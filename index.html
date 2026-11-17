@@ -1,0 +1,3426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist - Ordem de Dispensa</title>
+    <!-- Biblioteca PDF.js para leitura automática da Lista de Compras do ÁgiliBlue -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        :root{--primary:#0571ee;--primary-dark:#045fc7;--secondary:#05abff;--green:#35a853;--yellow:#f6c400;--red:#dc2626;--bg:#f3f7fb;--surface:#fff;--surface-soft:#f5f8fc;--border:#d9e2ec;--text:#19324a;--muted:#66788a;--shadow:0 14px 35px rgba(25,50,74,.10)}
+        *{box-sizing:border-box}body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#eef6ff 0,#f7fafc 45%,#f2f7f5 100%);color:var(--text);margin:0;padding:24px;min-height:100vh}
+        .institutional-header{max-width:1500px;margin:0 auto 18px;background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;border:1px solid #e2eaf2}
+        .brand-stripe{height:7px;background:linear-gradient(90deg,var(--primary) 0 55%,var(--secondary) 55% 78%,var(--green) 78% 90%,var(--yellow) 90%)}
+        .brand-content{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 24px}
+        .brand-left{display:flex;align-items:center;gap:14px}
+        .brand-mark{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;box-shadow:0 8px 18px rgba(5,113,238,.22)}
+        .brand-city{font-size:1.05rem;font-weight:900;letter-spacing:.04em;color:#124c8c}
+        .brand-sub{font-size:.72rem;color:var(--muted);margin-top:2px}
+        .semagi{border-left:1px solid #dce5ee;padding-left:24px;text-align:right}
+        .semagi strong{display:block;color:#0571ee;font-size:.98rem}
+        .semagi span{display:block;color:var(--muted);font-size:.76rem;margin-top:3px}
+
+        .layout{max-width:1500px;margin:0 auto;display:flex;gap:20px;align-items:flex-start}
+        .app-container,.history-container{background:rgba(255,255,255,.97);border:1px solid #e1e9f1;border-radius:18px;box-shadow:var(--shadow)}
+        .app-container{flex:1 1 850px;padding:28px;overflow:hidden}
+        .history-container{flex:0 1 380px;padding:24px;position:sticky;top:20px}
+
+        .title-input{width:100%;font-size:clamp(1.15rem,2vw,1.6rem);font-weight:850;border:0;border-bottom:3px solid var(--primary);padding:10px 4px 12px;margin-bottom:22px;background:transparent;color:var(--text);outline:none}
+        h2{margin-top:0;font-size:1.3rem;color:#075da9}
+        h3.section-header{color:#fff;background:linear-gradient(90deg,#0571ee,#05abff);border:0;padding:11px 15px;border-radius:10px;margin:26px 0 7px;box-shadow:0 7px 16px rgba(5,113,238,.16);font-size:.96rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+
+        .header-btns-wrap{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+        .btn-header-report{background:#fff;color:#0565c9;border:none;padding:6px 11px;border-radius:8px;font-size:0.75rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(0,0,0,0.12);transition:.18s}
+        .btn-header-report:hover{background:#eef7ff;transform:translateY(-1px)}
+        .quote-count-pill{background:#0571ee;color:#fff;padding:2px 7px;border-radius:999px;font-size:0.7rem;font-weight:800}
+
+        .item-row{display:flex;justify-content:space-between;align-items:center;padding:12px 6px;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap;transition:background .2s}
+        .item-row:hover{background:#f7fbff}
+        .item-label{flex:1 1 260px;font-size:.92rem;line-height:1.4}
+        .options-group{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+        .options-group label{font-size:.76rem;font-weight:750;background:var(--surface-soft);color:var(--muted);padding:7px 10px;border-radius:999px;border:1px solid var(--border);cursor:pointer;transition:.18s;user-select:none}
+        .options-group label:hover{border-color:var(--primary);color:var(--primary-dark)}
+        .options-group input[type=radio]{display:none}
+        .options-group input[type=radio]:checked+label{color:#fff;border-color:transparent;box-shadow:0 4px 10px rgba(5,113,238,.16)}
+        .options-group input[value="Tem"]:checked+label,
+        .options-group input[value="Autenticado"]:checked+label{background:linear-gradient(135deg,#22a45b,#168a49)}
+        .options-group input[value="Não tem"]:checked+label,
+        .options-group input[value="Não autenticado"]:checked+label{background:linear-gradient(135deg,#ef4444,#dc2626)}
+        .options-group input[value="Vencido"]:checked+label{background:linear-gradient(135deg,#b91c1c,#7f1d1d)}
+        .options-group input[type=radio]:checked:not([value="Tem"]):not([value="Não tem"]):not([value="Vencido"]):not([value="Autenticado"]):not([value="Não autenticado"])+label{background:linear-gradient(135deg,#f6b800,#d98b00)}
+
+        .btn-add-quote{background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;padding:7px 11px;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:4px}
+        .btn-add-quote:hover{background:#0571ee;color:#fff;border-color:#0571ee}
+
+        .btn-prop-action{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;padding:7px 11px;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:4px}
+        .btn-prop-action:hover{background:#059669;color:#fff;border-color:#059669}
+        .btn-prop-list{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;padding:7px 11px;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:4px}
+        .btn-prop-list:hover{background:#2563eb;color:#fff;border-color:#2563eb}
+
+        .date-input{width:112px;min-width:112px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;outline:none;font-family:inherit;font-size:.8rem;color:var(--text);background:#fff}
+        .date-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
+
+        .protocolo-container{background:#f8fbff;border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px;display:flex;flex-direction:column;gap:10px}
+        .protocolo-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .protocolo-field{display:flex;flex-direction:column;gap:4px}
+        .protocolo-field label{font-size:0.75rem;font-weight:800;color:#075da9}
+        .protocolo-input{width:140px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;outline:none;background:#fff;color:var(--text)}
+        .protocolo-input:focus,.secretaria-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
+        .secretaria-select{width:165px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:0.88rem;font-weight:700;outline:none;background:#fff;color:var(--text);cursor:pointer}
+
+        .observation-toggle{padding:7px 10px;border:1px solid #b9d9f8;border-radius:8px;background:#eef7ff;color:#0565c9;font-size:.74rem;font-weight:800;white-space:nowrap;cursor:pointer;transition:.18s}
+        .observation-toggle:hover{background:#e1f1ff}
+        .observation-toggle.active{background:#0571ee;color:#fff;border-color:#0571ee}
+        .protocolo-row .observation-toggle,.protocolo-row .observation-wrapper{align-self:flex-end}
+        .observation-wrapper{display:flex;flex-direction:column;gap:5px;min-width:220px;flex:1 1 240px}
+        .observation-wrapper.hidden{display:none}
+        .observation-input{width:100%;min-height:48px;resize:vertical;padding:8px 10px;border:1px solid var(--border);border-radius:9px;outline:none;font-family:inherit;font-size:.84rem;color:var(--text);background:#fff}
+        .observation-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
+
+        .extra-field{display:flex;align-items:center;gap:5px}
+        .extra-field span{font-weight:800;color:#607387;font-size:.82rem}
+        .currency-input{width:105px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:.84rem;outline:none}
+        .currency-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
+
+        .obs-aviso{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:14px 16px;border-radius:12px;font-size:0.86rem;margin-top:24px;margin-bottom:8px;display:flex;flex-direction:column;gap:10px}
+        .obs-aviso-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+        .obs-aviso-title{font-weight:800;line-height:1.4;flex:1 1 280px}
+        .obs-aviso .options-group label{background:#fff;border-color:#fcd34d;color:#78350f}
+        .obs-aviso .options-group label:hover{border-color:#d97706;color:#92400e}
+        .obs-aviso .observation-wrapper{width:100%;flex-basis:100%}
+
+        .actions{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+        button{padding:11px 17px;border:none;border-radius:9px;font-weight:800;cursor:pointer;transition:.18s}
+        .btn-save{background:linear-gradient(135deg,#0571ee,#05abff);color:#fff}
+        .btn-save:hover{filter:brightness(1.05)}
+        .btn-new{background:#64748b;color:#fff}
+        .btn-new:hover{background:#475569}
+
+        .history-list{list-style:none;padding:0;margin:14px 0 0;max-height:70vh;overflow-y:auto}
+        .history-item{padding:13px;border:1px solid var(--border);border-radius:11px;margin-bottom:9px;background:#fff}
+        .history-date{font-size:.76rem;color:var(--muted)}
+        .history-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+        .history-btn{padding:6px 8px;font-size:.72rem;border-radius:7px}
+        .btn-open{background:#e7f2ff;color:#0565c9}
+        .btn-delete{background:#feecec;color:#b91c1c}
+        .btn-pdf-small{background:#fff3d6;color:#9a6500}
+        .btn-pub{background:#f3e8ff;color:#7e22ce}
+
+        /* Pesquisa, filtros e tags */
+        .search-box{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;margin-bottom:10px;font-size:0.85rem;outline:none;background:#fff;font-family:inherit}
+        .search-box:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
+        .status-filters{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+        .filter-chip{padding:5px 9px;border-radius:999px;border:1px solid var(--border);background:var(--surface-soft);color:var(--muted);font-size:0.71rem;font-weight:750;cursor:pointer;transition:.15s}
+        .filter-chip:hover{border-color:var(--primary);color:var(--primary)}
+        .filter-chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+        .sec-tag{display:inline-block;background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe;padding:2px 7px;border-radius:6px;font-size:0.69rem;font-weight:800;margin-right:4px}
+
+        .status-badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:0.7rem;font-weight:700;margin-top:5px}
+        .status-em-andamento{background:#e0f2fe;color:#0369a1}
+        .status-finalizada{background:#d1fae5;color:#047857}
+        .status-fracassada{background:#fee2e2;color:#b91c1c}
+        .status-suspensa{background:#fef3c7;color:#b45309}
+        .status-cancelada{background:#f1f5f9;color:#475569}
+
+        .dropdown-container{position:relative;display:inline-block}
+        .dropdown-btn{background:#f1f5f9;border:1px solid var(--border);padding:4px 8px;border-radius:6px;cursor:pointer;font-weight:bold;font-size:0.85rem;color:var(--text)}
+        .dropdown-btn:hover{background:#e2e8f0}
+        .dropdown-content{display:none;position:absolute;right:0;background:#fff;min-width:140px;box-shadow:0 8px 16px rgba(0,0,0,0.12);border:1px solid var(--border);border-radius:8px;z-index:20;padding:4px}
+        .dropdown-content.show{display:block}
+        .dropdown-content button{width:100%;text-align:left;padding:6px 8px;background:none;border:none;font-size:0.75rem;border-radius:4px;cursor:pointer;font-weight:600;color:var(--text)}
+        .dropdown-content button:hover{background:#f1f5f9;color:var(--primary)}
+
+        /* Blocos de empresas vencedoras */
+        .habilitacao-bloco{background:#f8fbff;border:2px dashed #b9d9f8;border-radius:12px;padding:16px;margin-top:14px;margin-bottom:18px;position:relative}
+        .habilitacao-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+        .habilitacao-header h4{margin:0;color:#0565c9;font-size:0.95rem}
+        .company-inputs{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+        .company-field{flex:1;min-width:220px;display:flex;flex-direction:column;gap:4px}
+        .company-field label{font-size:0.78rem;font-weight:750;color:var(--muted)}
+        .company-field input{padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:0.85rem;outline:none;background:#fff}
+        .company-field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
+        .btn-remove-bloco{background:#feecec;color:#b91c1c;padding:5px 10px;font-size:0.75rem;border-radius:6px}
+        .btn-remove-bloco:hover{background:#fecaca}
+        .btn-add-bloco{background:#e0f2fe;color:#0369a1;padding:8px 14px;font-size:0.82rem;border-radius:8px;margin-top:8px;font-weight:800;border:1px solid #bae6fd;display:inline-flex;align-items:center;gap:6px}
+        .btn-add-bloco:hover{background:#bae6fd}
+
+        /* Modais (Publicação, Cotações e Propostas Recebidas) */
+        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.55);z-index:1000;justify-content:center;align-items:center;padding:16px}
+        .modal-overlay.show{display:flex}
+        .modal-card{background:#fff;padding:24px;border-radius:16px;width:100%;max-width:480px;box-shadow:0 20px 45px rgba(0,0,0,0.22);max-height:92vh;overflow-y:auto}
+        .modal-card.wide{max-width:780px}
+        .modal-card.extra-wide{max-width:1240px}
+        .modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:16px;gap:10px}
+        .modal-header h3{margin:0;font-size:1.05rem;color:#075da9;background:none;padding:0;box-shadow:none}
+        .modal-close{background:#f1f5f9;color:#475569;border:none;width:30px;height:30px;border-radius:8px;font-weight:800;cursor:pointer;padding:0;display:grid;place-items:center;flex-shrink:0}
+        .modal-field{margin-bottom:13px;display:flex;flex-direction:column;gap:5px}
+        .modal-field label{font-size:0.78rem;font-weight:800;color:var(--text)}
+        .modal-field input,.modal-field select{padding:9px 11px;border:1px solid var(--border);border-radius:8px;font-size:0.88rem;font-family:inherit;outline:none}
+        .modal-field input:focus,.modal-field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
+        .mode-switch{display:flex;gap:8px;background:var(--surface-soft);padding:5px;border-radius:10px;border:1px solid var(--border);margin-bottom:13px}
+        .mode-switch button{flex:1;padding:7px 10px;font-size:0.76rem;border-radius:7px;background:transparent;color:var(--muted);font-weight:750}
+        .mode-switch button.active{background:#fff;color:var(--primary);box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+        .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
+
+        .source-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+        .source-chip{padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:var(--surface-soft);color:var(--muted);font-size:0.73rem;font-weight:750;cursor:pointer;transition:.15s}
+        .source-chip:hover{border-color:var(--primary);color:var(--primary)}
+        .source-chip.active{background:#0571ee;color:#fff;border-color:#0571ee}
+
+        .source-type-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.69rem;font-weight:800;margin-left:6px;vertical-align:middle}
+        .stag-public{background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd}
+        .stag-private{background:#f3e8ff;color:#6b21a8;border:1px solid #e9d5ff}
+
+        .pub-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;font-size:0.7rem;font-weight:700;margin-top:5px}
+        .pub-green{background:#d1fae5;color:#047857}
+        .pub-yellow{background:#fef3c7;color:#b45309}
+        .pub-red{background:#fee2e2;color:#b91c1c}
+
+        .quote-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+        .quote-stat-box{padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface-soft);text-align:center}
+        .quote-stat-box strong{display:block;font-size:1.25rem;margin-bottom:2px}
+        .quote-stat-box span{font-size:0.73rem;font-weight:700;color:var(--muted)}
+        .stat-valid strong{color:#168a49}
+        .stat-warn strong{color:#d97706}
+        .stat-expired strong{color:#dc2626}
+
+        .quote-list{display:flex;flex-direction:column;gap:10px}
+        .quote-card{border:1px solid var(--border);border-radius:11px;padding:12px 14px;background:#fff;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+        .quote-card.expired{border-left:4px solid #dc2626;background:#fffafa}
+        .quote-card.warning{border-left:4px solid #f59e0b;background:#fffdf5}
+        .quote-card.valid{border-left:4px solid #16a34a;background:#f8fffb}
+        .quote-badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:0.72rem;font-weight:800;margin-bottom:5px}
+        .qbadge-valid{background:#dcfce7;color:#15803d}
+        .qbadge-warn{background:#fef3c7;color:#b45309}
+        .qbadge-expired{background:#fee2e2;color:#b91c1c}
+        .quote-meta{font-size:0.8rem;color:var(--text);line-height:1.45}
+        .quote-warning-msg{margin-top:5px;font-size:0.76rem;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:6px;display:inline-block}
+
+        /* Estilos para Lista de Compras, Mapa de Cotações e Propostas Recebidas */
+        .pdf-upload-zone{border:2px dashed #93c5fd;background:#f0f7ff;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+        .pdf-upload-info{font-size:0.82rem;color:#1e3a8a;line-height:1.4;flex:1 1 260px}
+        .btn-upload-pdf{background:#0571ee;color:#fff;padding:9px 14px;border-radius:8px;font-size:0.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+        .btn-upload-pdf:hover{background:#045fc7}
+
+        .items-table-wrapper{overflow-x:auto;border:1px solid var(--border);border-radius:10px;max-height:54vh}
+        .editable-items-table{width:100%;border-collapse:collapse;font-size:0.8rem;min-width:920px}
+        .editable-items-table th{background:#f1f5f9;color:#1e293b;font-weight:800;padding:8px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5;vertical-align:top}
+        .editable-items-table td{padding:6px;border-bottom:1px solid var(--border);vertical-align:top;background:#fff}
+        .tbl-input{width:100%;padding:6px 7px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.79rem;font-family:inherit;color:var(--text);outline:none}
+        .tbl-input:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(5,113,238,.12)}
+        .tbl-textarea{width:100%;min-height:48px;resize:vertical;padding:6px 7px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.78rem;font-family:inherit;color:var(--text);outline:none;line-height:1.35}
+        .tbl-textarea:focus{border-color:var(--primary)}
+        .tbl-total-cell{font-weight:800;color:#075da9;white-space:nowrap;padding-top:11px !important;font-size:0.81rem}
+        .tbl-avg-cell{font-weight:800;color:#047857;white-space:nowrap;padding-top:11px !important;font-size:0.81rem;background:#f0fdf4 !important}
+        .table-footer-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;padding:10px 14px;background:#f8fbff;border:1px solid var(--border);border-radius:10px}
+
+        .rank-card{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:#fff;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+        .rank-card.rank-1{border:2px solid #16a34a;background:linear-gradient(90deg,#f0fdf4 0%,#ffffff 100%);box-shadow:0 6px 16px rgba(22,163,74,.10)}
+        .rank-card.rank-2{border-left:5px solid #0284c7;background:#f8fafc}
+        .rank-card.rank-3{border-left:5px solid #d97706;background:#fffbeb}
+        .rank-pos-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:0.76rem;font-weight:900}
+        .pos-1{background:#16a34a;color:#fff}
+        .pos-2{background:#e0f2fe;color:#0369a1}
+        .pos-3{background:#fef3c7;color:#b45309}
+        .pos-other{background:#f1f5f9;color:#475569}
+
+        .item-winner-box{border:1px solid var(--border);border-radius:11px;padding:12px 14px;margin-bottom:12px;background:#fff}
+        .item-winner-header{font-size:0.84rem;font-weight:800;color:#075da9;border-bottom:1px solid var(--border);padding-bottom:7px;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+        .mini-rank-table{width:100%;border-collapse:collapse;font-size:0.79rem}
+        .mini-rank-table th,.mini-rank-table td{padding:6px 8px;border-bottom:1px solid #eef2f6;text-align:left}
+        .mini-rank-table th{color:var(--muted);font-weight:750;font-size:0.73rem}
+        .mini-rank-table tr.winner-row td{background:#f0fdf4;font-weight:750;color:#14532d}
+
+        @media(max-width:960px){
+            body{padding:12px}
+            .brand-content{align-items:flex-start;flex-direction:column}
+            .semagi{border-left:0;border-top:1px solid #dce5ee;padding:12px 0 0;text-align:left;width:100%}
+            .layout{flex-direction:column}
+            .app-container,.history-container{width:100%;padding:18px}
+            .history-container{position:static}
+            .item-row{align-items:stretch;flex-direction:column}
+            .options-group{justify-content:flex-start}
+            .date-input{width:112px}
+            .observation-wrapper{min-width:0;width:100%}
+            .quote-summary-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body>
+    <header class="institutional-header">
+        <div class="brand-stripe"></div>
+        <div class="brand-content">
+            <div class="brand-left">
+                <div class="brand-mark">R</div>
+                <div><div class="brand-city">PREFEITURA DE RONDONÓPOLIS</div><div class="brand-sub">Compromisso com a mudança</div></div>
+            </div>
+            <div class="semagi"><strong>SEMAGI</strong><span>Secretaria Municipal de Administração, Gestão de Pessoas e Inovação</span></div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <div class="app-container">
+            <input type="text" id="doc-title" class="title-input" value="Check List - Dispensa de Licitação Art nº 75, Incisos I e II">
+
+            <!-- Campo de Protocolo, Secretaria Demandante e Observação Própria -->
+            <div class="protocolo-container">
+                <div class="protocolo-row">
+                    <div class="protocolo-field">
+                        <label for="doc-protocolo">📋 Nº de Protocolo</label>
+                        <input type="text" id="doc-protocolo" class="protocolo-input" placeholder="00000/0000" maxlength="10">
+                    </div>
+                    <div class="protocolo-field">
+                        <label for="doc-secretaria">🏛️ Secretaria Demandante</label>
+                        <select id="doc-secretaria" class="secretaria-select">
+                            <option value="">Selecione...</option>
+                            <option value="SEGOV">SEGOV</option>
+                            <option value="SEMAGI">SEMAGI</option>
+                            <option value="PGM/PROCON">PGM/PROCON</option>
+                            <option value="SMDE">SMDE</option>
+                            <option value="SEMECEL">SEMECEL</option>
+                            <option value="SEMFAZ">SEMFAZ</option>
+                            <option value="SINFRA">SINFRA</option>
+                            <option value="SEMMAAP">SEMMAAP</option>
+                            <option value="SEMOB">SEMOB</option>
+                            <option value="SEPPUR">SEPPUR</option>
+                            <option value="SEMPRAS">SEMPRAS</option>
+                            <option value="SMS">SMS</option>
+                            <option value="SETRACI">SETRACI</option>
+                        </select>
+                    </div>
+                    <button type="button" class="observation-toggle" id="proto-obs-btn" onclick="toggleProtocoloObs()">📝 Observação</button>
+                    <div class="observation-wrapper hidden" id="proto-obs-wrapper">
+                        <textarea id="doc-protocolo-obs" class="observation-input" placeholder="Digite uma observação para o protocolo..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div id="form-content"></div>
+
+            <!-- Quadro de Autenticação das Vias -->
+            <div class="obs-aviso" id="obs-aviso-box">
+                <div class="obs-aviso-top">
+                    <div class="obs-aviso-title">
+                        Obs: Autenticar todas as vias (nome completo e matrícula ou assinatura e carimbo de identificação).
+                    </div>
+                    <div class="options-group">
+                        <div>
+                            <input type="radio" name="autenticacao_vias" id="auth_opt0" value="Autenticado">
+                            <label for="auth_opt0">Autenticado</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="autenticacao_vias" id="auth_opt1" value="Não autenticado">
+                            <label for="auth_opt1">Não autenticado</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="autenticacao_vias" id="auth_opt2" value="Autenticado parcialmente">
+                            <label for="auth_opt2">Autenticado parcialmente</label>
+                        </div>
+                    </div>
+                    <button type="button" class="observation-toggle" id="auth-obs-btn" onclick="toggleAuthObs()">📝 Observação</button>
+                </div>
+                <div class="observation-wrapper hidden" id="auth-obs-wrapper">
+                    <textarea id="autenticacao_vias_observation" class="observation-input" placeholder="Descreva o caso da autenticação (ex: quais vias ou documentos estão sem autenticação)..."></textarea>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn-save" onclick="saveData()">Salvar Registro</button>
+                <button class="btn-new" onclick="clearForm()">Novo Formulário</button>
+            </div>
+        </div>
+
+        <div class="history-container">
+            <h2>Dispensas de Licitação</h2>
+            <input type="text" id="history-search" class="search-box" placeholder="🔍 Pesquisar protocolo, secretaria, empresa..." oninput="renderHistory()">
+            <div class="status-filters" id="status-filters">
+                <button type="button" class="filter-chip active" data-filter="Todos" onclick="setStatusFilter('Todos', this)">Todos</button>
+                <button type="button" class="filter-chip" data-filter="Em andamento" onclick="setStatusFilter('Em andamento', this)">Em andamento</button>
+                <button type="button" class="filter-chip" data-filter="Finalizada" onclick="setStatusFilter('Finalizada', this)">Finalizada</button>
+                <button type="button" class="filter-chip" data-filter="Fracassada" onclick="setStatusFilter('Fracassada', this)">Fracassada</button>
+                <button type="button" class="filter-chip" data-filter="Suspensa" onclick="setStatusFilter('Suspensa', this)">Suspensa</button>
+                <button type="button" class="filter-chip" data-filter="Cancelada" onclick="setStatusFilter('Cancelada', this)">Cancelada</button>
+            </div>
+            <ul class="history-list" id="history-list"></ul>
+        </div>
+    </div>
+
+    <!-- Modal de Publicação -->
+    <div id="pub-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📢 Gerenciar Publicação do Aviso</h3>
+                <button type="button" class="modal-close" onclick="closePubModal()">✕</button>
+            </div>
+            <p id="pub-modal-title" style="font-size:0.85rem;color:var(--muted);margin-top:-6px;margin-bottom:14px;"></p>
+            <div class="modal-field">
+                <label>Data de Início:</label>
+                <input type="date" id="pub-start-date">
+            </div>
+            <div class="modal-field">
+                <label>Data de Término:</label>
+                <input type="date" id="pub-end-date">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="history-btn" style="background:#e2e8f0;color:#334155;" onclick="closePubModal()">Cancelar</button>
+                <button type="button" class="history-btn" style="background:var(--primary);color:#fff;" onclick="savePubDates()">Salvar Publicação</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Adicionar Cotação (Fonte Pública ou Privada) -->
+    <div id="add-quote-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>➕ Adicionar Cotação (Pública ou Privada)</h3>
+                <button type="button" class="modal-close" onclick="closeAddQuoteModal()">✕</button>
+            </div>
+
+            <div class="modal-field">
+                <label>Tipo de Fonte da Cotação *</label>
+                <div class="source-chips" id="quote-source-type-chips">
+                    <button type="button" class="source-chip active" data-type="Banco de Preços" onclick="selectQuoteSourceType('Banco de Preços', this)">🏛️ Banco de Preços</button>
+                    <button type="button" class="source-chip" data-type="PNCP" onclick="selectQuoteSourceType('PNCP', this)">🌐 PNCP</button>
+                    <button type="button" class="source-chip" data-type="TCE-MT" onclick="selectQuoteSourceType('TCE-MT', this)">⚖️ TCE-MT</button>
+                    <button type="button" class="source-chip" data-type="Empresa Privada" onclick="selectQuoteSourceType('Empresa Privada', this)">🏢 Empresa Privada</button>
+                    <button type="button" class="source-chip" data-type="Outro Órgão / Ata" onclick="selectQuoteSourceType('Outro Órgão / Ata', this)">📄 Outro Órgão / Ata</button>
+                </div>
+            </div>
+
+            <div class="modal-field">
+                <label for="quote-supplier" id="quote-supplier-label">Descrição / Identificação da Fonte (Opcional)</label>
+                <input type="text" id="quote-supplier" placeholder="Ex: Banco de Preços - Cotação nº 1234/2026">
+            </div>
+
+            <div class="modal-field" id="quote-cnpj-field" style="display:none;">
+                <label for="quote-cnpj">CNPJ da Empresa (Opcional)</label>
+                <input type="text" id="quote-cnpj" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJInput(this)">
+            </div>
+
+            <div class="modal-field">
+                <label for="quote-start-date">Data Inicial da Cotação *</label>
+                <input type="text" id="quote-start-date" placeholder="dd/mm/aaaa" maxlength="10" inputmode="numeric" oninput="maskDateInput(this)" onblur="completeDateYear(this)">
+            </div>
+
+            <div class="mode-switch">
+                <button type="button" id="qmode-days" class="active" onclick="setQuoteMode('days')">Informar Dias de Validade</button>
+                <button type="button" id="qmode-date" onclick="setQuoteMode('date')">Informar Data Final ("Até")</button>
+            </div>
+            <div class="modal-field" id="qfield-days">
+                <label for="quote-days">Dias de Validade *</label>
+                <input type="number" id="quote-days" min="1" placeholder="Ex: 60">
+            </div>
+            <div class="modal-field" id="qfield-end-date" style="display:none;">
+                <label for="quote-end-date">Válida Até *</label>
+                <input type="text" id="quote-end-date" placeholder="dd/mm/aaaa" maxlength="10" inputmode="numeric" oninput="maskDateInput(this)" onblur="completeDateYear(this)">
+            </div>
+            <div class="modal-actions">
+                <button type="button" style="background:#e2e8f0;color:#334155;" onclick="closeAddQuoteModal()">Fechar</button>
+                <button type="button" style="background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;" onclick="addQuote(true)">Salvar e Adicionar Outra</button>
+                <button type="button" style="background:var(--primary);color:#fff;" onclick="addQuote(false)">Salvar Cotação</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Relatório de Validade das Cotações Adicionadas -->
+    <div id="report-quotes-modal" class="modal-overlay">
+        <div class="modal-card wide">
+            <div class="modal-header">
+                <h3>📊 Validade das Cotações Adicionadas</h3>
+                <button type="button" class="modal-close" onclick="closeQuotesReportModal()">✕</button>
+            </div>
+            <div id="quotes-report-content"></div>
+            <div class="modal-actions">
+                <button type="button" style="background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;" onclick="closeQuotesReportModal(); openAddQuoteModal();">+ Nova Cotação</button>
+                <button type="button" style="background:#059669;color:#fff;" onclick="closeQuotesReportModal(); openQuotesMatrixModal();">🧮 Mapa de Cotações (Média/Total)</button>
+                <button type="button" style="background:#fff3d6;color:#9a6500;" onclick="printQuotesReportPDF()">🖨️ Imprimir Validades</button>
+                <button type="button" style="background:#e2e8f0;color:#334155;" onclick="closeQuotesReportModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Mapa de Cotações (Lista de Itens + Cotação 01, 02, 03... + Média + Total) -->
+    <div id="quotes-matrix-modal" class="modal-overlay">
+        <div class="modal-card extra-wide">
+            <div class="modal-header">
+                <h3>🧮 Mapa de Cotações — Cálculo de Média e Valor Total</h3>
+                <button type="button" class="modal-close" onclick="closeQuotesMatrixModal()">✕</button>
+            </div>
+
+            <div class="pdf-upload-zone">
+                <div class="pdf-upload-info">
+                    <strong>📄 Importar Lista de Compras (PDF ÁgiliBlue):</strong><br>
+                    Importe o PDF da Lista de Compras para preencher automaticamente <em>Item, Código Ágilli, Código TCE, Descrição, Und de Medida, Quantidade</em> e o <em>Valor Estimado</em> (que também pode ser usado na aba de Propostas).
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                    <label class="btn-upload-pdf" for="quotes-pdf-input">
+                        📤 Importar Lista (PDF)
+                        <input type="file" id="quotes-pdf-input" accept="application/pdf" style="display:none" onchange="handleListaComprasPDF(event, 'quotes')">
+                    </label>
+                    <button type="button" style="background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;padding:9px 13px;font-size:0.79rem;" onclick="addQuoteColumnFromMatrix()">
+                        ＋ Adicionar Coluna de Cotação
+                    </button>
+                </div>
+            </div>
+
+            <div class="items-table-wrapper">
+                <table class="editable-items-table" id="quotes-matrix-table">
+                    <thead id="quotes-matrix-thead"></thead>
+                    <tbody id="quotes-matrix-tbody"></tbody>
+                </table>
+            </div>
+
+            <div class="table-footer-bar">
+                <button type="button" style="background:#e0f2fe;color:#0369a1;padding:8px 13px;font-size:0.78rem;" onclick="addItemRowFromQuotesMatrix()">＋ Adicionar Item Manualmente</button>
+                <div style="font-size:0.95rem;font-weight:900;color:#075da9;">
+                    Valor Total Geral (Soma das Médias × Quantidades): <span id="quotes-matrix-grand-total">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" style="background:#fff3d6;color:#9a6500;" onclick="printQuotesMatrixPDF()">🖨️ Imprimir / PDF do Mapa de Cotações</button>
+                <button type="button" style="background:var(--primary);color:#fff;" onclick="saveQuotesMatrixAndClose()">Salvar e Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1 (Propostas): Importar / Editar Lista de Itens (Lista de Compras) -->
+    <div id="proposal-items-modal" class="modal-overlay">
+        <div class="modal-card extra-wide">
+            <div class="modal-header">
+                <h3>📋 Lista de Itens do Processo (Base para Propostas e Cotações)</h3>
+                <button type="button" class="modal-close" onclick="closeProposalItemsModal()">✕</button>
+            </div>
+
+            <div class="pdf-upload-zone">
+                <div class="pdf-upload-info">
+                    <strong>📄 Importar PDF da Lista de Compras (ÁgiliBlue):</strong><br>
+                    Selecione o PDF oficial da Lista de Compras para extrair automaticamente <em>Sequência, Código Ágilli, Código TCE, Descrição, Unidade, Quantidade e Valor Unitário Estimado</em>. Todos os campos permanecem editáveis abaixo.
+                </div>
+                <label class="btn-upload-pdf" for="agiliblue-pdf-input">
+                    📤 Importar Lista (PDF)
+                    <input type="file" id="agiliblue-pdf-input" accept="application/pdf" style="display:none" onchange="handleListaComprasPDF(event, 'proposals')">
+                </label>
+            </div>
+
+            <div class="items-table-wrapper">
+                <table class="editable-items-table">
+                    <thead>
+                        <tr>
+                            <th style="width:55px;">Item</th>
+                            <th style="width:85px;">Cód. Ágilli</th>
+                            <th style="width:95px;">Cód. TCE</th>
+                            <th>Descrição do Item</th>
+                            <th style="width:90px;">Und. Medida</th>
+                            <th style="width:105px;">Quantidade</th>
+                            <th style="width:115px;">Unit. Estimado</th>
+                            <th style="width:120px;">Total Estimado</th>
+                            <th style="width:45px;text-align:center;">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="base-items-tbody"></tbody>
+                </table>
+            </div>
+
+            <div class="table-footer-bar">
+                <button type="button" style="background:#e0f2fe;color:#0369a1;padding:8px 13px;font-size:0.78rem;" onclick="addBaseItemRow()">＋ Adicionar Item Manualmente</button>
+                <div style="font-size:0.9rem;font-weight:850;color:#075da9;">
+                    Valor Total Estimado da Lista: <span id="base-items-grand-total">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" style="background:#e2e8f0;color:#334155;" onclick="closeProposalItemsModal()">Fechar</button>
+                <button type="button" style="background:#059669;color:#fff;" onclick="saveBaseItemsAndOpenAddProposal()">Salvar Lista e Lançar Proposta →</button>
+                <button type="button" style="background:var(--primary);color:#fff;" onclick="saveBaseItemsOnly()">Salvar Lista de Itens</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 (Propostas): Adicionar / Editar Proposta de Empresa -->
+    <div id="add-proposal-modal" class="modal-overlay">
+        <div class="modal-card extra-wide">
+            <div class="modal-header">
+                <h3 id="add-prop-modal-title">🏢 Lançar Proposta de Empresa</h3>
+                <button type="button" class="modal-close" onclick="closeAddProposalModal()">✕</button>
+            </div>
+
+            <div class="company-inputs">
+                <div class="company-field">
+                    <label for="prop-company-name">Nome / Razão Social da Empresa *</label>
+                    <input type="text" id="prop-company-name" placeholder="Digite o nome da empresa proponente...">
+                </div>
+                <div class="company-field">
+                    <label for="prop-company-cnpj">CNPJ *</label>
+                    <input type="text" id="prop-company-cnpj" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJInput(this)">
+                </div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
+                <span style="font-size:0.8rem;color:var(--muted);font-weight:700;">Informe manualmente os valores unitários propostos pela empresa:</span>
+                <button type="button" style="background:#eff6ff;color:#1d4ed8;padding:6px 10px;font-size:0.74rem;" onclick="closeAddProposalModal(); openProposalItemsModal();">⚙️ Editar Lista Base / Importar PDF</button>
+            </div>
+
+            <div class="items-table-wrapper">
+                <table class="editable-items-table">
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">Item</th>
+                            <th style="width:80px;">Cód. Ágilli</th>
+                            <th style="width:90px;">Cód. TCE</th>
+                            <th>Descrição do Item</th>
+                            <th style="width:80px;">Unid.</th>
+                            <th style="width:95px;">Qtd.</th>
+                            <th style="width:110px;">Unit. Estimado</th>
+                            <th style="width:125px;">Unit. Proposto (R$)</th>
+                            <th style="width:125px;">Total Proposto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="proposal-entry-tbody"></tbody>
+                </table>
+            </div>
+
+            <div class="table-footer-bar">
+                <span style="font-size:0.78rem;color:var(--muted);">* Deixe R$ 0,00 ou vazio caso a empresa não tenha cotado determinado item.</span>
+                <div style="font-size:0.95rem;font-weight:900;color:#047857;">
+                    Valor Global da Proposta: <span id="proposal-entry-grand-total">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" style="background:#e2e8f0;color:#334155;" onclick="closeAddProposalModal()">Cancelar</button>
+                <button type="button" style="background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;" onclick="saveCompanyProposal(true)">Salvar e Adicionar Outra Empresa</button>
+                <button type="button" style="background:var(--primary);color:#fff;" onclick="saveCompanyProposal(false)">Salvar Proposta e Ver Vencedor</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 (Propostas): Relatório de Propostas Recebidas e Vencedores -->
+    <div id="report-proposals-modal" class="modal-overlay">
+        <div class="modal-card extra-wide">
+            <div class="modal-header">
+                <h3>🏆 Propostas Recebidas — Apuração e Classificação</h3>
+                <button type="button" class="modal-close" onclick="closeProposalsReportModal()">✕</button>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+                <div class="mode-switch" style="margin-bottom:0;min-width:320px;">
+                    <button type="button" id="prop-mode-global" class="active" onclick="setProposalRankingMode('global')">🌐 Menor Preço Global</button>
+                    <button type="button" id="prop-mode-item" onclick="setProposalRankingMode('item')">📦 Menor Preço por Item</button>
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <button type="button" style="background:#eff6ff;color:#1d4ed8;padding:8px 12px;font-size:0.78rem;" onclick="closeProposalsReportModal(); openProposalItemsModal();">📋 Lista de Itens</button>
+                    <button type="button" style="background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;padding:8px 12px;font-size:0.78rem;" onclick="closeProposalsReportModal(); openAddProposalModal();">➕ Adicionar Proposta</button>
+                </div>
+            </div>
+
+            <div id="proposals-report-content"></div>
+
+            <div class="modal-actions">
+                <button type="button" style="background:#fff3d6;color:#9a6500;" onclick="printProposalsReportPDF()">🖨️ Imprimir / PDF da Apuração</button>
+                <button type="button" style="background:#e2e8f0;color:#334155;" onclick="closeProposalsReportModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        const fixedChecklistData = [
+            {
+                section: "1. Processo inicial",
+                isBudgetSection: true,
+                type: "status",
+                items: [
+                    { text: "Ofício assinado pelo secretário;" },
+                    { text: "ETP, Estudo Técnico Preliminar;" },
+                    { text: "Comprovação de Inclusão no PCA (Publicação);", options: ["Tem", "Não tem"] },
+                    { text: "Mapa de Risco" },
+                    { text: "Termo de referência;" },
+                    { text: "Classificação orçamentaria autorizada pela equipe econômica;", extra: "currency" },
+                    { text: "Justificativa da necessidade da aquisição/serviço;" },
+                    { text: "Justificativa da escolha do fornecedor (se tiver preço privado);" },
+                    { text: "Orçamentos válido (contendo todos itens solicitados); (Orçamentos para média);", hasQuoteAction: true },
+                    { text: "Verificar se tem preço público, caso não tiver anexar justificativa da ausência;" },
+                    { text: "Verificar se tem preço local, caso não tiver anexar justificativa da ausência;" },
+                    { text: "Comprovação de solicitação de orçamento via e-mail ou ofício;", options: ["Tem", "Não tem", "Tem, mas não possui conexão"] },
+                    { text: "Fluxo da modalidade no sistema (verificar se o item tem cadastro, fazer a lista no sistema informando seus itens e quantidades, informar a dotação) Assinado pelo Sec. da Pasta Solicitante;" },
+                    { text: "Minuta de Contrato;", options: ["Tem", "Não tem", "Dispensado com justificativa/Não precisa"] }
+                ]
+            },
+            {
+                section: "2. Superintendência de Compras e Licitação",
+                isProposalSection: true,
+                type: "status",
+                items: [
+                    { text: "Autorização do Gestor;" },
+                    { text: "Parecer Jurídico;", options: ["Tem", "Não tem"] },
+                    { text: "Atendimento do Parecer Jurídico;", options: ["Tem", "Não tem"] },
+                    { text: "Aviso de Dispensa de Licitação;", options: ["Tem", "Não tem"] },
+                    { text: "Publicação do Aviso;", options: ["Tem", "Não tem"] },
+                    { text: "Proposta das empresas e seus comprovantes via e-mail ou ofício;", options: ["Tem", "Não tem"], hasProposalAction: true }
+                ]
+            }
+        ];
+
+        const habilitacaoItemsData = [
+            { text: "Cópia do contrato social e a última alteração (se houver); PJ", noDate: true, options: ["Tem", "Não tem"] },
+            { text: "Cópia dos documentos pessoais dos sócios (rg e cpf); PJ/PF", noDate: true, options: ["Tem", "Não tem"] },
+            { text: "Alvará em vigência; PJ", options: ["Tem", "Não tem"] },
+            { text: "Certidão conjunta negativa de débitos federais (receita federal); PJ/PF", options: ["Tem", "Não tem"] },
+            { text: "Certidão negativa de débitos estaduais (local da empresa); PJ/PF", options: ["Tem", "Não tem"] },
+            { text: "Certidão negativa de débitos municipais (local da empresa); PJ/PF", options: ["Tem", "Não tem"] },
+            { text: "Certidão negativa de débitos fgts; PJ", options: ["Tem", "Não tem"] },
+            { text: "Certidão negativa de débitos trabalhistas; PJ/PF", options: ["Tem", "Não tem"] },
+            { text: "Declaração de que não possui fatos impeditivos à licitação; PJ/PF", noDate: true, options: ["Tem", "Não tem"] },
+            { text: "Cartão cnpj; PJ", noDate: true, options: ["Tem", "Não tem"] },
+            { text: "Declaração de que não emprega menor; PJ/PF", noDate: true, options: ["Tem", "Não tem", "Tem, mas não está assinado"] },
+            { text: "Certidão negativa do ceis; PJ/PF", options: ["Tem", "Não tem"] },
+            { text: "Certidão negativa do tce (local da empresa); PJ/PF", options: ["Tem", "Não tem", "Tem, mas não está assinado"] },
+            { text: "Certidão negativa do tcu (licitantes inidôneos); PJ/PF" }
+        ];
+
+        const finalSectionData = {
+            section: "3. Superintendência de Compras e Licitação",
+            type: "status",
+            items: [
+                { text: "Ata;" },
+                { text: "Resultado;" },
+                { text: "Termo de ratificação;" },
+                { text: "Publicações do Termo de Ratificação;", options: ["Tem", "Não tem"] }
+            ]
+        };
+
+        let currentEditingId = null;
+        let habilitacaoInstancesCount = 0;
+        let activePubRecordId = null;
+        let currentStatusFilter = 'Todos';
+
+        // Estado das Cotações (Fontes Públicas/Privadas + Valores por Item)
+        let currentQuotes = []; // [{ id, sourceType, supplier, cnpj, startDate, endDate, validityDays, precos: { [itemId]: number } }]
+        let quoteInputMode = 'days';
+        let selectedQuoteSourceType = 'Banco de Preços';
+
+        // Estado da Lista de Itens e Propostas Recebidas
+        let currentProposalItems = []; // [{ id, seq, codigo, codigoTce, descricao, unidade, quantidade, precoEstimado }]
+        let currentProposals = [];    // [{ id, empresaNome, empresaCnpj, precos: { [itemId]: number } }]
+        let editingProposalId = null;
+        let proposalRankingMode = 'global'; // 'global' | 'item'
+
+        function setStatusFilter(status, btnEl) {
+            currentStatusFilter = status;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+            renderHistory();
+        }
+
+        function toggleProtocoloObs() {
+            const wrapper = document.getElementById('proto-obs-wrapper');
+            const btn = document.getElementById('proto-obs-btn');
+            const isHidden = wrapper.classList.toggle('hidden');
+            btn.classList.toggle('active', !isHidden);
+            btn.textContent = isHidden ? '📝 Observação' : '✕ Ocultar';
+            if (!isHidden) document.getElementById('doc-protocolo-obs').focus();
+        }
+
+        function toggleAuthObs(forceOpen = null) {
+            const wrapper = document.getElementById('auth-obs-wrapper');
+            const btn = document.getElementById('auth-obs-btn');
+            const shouldOpen = forceOpen !== null ? forceOpen : wrapper.classList.contains('hidden');
+            wrapper.classList.toggle('hidden', !shouldOpen);
+            btn.classList.toggle('active', shouldOpen);
+            btn.textContent = shouldOpen ? '✕ Ocultar' : '📝 Observação';
+            if (shouldOpen) document.getElementById('autenticacao_vias_observation').focus();
+        }
+
+        function setupAuthRadios() {
+            document.querySelectorAll('input[name="autenticacao_vias"]').forEach(radio => {
+                radio.addEventListener('click', function() {
+                    if (this.dataset.wasChecked === "true") {
+                        this.checked = false;
+                        this.dataset.wasChecked = "false";
+                    } else {
+                        document.querySelectorAll('input[name="autenticacao_vias"]').forEach(r => r.dataset.wasChecked = "false");
+                        this.dataset.wasChecked = "true";
+                        if (this.value === 'Autenticado parcialmente') {
+                            toggleAuthObs(true);
+                        }
+                    }
+                });
+            });
+        }
+
+        function restoreAuthSection(formData) {
+            const savedAuth = formData['autenticacao_vias'] || '';
+            const savedAuthObs = formData['autenticacao_vias_observation'] || '';
+            document.querySelectorAll('input[name="autenticacao_vias"]').forEach(r => {
+                if (r.value === savedAuth) {
+                    r.checked = true;
+                    r.dataset.wasChecked = "true";
+                } else {
+                    r.checked = false;
+                    r.dataset.wasChecked = "false";
+                }
+            });
+            document.getElementById('autenticacao_vias_observation').value = savedAuthObs;
+            const shouldShowObs = Boolean(savedAuthObs.trim()) || savedAuth === 'Autenticado parcialmente';
+            const wrapper = document.getElementById('auth-obs-wrapper');
+            const btn = document.getElementById('auth-obs-btn');
+            wrapper.classList.toggle('hidden', !shouldShowObs);
+            btn.classList.toggle('active', shouldShowObs);
+            btn.textContent = shouldShowObs ? '✕ Ocultar' : '📝 Observação';
+        }
+
+        function maskCNPJInput(input) {
+            let v = (input.value || '').replace(/\D/g, '').slice(0, 14);
+            v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+            v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+            v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+            v = v.replace(/(\d{4})(\d)/, '$1-$2');
+            input.value = v;
+        }
+
+        function maskDateInput(input) {
+            let digits = (input.value || '').replace(/\D/g, '').slice(0, 8);
+            if (digits.length > 4) {
+                input.value = `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+            } else if (digits.length > 2) {
+                input.value = `${digits.slice(0, 2)}/${digits.slice(2)}`;
+            } else {
+                input.value = digits;
+            }
+        }
+
+        function completeDateYear(input) {
+            const raw = (input.value || '').trim();
+            if (!raw) return;
+
+            let dayStr = '', monthStr = '', yearStr = '';
+            const digitsOnly = raw.replace(/\D/g, '');
+
+            if (!raw.includes('/') && (digitsOnly.length === 4 || digitsOnly.length === 6 || digitsOnly.length === 8)) {
+                dayStr = digitsOnly.slice(0, 2);
+                monthStr = digitsOnly.slice(2, 4);
+                yearStr = digitsOnly.slice(4);
+            } else {
+                const match = raw.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{0,4}))?$/);
+                if (!match) return;
+                dayStr = match[1];
+                monthStr = match[2];
+                yearStr = match[3] || '';
+            }
+
+            const day = String(dayStr).padStart(2, '0');
+            const month = String(monthStr).padStart(2, '0');
+            let year = yearStr || String(new Date().getFullYear());
+            if (year.length === 2) year = `20${year}`;
+
+            if (year.length === 4) {
+                input.value = `${day}/${month}/${year}`;
+            }
+        }
+
+        function parseDateBR(value) {
+            if (!value) return null;
+            let match = String(value).trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+            if (!match) return null;
+            const day = Number(match[1]), month = Number(match[2]), year = Number(match[3]);
+            const date = new Date(year, month - 1, day);
+            if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+            date.setHours(0,0,0,0);
+            return date;
+        }
+
+        function formatDateBR(dateObj) {
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const y = dateObj.getFullYear();
+            return `${d}/${m}/${y}`;
+        }
+
+        function countBusinessDays(startDate, endDate) {
+            if (endDate < startDate) return -1;
+            let count = 0;
+            const cur = new Date(startDate);
+            cur.setDate(cur.getDate() + 1);
+            while (cur <= endDate) {
+                const day = cur.getDay();
+                if (day !== 0 && day !== 6) count++;
+                cur.setDate(cur.getDate() + 1);
+            }
+            return count;
+        }
+
+        function evaluatePeriodStatus(startStr, endStr) {
+            const start = parseDateBR(startStr);
+            const end = parseDateBR(endStr);
+            if (!start || !end) {
+                return { status: 'invalid', label: 'Data inválida', detail: 'Verifique as datas', businessDaysLeft: 0, calendarDaysLeft: 0 };
+            }
+
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            const msPerDay = 1000 * 60 * 60 * 24;
+            const totalDays = Math.round((end - start) / msPerDay);
+            const calendarDaysLeft = Math.round((end - today) / msPerDay);
+            const businessDaysLeft = countBusinessDays(today, end);
+
+            if (end < today) {
+                const expiredAgo = Math.abs(calendarDaysLeft);
+                return {
+                    status: 'expired',
+                    label: 'Vencido',
+                    detail: `Vencido há ${expiredAgo} dia(s) corrido(s)`,
+                    totalDays,
+                    calendarDaysLeft,
+                    businessDaysLeft
+                };
+            }
+
+            if (businessDaysLeft <= 3) {
+                const dayText = businessDaysLeft === 0 ? 'Vence hoje!' : `Restam ${businessDaysLeft} dia(s) útil(eis) (${calendarDaysLeft} corrido(s))`;
+                return {
+                    status: 'warning',
+                    label: 'Atenção — Próximo do Vencimento',
+                    detail: dayText,
+                    warningNote: '⚠️ Cuidado: faltam 3 dias úteis ou menos para vencer!',
+                    totalDays,
+                    calendarDaysLeft,
+                    businessDaysLeft
+                };
+            }
+
+            return {
+                status: 'valid',
+                label: 'Válido',
+                detail: `Restam ${calendarDaysLeft} dia(s) corrido(s) (${businessDaysLeft} úteis)`,
+                totalDays,
+                calendarDaysLeft,
+                businessDaysLeft
+            };
+        }
+
+        function evaluateQuoteStatus(quote) {
+            if (!quote.startDate || !quote.endDate) {
+                return { status: 'valid', label: 'Sem data definida', detail: 'Validade não informada na cotação', businessDaysLeft: 99, calendarDaysLeft: 99 };
+            }
+            const res = evaluatePeriodStatus(quote.startDate, quote.endDate);
+            if (res.status === 'expired') res.label = 'Vencida';
+            if (res.status === 'valid') res.label = 'Válida';
+            return res;
+        }
+
+        function updateQuoteCountBadge() {
+            const badge = document.getElementById('quote-count-pill');
+            if (badge) {
+                badge.textContent = currentQuotes.length;
+            }
+        }
+
+        function updateProposalCountBadge() {
+            const badge = document.getElementById('proposal-count-pill');
+            if (badge) {
+                badge.textContent = currentProposals.length;
+            }
+        }
+
+        function updateDateStatus(inputId) {
+            const dateInput = document.getElementById(`${inputId}_date`);
+            if (!dateInput) return;
+            completeDateYear(dateInput);
+            const date = parseDateBR(dateInput.value);
+            if (!date) return;
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const desired = date < today ? 'Vencido' : 'Tem';
+            const radio = document.querySelector(`input[name="${inputId}"][value="${desired}"]`);
+            if (radio) {
+                radio.checked = true;
+                radio.dataset.wasChecked = "true";
+            }
+        }
+
+        function attachDateBehavior(dateInput, inputId) {
+            dateInput.addEventListener('input', () => maskDateInput(dateInput));
+            dateInput.addEventListener('blur', () => updateDateStatus(inputId));
+            dateInput.addEventListener('change', () => updateDateStatus(inputId));
+            dateInput.addEventListener('keydown', event => {
+                if (event.key === 'Tab') updateDateStatus(inputId);
+            });
+        }
+
+        function renderForm(savedRecord = null) {
+            const container = document.getElementById('form-content');
+            container.innerHTML = '';
+            habilitacaoInstancesCount = 0;
+
+            const formData = savedRecord ? (savedRecord.data || savedRecord) : {};
+            if (savedRecord) {
+                currentQuotes = Array.isArray(savedRecord.quotes) ? JSON.parse(JSON.stringify(savedRecord.quotes)) : [];
+                currentProposalItems = Array.isArray(savedRecord.proposalItems) ? JSON.parse(JSON.stringify(savedRecord.proposalItems)) : [];
+                currentProposals = Array.isArray(savedRecord.proposals) ? JSON.parse(JSON.stringify(savedRecord.proposals)) : [];
+            }
+
+            document.getElementById('doc-protocolo').value = formData['protocolo_numero'] || '';
+            document.getElementById('doc-secretaria').value = formData['secretaria'] || '';
+            const protoObs = formData['protocolo_obs'] || '';
+            document.getElementById('doc-protocolo-obs').value = protoObs;
+
+            const protoObsWrapper = document.getElementById('proto-obs-wrapper');
+            const protoObsBtn = document.getElementById('proto-obs-btn');
+            if (protoObs.trim()) {
+                protoObsWrapper.classList.remove('hidden');
+                protoObsBtn.classList.add('active');
+                protoObsBtn.textContent = '✕ Ocultar';
+            } else {
+                protoObsWrapper.classList.add('hidden');
+                protoObsBtn.classList.remove('active');
+                protoObsBtn.textContent = '📝 Observação';
+            }
+
+            restoreAuthSection(formData);
+
+            fixedChecklistData.forEach((block, sectionIndex) => {
+                const sectionTitle = document.createElement('h3');
+                sectionTitle.className = 'section-header';
+
+                const titleSpan = document.createElement('span');
+                titleSpan.textContent = block.section;
+                sectionTitle.appendChild(titleSpan);
+
+                if (block.isBudgetSection) {
+                    const headerBtns = document.createElement('div');
+                    headerBtns.className = 'header-btns-wrap';
+
+                    const matrixBtn = document.createElement('button');
+                    matrixBtn.type = 'button';
+                    matrixBtn.className = 'btn-header-report';
+                    matrixBtn.innerHTML = `🧮 Mapa de Cotações (Média/Total)`;
+                    matrixBtn.onclick = openQuotesMatrixModal;
+                    headerBtns.appendChild(matrixBtn);
+
+                    const reportBtn = document.createElement('button');
+                    reportBtn.type = 'button';
+                    reportBtn.className = 'btn-header-report';
+                    reportBtn.innerHTML = `📊 Cotações Adicionadas <span class="quote-count-pill" id="quote-count-pill">${currentQuotes.length}</span>`;
+                    reportBtn.onclick = openQuotesReportModal;
+                    headerBtns.appendChild(reportBtn);
+
+                    sectionTitle.appendChild(headerBtns);
+                }
+
+                if (block.isProposalSection) {
+                    const propReportBtn = document.createElement('button');
+                    propReportBtn.type = 'button';
+                    propReportBtn.className = 'btn-header-report';
+                    propReportBtn.innerHTML = `🏆 Propostas Recebidas <span class="quote-count-pill" id="proposal-count-pill" style="background:#059669;">${currentProposals.length}</span>`;
+                    propReportBtn.onclick = openProposalsReportModal;
+                    sectionTitle.appendChild(propReportBtn);
+                }
+
+                container.appendChild(sectionTitle);
+
+                block.items.forEach((item, itemIndex) => {
+                    renderItemRow(container, item, `s${sectionIndex}_i${itemIndex}`, true, 'status', formData);
+                });
+            });
+
+            const habTitle = document.createElement('h3');
+            habTitle.className = 'section-header';
+            habTitle.textContent = "Documentos para habilitação (anexados à proposta vencedora)";
+            container.appendChild(habTitle);
+
+            const habContainer = document.createElement('div');
+            habContainer.id = 'habilitacao-container';
+            container.appendChild(habContainer);
+
+            const addHabBtn = document.createElement('button');
+            addHabBtn.type = 'button';
+            addHabBtn.className = 'btn-add-bloco';
+            addHabBtn.innerHTML = '＋ Adicionar Outra Empresa Vencedora';
+            addHabBtn.onclick = () => addHabilitacaoBloco(habContainer, null, savedRecord);
+            container.appendChild(addHabBtn);
+
+            if (savedRecord && savedRecord.habilitacaoBlocos && savedRecord.habilitacaoBlocos.length > 0) {
+                savedRecord.habilitacaoBlocos.forEach(blocoData => {
+                    addHabilitacaoBloco(habContainer, blocoData, savedRecord);
+                });
+            } else {
+                let migratedBloco = null;
+                if (formData && Object.keys(formData).some(k => k.startsWith('hab_'))) {
+                    migratedBloco = { empresaNome: formData['hab_empresa_nome'] || '', empresaCnpj: formData['hab_empresa_cnpj'] || '', itens: {}, datas: {}, observacoes: {} };
+                }
+                addHabilitacaoBloco(habContainer, migratedBloco, savedRecord);
+            }
+
+            const finalBlock = finalSectionData;
+            const finalSectionTitle = document.createElement('h3');
+            finalSectionTitle.className = 'section-header';
+            finalSectionTitle.textContent = finalBlock.section;
+            container.appendChild(finalSectionTitle);
+
+            finalBlock.items.forEach((item, itemIndex) => {
+                renderItemRow(container, item, `sFinal_i${itemIndex}`, true, 'status', formData);
+            });
+        }
+
+        function addHabilitacaoBloco(habContainer, blocoData = null, savedRecord = null) {
+            const blocoIndex = habilitacaoInstancesCount++;
+            const blocoDiv = document.createElement('div');
+            blocoDiv.className = 'habilitacao-bloco';
+            blocoDiv.dataset.blocoIndex = blocoIndex;
+
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'habilitacao-header';
+
+            const blocoTitle = document.createElement('h4');
+            blocoTitle.textContent = `Empresa Vencedora #${blocoIndex + 1}`;
+            headerDiv.appendChild(blocoTitle);
+
+            if (habContainer.children.length > 0) {
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'btn-remove-bloco';
+                removeBtn.textContent = '✕ Remover Empresa';
+                removeBtn.onclick = () => { blocoDiv.remove(); };
+                headerDiv.appendChild(removeBtn);
+            }
+            blocoDiv.appendChild(headerDiv);
+
+            const inputsDiv = document.createElement('div');
+            inputsDiv.className = 'company-inputs';
+
+            const nameField = document.createElement('div');
+            nameField.className = 'company-field';
+            nameField.innerHTML = `<label>Nome da Empresa:</label><input type="text" class="hab-empresa-nome" placeholder="Razão social da empresa..." value="${escapeHTML(blocoData ? blocoData.empresaNome : '')}">`;
+            inputsDiv.appendChild(nameField);
+
+            const cnpjField = document.createElement('div');
+            cnpjField.className = 'company-field';
+            cnpjField.innerHTML = `<label>CNPJ:</label><input type="text" class="hab-empresa-cnpj" placeholder="00.000.000/0000-00" value="${escapeHTML(blocoData ? blocoData.empresaCnpj : '')}">`;
+            inputsDiv.appendChild(cnpjField);
+
+            blocoDiv.appendChild(inputsDiv);
+
+            habilitacaoItemsData.forEach((item, itemIndex) => {
+                const uniqueId = `hab_${blocoIndex}_i${itemIndex}`;
+                renderItemRow(blocoDiv, item, uniqueId, true, 'date-status', savedRecord, blocoIndex, itemIndex);
+            });
+
+            habContainer.appendChild(blocoDiv);
+        }
+
+        function renderItemRow(container, item, inputId, hasObservation, type, savedSource, blocoIndex = null, itemIndex = null) {
+            const row = document.createElement('div');
+            row.className = 'item-row';
+
+            const label = document.createElement('div');
+            label.className = 'item-label';
+            label.textContent = item.text;
+            row.appendChild(label);
+
+            let savedValue = '';
+            let savedDate = '';
+            let savedCurrency = '';
+            let savedObs = '';
+
+            const formData = (savedSource && savedSource.data) ? savedSource.data : (savedSource || {});
+
+            if (savedSource) {
+                if (blocoIndex !== null && itemIndex !== null) {
+                    if (savedSource.habilitacaoBlocos && savedSource.habilitacaoBlocos[blocoIndex]) {
+                        const blk = savedSource.habilitacaoBlocos[blocoIndex];
+                        savedValue = (blk.itens && blk.itens[itemIndex]) || '';
+                        savedDate = (blk.datas && blk.datas[itemIndex]) || '';
+                        savedObs = (blk.observacoes && blk.observacoes[itemIndex]) || '';
+                    } else {
+                        savedValue = formData[inputId] || '';
+                        savedDate = formData[`${inputId}_date`] || '';
+                        savedObs = formData[`${inputId}_observation`] || '';
+                    }
+                } else {
+                    savedValue = formData[inputId] || '';
+                    savedDate = formData[`${inputId}_date`] || '';
+                    savedCurrency = formData[`${inputId}_value`] || '';
+                    savedObs = formData[`${inputId}_observation`] || '';
+                }
+            }
+
+            if (type === 'status' || type === 'date-status') {
+                const optionsGroup = document.createElement('div');
+                optionsGroup.className = 'options-group';
+
+                if (item.hasQuoteAction) {
+                    const quoteMatrixBtn = document.createElement('button');
+                    quoteMatrixBtn.type = 'button';
+                    quoteMatrixBtn.className = 'btn-prop-list';
+                    quoteMatrixBtn.innerHTML = '📋 Lista / Mapa de Cotações';
+                    quoteMatrixBtn.onclick = openQuotesMatrixModal;
+                    optionsGroup.appendChild(quoteMatrixBtn);
+
+                    const addQuoteBtn = document.createElement('button');
+                    addQuoteBtn.type = 'button';
+                    addQuoteBtn.className = 'btn-add-quote';
+                    addQuoteBtn.innerHTML = '➕ Adicionar cotações';
+                    addQuoteBtn.onclick = openAddQuoteModal;
+                    optionsGroup.appendChild(addQuoteBtn);
+                }
+
+                if (item.hasProposalAction) {
+                    const listItemsBtn = document.createElement('button');
+                    listItemsBtn.type = 'button';
+                    listItemsBtn.className = 'btn-prop-list';
+                    listItemsBtn.innerHTML = '📋 Lista de Itens / PDF';
+                    listItemsBtn.onclick = openProposalItemsModal;
+                    optionsGroup.appendChild(listItemsBtn);
+
+                    const addPropBtn = document.createElement('button');
+                    addPropBtn.type = 'button';
+                    addPropBtn.className = 'btn-prop-action';
+                    addPropBtn.innerHTML = '➕ Adicionar Proposta';
+                    addPropBtn.onclick = () => openAddProposalModal();
+                    optionsGroup.appendChild(addPropBtn);
+                }
+
+                let options = item.options || (type === 'date-status' ? ['Tem', 'Não tem', 'Vencido'] : ['Tem', 'Não tem', 'Tem, mas não está assinado']);
+                if (type === 'date-status' && !item.noDate && !options.includes('Vencido')) options = [...options, 'Vencido'];
+
+                options.forEach((opt, optIndex) => {
+                    const wrapper = document.createElement('div');
+
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = inputId;
+                    radio.id = `${inputId}_opt${optIndex}`;
+                    radio.value = opt;
+                    if (savedValue === opt) {
+                        radio.checked = true;
+                        radio.dataset.wasChecked = "true";
+                    }
+
+                    radio.addEventListener('click', function() {
+                        if (this.dataset.wasChecked === "true") {
+                            this.checked = false;
+                            this.dataset.wasChecked = "false";
+                            this.dispatchEvent(new Event('change', { bubbles: true }));
+                        } else {
+                            document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => {
+                                r.dataset.wasChecked = "false";
+                            });
+                            this.dataset.wasChecked = "true";
+                        }
+                    });
+
+                    const radioLabel = document.createElement('label');
+                    radioLabel.htmlFor = `${inputId}_opt${optIndex}`;
+                    radioLabel.textContent = opt;
+
+                    wrapper.appendChild(radio);
+                    wrapper.appendChild(radioLabel);
+                    optionsGroup.appendChild(wrapper);
+                });
+
+                row.appendChild(optionsGroup);
+
+                if (type === 'date-status' && !item.noDate) {
+                    const dateInput = document.createElement('input');
+                    dateInput.type = 'text';
+                    dateInput.name = `${inputId}_date`;
+                    dateInput.id = `${inputId}_date`;
+                    dateInput.className = 'date-input';
+                    dateInput.placeholder = 'dd/mm/aaaa';
+                    dateInput.maxLength = 10;
+                    dateInput.inputMode = 'numeric';
+                    dateInput.value = savedDate;
+                    attachDateBehavior(dateInput, inputId);
+                    row.appendChild(dateInput);
+                }
+            }
+
+            if (item.extra === 'currency') {
+                const currencyWrapper = document.createElement('div');
+                currencyWrapper.className = 'extra-field';
+
+                const prefix = document.createElement('span');
+                prefix.textContent = 'R$';
+
+                const currencyInput = document.createElement('input');
+                currencyInput.type = 'text';
+                currencyInput.inputMode = 'decimal';
+                currencyInput.placeholder = '0,00';
+                currencyInput.name = `${inputId}_value`;
+                currencyInput.id = `${inputId}_value`;
+                currencyInput.className = 'currency-input';
+                currencyInput.value = savedCurrency;
+
+                currencyWrapper.appendChild(prefix);
+                currencyWrapper.appendChild(currencyInput);
+                row.appendChild(currencyWrapper);
+            }
+
+            if (hasObservation) {
+                const observationButton = document.createElement('button');
+                observationButton.type = 'button';
+                observationButton.className = 'observation-toggle';
+                observationButton.textContent = savedObs.trim() ? '✕ Ocultar' : '📝 Observação';
+                if (savedObs.trim()) observationButton.classList.add('active');
+
+                const observationWrapper = document.createElement('div');
+                observationWrapper.className = `observation-wrapper ${savedObs.trim() ? '' : 'hidden'}`;
+
+                const observationInput = document.createElement('textarea');
+                observationInput.id = `${inputId}_observation`;
+                observationInput.name = `${inputId}_observation`;
+                observationInput.className = 'observation-input';
+                observationInput.placeholder = 'Digite uma observação, se necessário...';
+                observationInput.value = savedObs;
+
+                observationButton.addEventListener('click', () => {
+                    const isHidden = observationWrapper.classList.toggle('hidden');
+                    observationButton.classList.toggle('active', !isHidden);
+                    observationButton.textContent = isHidden ? '📝 Observação' : '✕ Ocultar';
+                    if (!isHidden) observationInput.focus();
+                });
+
+                observationWrapper.appendChild(observationInput);
+                row.appendChild(observationButton);
+                row.appendChild(observationWrapper);
+            }
+
+            container.appendChild(row);
+        }
+
+        // ==========================================
+        // UTILITÁRIOS NUMÉRICOS E EXTRATOR PDF
+        // ==========================================
+
+        function parseBRNumber(str) {
+            if (typeof str === 'number') return isNaN(str) ? 0 : str;
+            if (!str) return 0;
+            let s = String(str).replace(/R\$/gi, '').replace(/\s+/g, '').trim();
+            if (!s) return 0;
+            if (s.includes(',') && s.includes('.')) {
+                s = s.replace(/\./g, '').replace(',', '.');
+            } else if (s.includes(',')) {
+                s = s.replace(',', '.');
+            }
+            const n = parseFloat(s);
+            return isNaN(n) ? 0 : n;
+        }
+
+        function formatBRL(num) {
+            const val = Number(num) || 0;
+            return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function formatQtyBR(num) {
+            const val = Number(num) || 0;
+            return val.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 4 });
+        }
+
+        function formatUnitInputBR(num) {
+            const val = Number(num) || 0;
+            if (val === 0) return '';
+            return val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+        }
+
+        async function handleListaComprasPDF(event, origin = 'proposals') {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            if (!window.pdfjsLib) {
+                alert('A biblioteca de leitura de PDF não pôde ser carregada. Verifique sua conexão ou preencha manualmente.');
+                return;
+            }
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const allPagesTokens = [];
+
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const textContent = await page.getTextContent();
+
+                    const tokens = textContent.items
+                        .map(item => ({
+                            str: (item.str || '').trim(),
+                            x: item.transform[4],
+                            y: item.transform[5],
+                            width: item.width || 0
+                        }))
+                        .filter(t => t.str.length > 0);
+
+                    allPagesTokens.push({ pageNum, tokens });
+                }
+
+                const extractedItems = parseAgiliBlueByColumns(allPagesTokens);
+                if (!extractedItems.length) {
+                    alert('Não foi possível identificar automaticamente a tabela de itens neste PDF. Verifique se é uma Lista de Compras em texto selecionável ou adicione os itens manualmente.');
+                    return;
+                }
+
+                currentProposalItems = extractedItems;
+                if (origin === 'quotes') {
+                    ensureDefaultQuoteColumns();
+                    renderQuotesMatrix();
+                } else {
+                    renderBaseItemsTable();
+                }
+                alert(`✅ ${extractedItems.length} item(ns) extraído(s) com sucesso da Lista de Compras (incluindo valores unitários estimados)!`);
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao ler o arquivo PDF: ' + err.message);
+            } finally {
+                event.target.value = '';
+            }
+        }
+
+        function parseAgiliBlueByColumns(pagesTokens) {
+            const items = [];
+            let colBounds = {
+                seqMax: 75,
+                codMax: 125,
+                tceMax: 185,
+                descMax: 425,
+                unidMax: 485,
+                qtdMax: 555,
+                unitMax: 635
+            };
+
+            const isNoise = (txt) => {
+                return /^Página:\s*\d+/i.test(txt) ||
+                       /^PREFEITURA DE/i.test(txt) ||
+                       /^RONDONÓPOLIS/i.test(txt) ||
+                       /^ESTADO DE MATO GROSSO/i.test(txt) ||
+                       /^Prefeitura Municipal de Rondonópolis/i.test(txt) ||
+                       /^Avenida Duque de Caxias/i.test(txt) ||
+                       /^CNPJ\s*03\.347\.101/i.test(txt) ||
+                       /^Telefone:\s*\(66\)/i.test(txt) ||
+                       /^Lista de compras$/i.test(txt) ||
+                       /^Número:/i.test(txt) ||
+                       /^Data:/i.test(txt) ||
+                       /^Situação:/i.test(txt) ||
+                       /^Estrutura administrativa:/i.test(txt) ||
+                       /^Descrição:/i.test(txt) ||
+                       /^Total:$/i.test(txt);
+            };
+
+            for (const pageData of pagesTokens) {
+                const tokens = pageData.tokens;
+
+                const hSeq = tokens.find(t => /^Sequ[êe]ncia$/i.test(t.str));
+                const hCod = tokens.find(t => /^C[óo]digo$/i.test(t.str) && (!hSeq || t.x > hSeq.x));
+                const hTce = tokens.find(t => /TCE/i.test(t.str));
+                const hItens = tokens.find(t => /^Itens$/i.test(t.str));
+                const hUnid = tokens.find(t => /^Unidade$/i.test(t.str));
+                const hQtd = tokens.find(t => /^Quantidade$/i.test(t.str));
+                const hEst = tokens.find(t => /estimado/i.test(t.str) || /^Pre[çc]o/i.test(t.str));
+                const hTot = tokens.find(t => /^Valor$/i.test(t.str) || /^total$/i.test(t.str));
+
+                let tableTopY = Infinity;
+                if (hSeq) {
+                    tableTopY = hSeq.y - 4;
+                    if (hCod) colBounds.seqMax = (hSeq.x + hCod.x) / 2 + 8;
+                    if (hCod && hTce) colBounds.codMax = (hCod.x + hTce.x) / 2 + 8;
+                    if (hTce && hItens) colBounds.tceMax = (hTce.x + hItens.x) / 2 + 12;
+                    if (hItens && hUnid) colBounds.descMax = hUnid.x - 10;
+                    if (hUnid && hQtd) colBounds.unidMax = (hUnid.x + hQtd.x) / 2 + 5;
+                    if (hQtd && hEst) colBounds.qtdMax = (hQtd.x + hEst.x) / 2 + 5;
+                    if (hEst && hTot) colBounds.unitMax = (hEst.x + hTot.x) / 2 + 5;
+                }
+
+                const footerToken = tokens.find(t => /^Total:$/i.test(t.str) || /^Página:/i.test(t.str));
+                const tableBottomY = footerToken ? footerToken.y + 4 : -Infinity;
+
+                const bodyTokens = tokens.filter(t => {
+                    if (t.y >= tableTopY || t.y <= tableBottomY) return false;
+                    if (isNoise(t.str)) return false;
+                    if (/^(Sequ[êe]ncia|C[óo]digo|TCE|Itens|Unidade|Quantidade|Pre[çc]o|estimado|Valor|total)$/i.test(t.str)) return false;
+                    return true;
+                });
+
+                const seqAnchors = bodyTokens
+                    .filter(t => t.x <= colBounds.seqMax && /^\d{1,4}$/.test(t.str))
+                    .sort((a, b) => b.y - a.y);
+
+                if (!seqAnchors.length) {
+                    if (items.length > 0 && bodyTokens.length > 0) {
+                        const extraDesc = bodyTokens
+                            .filter(t => t.x > colBounds.tceMax && t.x <= colBounds.descMax)
+                            .sort((a, b) => (Math.abs(b.y - a.y) > 3 ? b.y - a.y : a.x - b.x))
+                            .map(t => t.str)
+                            .join(' ');
+                        if (extraDesc) {
+                            items[items.length - 1].descricao = (items[items.length - 1].descricao + ' ' + extraDesc).replace(/\s+/g, ' ').trim();
+                        }
+                    }
+                    continue;
+                }
+
+                for (let i = 0; i < seqAnchors.length; i++) {
+                    const anchor = seqAnchors[i];
+                    const prevAnchor = i > 0 ? seqAnchors[i - 1] : null;
+                    const nextAnchor = i < seqAnchors.length - 1 ? seqAnchors[i + 1] : null;
+
+                    const upperY = prevAnchor ? (prevAnchor.y + anchor.y) / 2 : tableTopY;
+                    const lowerY = nextAnchor ? (anchor.y + nextAnchor.y) / 2 : tableBottomY;
+
+                    const rowTokens = bodyTokens.filter(t => t.y <= upperY && t.y > lowerY);
+
+                    const codTokens = rowTokens.filter(t => t.x > colBounds.seqMax && t.x <= colBounds.codMax);
+                    const tceTokens = rowTokens.filter(t => t.x > colBounds.codMax && t.x <= colBounds.tceMax);
+                    const descTokens = rowTokens.filter(t => t.x > colBounds.tceMax && t.x <= colBounds.descMax);
+                    const unidTokens = rowTokens.filter(t => t.x > colBounds.descMax && t.x <= colBounds.unidMax);
+                    const qtdTokens = rowTokens.filter(t => t.x > colBounds.unidMax && t.x <= colBounds.qtdMax);
+                    const unitTokens = rowTokens.filter(t => t.x > colBounds.qtdMax && t.x <= colBounds.unitMax);
+
+                    const sortReadingOrder = (arr) => arr.sort((a, b) => (Math.abs(b.y - a.y) > 3 ? b.y - a.y : a.x - b.x));
+
+                    const codigo = sortReadingOrder(codTokens).map(t => t.str).join('');
+                    const codigoTce = sortReadingOrder(tceTokens).map(t => t.str).join('');
+                    const descricao = sortReadingOrder(descTokens).map(t => t.str).join(' ').replace(/\s+/g, ' ').trim();
+                    const unidade = sortReadingOrder(unidTokens).map(t => t.str).join(' ').trim() || 'Unidade';
+
+                    const qtdRaw = sortReadingOrder(qtdTokens).map(t => t.str).join('');
+                    const unitRaw = sortReadingOrder(unitTokens).map(t => t.str).join('');
+
+                    items.push({
+                        id: 'item_' + Date.now().toString(36) + '_' + items.length + '_' + Math.random().toString(36).slice(2, 5),
+                        seq: anchor.str.trim(),
+                        codigo: codigo,
+                        codigoTce: codigoTce,
+                        descricao: descricao,
+                        unidade: unidade,
+                        quantidade: parseBRNumber(qtdRaw) || 1,
+                        precoEstimado: parseBRNumber(unitRaw)
+                    });
+                }
+            }
+
+            return items;
+        }
+
+        // ==========================================
+        // MÓDULO DE COTAÇÕES (PÚBLICAS/PRIVADAS + MAPA DE MÉDIA E TOTAL)
+        // ==========================================
+
+        function selectQuoteSourceType(type, btnEl) {
+            selectedQuoteSourceType = type;
+            document.querySelectorAll('#quote-source-type-chips .source-chip').forEach(c => c.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+
+            const cnpjField = document.getElementById('quote-cnpj-field');
+            const supplierInput = document.getElementById('quote-supplier');
+            const supplierLabel = document.getElementById('quote-supplier-label');
+
+            if (type === 'Empresa Privada') {
+                cnpjField.style.display = 'flex';
+                supplierLabel.textContent = 'Razão Social / Nome da Empresa *';
+                supplierInput.placeholder = 'Ex: Papelaria Central Ltda';
+            } else {
+                cnpjField.style.display = 'none';
+                document.getElementById('quote-cnpj').value = '';
+                supplierLabel.textContent = `Identificação / Detalhe (${type}) (Opcional)`;
+                if (type === 'Banco de Preços') supplierInput.placeholder = 'Ex: Banco de Preços - Cotação nº 1234/2026';
+                else if (type === 'PNCP') supplierInput.placeholder = 'Ex: PNCP - Pregão nº 15/2026 - Pref. Cuiabá';
+                else if (type === 'TCE-MT') supplierInput.placeholder = 'Ex: TCE-MT / Radar - Ata nº 42/2026';
+                else supplierInput.placeholder = 'Ex: Ata RP nº 10/2026 - Secretaria X';
+            }
+        }
+
+        function openAddQuoteModal() {
+            document.getElementById('quote-supplier').value = '';
+            document.getElementById('quote-cnpj').value = '';
+            document.getElementById('quote-start-date').value = '';
+            document.getElementById('quote-days').value = '';
+            document.getElementById('quote-end-date').value = '';
+            const defaultChip = document.querySelector('#quote-source-type-chips .source-chip[data-type="Banco de Preços"]');
+            selectQuoteSourceType('Banco de Preços', defaultChip);
+            setQuoteMode('days');
+            document.getElementById('add-quote-modal').classList.add('show');
+            document.getElementById('quote-supplier').focus();
+        }
+
+        function closeAddQuoteModal() {
+            document.getElementById('add-quote-modal').classList.remove('show');
+        }
+
+        function setQuoteMode(mode) {
+            quoteInputMode = mode;
+            document.getElementById('qmode-days').classList.toggle('active', mode === 'days');
+            document.getElementById('qmode-date').classList.toggle('active', mode === 'date');
+            document.getElementById('qfield-days').style.display = mode === 'days' ? 'flex' : 'none';
+            document.getElementById('qfield-end-date').style.display = mode === 'date' ? 'flex' : 'none';
+        }
+
+        function addQuote(keepOpen) {
+            const rawSupplier = document.getElementById('quote-supplier').value.trim();
+            const cnpj = document.getElementById('quote-cnpj').value.trim();
+
+            if (selectedQuoteSourceType === 'Empresa Privada' && !rawSupplier) {
+                alert('Informe o nome da empresa privada.');
+                document.getElementById('quote-supplier').focus();
+                return;
+            }
+
+            const supplier = rawSupplier || `${selectedQuoteSourceType} (Cotação #${currentQuotes.length + 1})`;
+            const startInput = document.getElementById('quote-start-date');
+            completeDateYear(startInput);
+            const startDateObj = parseDateBR(startInput.value);
+
+            if (!startDateObj) {
+                alert('Por favor, informe uma Data Inicial válida no formato dd/mm/aaaa.');
+                startInput.focus();
+                return;
+            }
+
+            let endDateObj = null;
+            let validityDays = 0;
+
+            if (quoteInputMode === 'days') {
+                const daysVal = parseInt(document.getElementById('quote-days').value, 10);
+                if (!daysVal || daysVal <= 0) {
+                    alert('Informe a quantidade de dias de validade (maior que zero).');
+                    document.getElementById('quote-days').focus();
+                    return;
+                }
+                validityDays = daysVal;
+                endDateObj = new Date(startDateObj);
+                endDateObj.setDate(endDateObj.getDate() + daysVal);
+            } else {
+                const endInput = document.getElementById('quote-end-date');
+                completeDateYear(endInput);
+                endDateObj = parseDateBR(endInput.value);
+                if (!endDateObj) {
+                    alert('Por favor, informe uma Data Final ("Até") válida no formato dd/mm/aaaa.');
+                    endInput.focus();
+                    return;
+                }
+                if (endDateObj < startDateObj) {
+                    alert('A data final não pode ser anterior à data inicial da cotação.');
+                    endInput.focus();
+                    return;
+                }
+                validityDays = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
+            }
+
+            currentQuotes.push({
+                id: Date.now().toString() + Math.random().toString(36).slice(2, 6),
+                sourceType: selectedQuoteSourceType,
+                supplier,
+                cnpj: selectedQuoteSourceType === 'Empresa Privada' ? cnpj : '',
+                startDate: formatDateBR(startDateObj),
+                endDate: formatDateBR(endDateObj),
+                validityDays,
+                precos: {}
+            });
+
+            updateQuoteCountBadge();
+
+            if (keepOpen) {
+                document.getElementById('quote-supplier').value = '';
+                document.getElementById('quote-cnpj').value = '';
+                document.getElementById('quote-start-date').value = '';
+                document.getElementById('quote-days').value = '';
+                document.getElementById('quote-end-date').value = '';
+                document.getElementById('quote-supplier').focus();
+                alert(`Cotação adicionada! Total atual: ${currentQuotes.length} cotação(ões).`);
+            } else {
+                closeAddQuoteModal();
+                openQuotesReportModal();
+            }
+        }
+
+        function removeQuote(quoteId) {
+            currentQuotes = currentQuotes.filter(q => q.id !== quoteId);
+            updateQuoteCountBadge();
+            renderQuotesReport();
+        }
+
+        function openQuotesReportModal() {
+            renderQuotesReport();
+            document.getElementById('report-quotes-modal').classList.add('show');
+        }
+
+        function closeQuotesReportModal() {
+            document.getElementById('report-quotes-modal').classList.remove('show');
+        }
+
+        function renderQuotesReport() {
+            const container = document.getElementById('quotes-report-content');
+            if (!currentQuotes.length) {
+                container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--muted);font-size:0.88rem;">
+                    Nenhuma cotação foi adicionada a este processo ainda.<br>Clique em <strong>"+ Nova Cotação"</strong> para cadastrar fontes públicas (Banco de Preços, PNCP, TCE-MT) ou privadas.
+                </div>`;
+                return;
+            }
+
+            let validCount = 0, warnCount = 0, expiredCount = 0;
+
+            const cardsHTML = currentQuotes.map((q, idx) => {
+                const evalRes = evaluateQuoteStatus(q);
+                if (evalRes.status === 'valid') validCount++;
+                else if (evalRes.status === 'warning') warnCount++;
+                else expiredCount++;
+
+                const badgeClass = evalRes.status === 'valid' ? 'qbadge-valid' : (evalRes.status === 'warning' ? 'qbadge-warn' : 'qbadge-expired');
+                const srcType = q.sourceType || 'Cotação';
+                const isPrivate = srcType === 'Empresa Privada';
+                const srcTagClass = isPrivate ? 'stag-private' : 'stag-public';
+                const cnpjInfo = isPrivate && q.cnpj ? ` — CNPJ: ${escapeHTML(q.cnpj)}` : '';
+
+                return `
+                    <div class="quote-card ${evalRes.status}">
+                        <div>
+                            <span class="quote-badge ${badgeClass}">${evalRes.label}</span>
+                            <span class="source-type-tag ${srcTagClass}">${escapeHTML(srcType)}</span>
+                            <div style="font-weight:800;font-size:0.9rem;color:#19324a;margin-bottom:3px;">${idx + 1}. ${escapeHTML(q.supplier)}${cnpjInfo}</div>
+                            <div class="quote-meta">
+                                <strong>Data Inicial:</strong> ${escapeHTML(q.startDate || '-')} &nbsp;|&nbsp; 
+                                <strong>Válida Até:</strong> ${escapeHTML(q.endDate || '-')} ${q.validityDays ? `(${q.validityDays} dias)` : ''}<br>
+                                <strong>Situação Atual:</strong> ${escapeHTML(evalRes.detail)}
+                            </div>
+                            ${evalRes.warningNote ? `<div class="quote-warning-msg">${evalRes.warningNote}</div>` : ''}
+                        </div>
+                        <button type="button" class="history-btn btn-delete" onclick="removeQuote('${q.id}')">Excluir</button>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="quote-summary-grid">
+                    <div class="quote-stat-box stat-valid"><strong>${validCount}</strong><span>Válidas (> 3 dias úteis)</span></div>
+                    <div class="quote-stat-box stat-warn"><strong>${warnCount}</strong><span>Atenção (≤ 3 dias úteis)</span></div>
+                    <div class="quote-stat-box stat-expired"><strong>${expiredCount}</strong><span>Vencidas</span></div>
+                </div>
+                <div class="quote-list">${cardsHTML}</div>
+            `;
+        }
+
+        function ensureDefaultQuoteColumns() {
+            if (currentQuotes.length === 0) {
+                currentQuotes.push({
+                    id: 'qcol_' + Date.now().toString(36) + '_1',
+                    sourceType: 'Banco de Preços',
+                    supplier: 'Cotação 01 (Banco de Preços)',
+                    cnpj: '',
+                    startDate: '',
+                    endDate: '',
+                    validityDays: 0,
+                    precos: {}
+                });
+                updateQuoteCountBadge();
+            }
+            currentQuotes.forEach(q => {
+                if (!q.precos) q.precos = {};
+            });
+        }
+
+        function openQuotesMatrixModal() {
+            if (!currentProposalItems.length) {
+                addBaseItemRow(false);
+            }
+            ensureDefaultQuoteColumns();
+            renderQuotesMatrix();
+            document.getElementById('quotes-matrix-modal').classList.add('show');
+        }
+
+        function closeQuotesMatrixModal() {
+            document.getElementById('quotes-matrix-modal').classList.remove('show');
+        }
+
+        function addQuoteColumnFromMatrix() {
+            const nextNum = String(currentQuotes.length + 1).padStart(2, '0');
+            currentQuotes.push({
+                id: 'qcol_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 5),
+                sourceType: 'Banco de Preços',
+                supplier: `Cotação ${nextNum}`,
+                cnpj: '',
+                startDate: '',
+                endDate: '',
+                validityDays: 0,
+                precos: {}
+            });
+            updateQuoteCountBadge();
+            renderQuotesMatrix();
+        }
+
+        function removeQuoteColumnFromMatrix(qIdx) {
+            if (currentQuotes.length <= 1) {
+                alert('É necessário manter ao menos uma coluna de cotação na tabela.');
+                return;
+            }
+            if (!confirm(`Remover a coluna "${currentQuotes[qIdx].supplier}"?`)) return;
+            currentQuotes.splice(qIdx, 1);
+            updateQuoteCountBadge();
+            renderQuotesMatrix();
+        }
+
+        function updateQuoteColumnHeader(qIdx, newName) {
+            if (currentQuotes[qIdx]) {
+                currentQuotes[qIdx].supplier = newName;
+            }
+        }
+
+        function addItemRowFromQuotesMatrix() {
+            addBaseItemRow(false);
+            renderQuotesMatrix();
+        }
+
+        function removeItemRowFromQuotesMatrix(itemIdx) {
+            currentProposalItems.splice(itemIdx, 1);
+            renderQuotesMatrix();
+        }
+
+        function calcQuoteItemStats(item) {
+            const qty = Number(item.quantidade) || 0;
+            let sum = 0;
+            let count = 0;
+            currentQuotes.forEach(q => {
+                const val = Number(q.precos && q.precos[item.id]) || 0;
+                if (val > 0) {
+                    sum += val;
+                    count++;
+                }
+            });
+            const avg = count > 0 ? (sum / count) : 0;
+            const total = avg * qty;
+            return { avg, total, count };
+        }
+
+        function renderQuotesMatrix() {
+            const thead = document.getElementById('quotes-matrix-thead');
+            const tbody = document.getElementById('quotes-matrix-tbody');
+
+            let quoteHeadersHTML = currentQuotes.map((q, qIdx) => {
+                const numLabel = `Cotação ${String(qIdx + 1).padStart(2, '0')}`;
+                const srcTag = q.sourceType ? `<div style="font-size:0.68rem;color:#0369a1;font-weight:700;margin-bottom:3px;">${escapeHTML(q.sourceType)}</div>` : '';
+                return `
+                    <th style="min-width:135px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;">
+                            <span style="font-size:0.72rem;color:#0571ee;">${numLabel}</span>
+                            ${currentQuotes.length > 1 ? `<button type="button" style="background:#fee2e2;color:#b91c1c;padding:1px 5px;font-size:0.65rem;border-radius:4px;" onclick="removeQuoteColumnFromMatrix(${qIdx})" title="Remover coluna">✕</button>` : ''}
+                        </div>
+                        ${srcTag}
+                        <input type="text" class="tbl-input" style="font-size:0.72rem;padding:4px 6px;" value="${escapeHTML(q.supplier)}" placeholder="Fonte / Empresa" oninput="updateQuoteColumnHeader(${qIdx}, this.value)">
+                    </th>
+                `;
+            }).join('');
+
+            thead.innerHTML = `
+                <tr>
+                    <th style="width:52px;">Item</th>
+                    <th style="width:82px;">Código Ágilli</th>
+                    <th style="width:88px;">Código TCE</th>
+                    <th style="min-width:220px;">Descrição</th>
+                    <th style="width:88px;">Und de Medida</th>
+                    <th style="width:92px;">Quantidade</th>
+                    ${quoteHeadersHTML}
+                    <th style="width:110px;background:#dcfce7;color:#14532d;">Média</th>
+                    <th style="width:120px;background:#e0f2fe;color:#075da9;">Total</th>
+                    <th style="width:42px;text-align:center;">Ação</th>
+                </tr>
+            `;
+
+            tbody.innerHTML = '';
+
+            currentProposalItems.forEach((item, itemIdx) => {
+                const tr = document.createElement('tr');
+                const stats = calcQuoteItemStats(item);
+
+                const quoteCellsHTML = currentQuotes.map((q, qIdx) => {
+                    const unitVal = Number(q.precos && q.precos[item.id]) || 0;
+                    return `
+                        <td>
+                            <input type="text" class="tbl-input" value="${escapeHTML(formatUnitInputBR(unitVal))}" placeholder="0,00"
+                                oninput="onMatrixQuotePriceChange(${qIdx}, '${item.id}', this.value, ${itemIdx})">
+                        </td>
+                    `;
+                }).join('');
+
+                tr.innerHTML = `
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.seq)}" oninput="updateBaseItemField(${itemIdx}, 'seq', this.value)"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.codigo)}" placeholder="Ágilli" oninput="updateBaseItemField(${itemIdx}, 'codigo', this.value)"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.codigoTce)}" placeholder="TCE" oninput="updateBaseItemField(${itemIdx}, 'codigoTce', this.value)"></td>
+                    <td><textarea class="tbl-textarea" placeholder="Descrição..." oninput="updateBaseItemField(${itemIdx}, 'descricao', this.value)">${escapeHTML(item.descricao)}</textarea></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.unidade)}" placeholder="Unid." oninput="updateBaseItemField(${itemIdx}, 'unidade', this.value)"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(formatQtyBR(item.quantidade))}" oninput="onMatrixQtyChange(${itemIdx}, this.value)"></td>
+                    ${quoteCellsHTML}
+                    <td class="tbl-avg-cell" id="qmatrix_avg_${itemIdx}">${formatBRL(stats.avg)}</td>
+                    <td class="tbl-total-cell" id="qmatrix_tot_${itemIdx}">${formatBRL(stats.total)}</td>
+                    <td style="text-align:center;"><button type="button" class="history-btn btn-delete" style="padding:5px 8px;" onclick="removeItemRowFromQuotesMatrix(${itemIdx})" title="Remover item">✕</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            recalcQuotesMatrixGrandTotal();
+        }
+
+        function onMatrixQuotePriceChange(qIdx, itemId, rawVal, itemIdx) {
+            if (!currentQuotes[qIdx]) return;
+            if (!currentQuotes[qIdx].precos) currentQuotes[qIdx].precos = {};
+            currentQuotes[qIdx].precos[itemId] = parseBRNumber(rawVal);
+
+            const item = currentProposalItems[itemIdx];
+            if (item) {
+                const stats = calcQuoteItemStats(item);
+                const avgEl = document.getElementById(`qmatrix_avg_${itemIdx}`);
+                const totEl = document.getElementById(`qmatrix_tot_${itemIdx}`);
+                if (avgEl) avgEl.textContent = formatBRL(stats.avg);
+                if (totEl) totEl.textContent = formatBRL(stats.total);
+            }
+            recalcQuotesMatrixGrandTotal();
+        }
+
+        function onMatrixQtyChange(itemIdx, rawVal) {
+            const item = currentProposalItems[itemIdx];
+            if (!item) return;
+            item.quantidade = parseBRNumber(rawVal);
+
+            const stats = calcQuoteItemStats(item);
+            const avgEl = document.getElementById(`qmatrix_avg_${itemIdx}`);
+            const totEl = document.getElementById(`qmatrix_tot_${itemIdx}`);
+            if (avgEl) avgEl.textContent = formatBRL(stats.avg);
+            if (totEl) totEl.textContent = formatBRL(stats.total);
+            recalcQuotesMatrixGrandTotal();
+        }
+
+        function recalcQuotesMatrixGrandTotal() {
+            const grandTotal = currentProposalItems.reduce((acc, item) => acc + calcQuoteItemStats(item).total, 0);
+            const el = document.getElementById('quotes-matrix-grand-total');
+            if (el) el.textContent = formatBRL(grandTotal);
+        }
+
+        function saveQuotesMatrixAndClose() {
+            cleanEmptyBaseItems();
+            closeQuotesMatrixModal();
+        }
+
+        function printQuotesMatrixPDF() {
+            cleanEmptyBaseItems();
+            if (!currentProposalItems.length) {
+                alert('Cadastre ou importe ao menos um item antes de gerar o PDF do Mapa de Cotações.');
+                return;
+            }
+
+            const title = document.getElementById('doc-title').value || 'Mapa de Cotações';
+            const proto = document.getElementById('doc-protocolo').value || 'Não informado';
+            const sec = document.getElementById('doc-secretaria').value || 'Não informada';
+
+            const quoteColsHeader = currentQuotes.map((q, idx) =>
+                `<th>Cotação ${String(idx + 1).padStart(2, '0')}<br><small style="font-weight:normal;">${escapeHTML(q.supplier)}</small></th>`
+            ).join('');
+
+            let grandTotal = 0;
+            const rowsHTML = currentProposalItems.map(item => {
+                const stats = calcQuoteItemStats(item);
+                grandTotal += stats.total;
+
+                const qCells = currentQuotes.map(q => {
+                    const v = Number(q.precos && q.precos[item.id]) || 0;
+                    return `<td>${v > 0 ? formatBRL(v) : '-'}</td>`;
+                }).join('');
+
+                return `
+                    <tr>
+                        <td>${escapeHTML(item.seq)}</td>
+                        <td>${escapeHTML(item.codigo || '-')}</td>
+                        <td>${escapeHTML(item.codigoTce || '-')}</td>
+                        <td>${escapeHTML(item.descricao)}</td>
+                        <td>${escapeHTML(item.unidade)}</td>
+                        <td>${escapeHTML(formatQtyBR(item.quantidade))}</td>
+                        ${qCells}
+                        <td style="font-weight:bold;background:#f0fdf4;">${formatBRL(stats.avg)}</td>
+                        <td style="font-weight:bold;background:#eff6ff;">${formatBRL(stats.total)}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const printWin = window.open('', '_blank');
+            if (!printWin) {
+                alert('O navegador bloqueou o pop-up de impressão.');
+                return;
+            }
+
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Mapa de Cotações - ${escapeHTML(proto)}</title>
+                    <style>
+                        @page { size: A4 landscape; margin: 10mm; }
+                        body { font-family: Arial, sans-serif; color: #1e293b; font-size: 10px; margin: 0; }
+                        .header { border-bottom: 3px solid #0571ee; padding-bottom: 8px; margin-bottom: 12px; }
+                        h1 { margin: 0 0 3px; font-size: 15px; color: #075da9; }
+                        .meta { font-size: 9.5px; color: #475569; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { border: 1px solid #cbd5e1; padding: 5px 6px; text-align: left; vertical-align: middle; }
+                        th { background: #f1f5f9; font-weight: bold; }
+                        .total-bar { margin-top: 10px; text-align: right; font-size: 12px; font-weight: bold; color: #075da9; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Prefeitura de Rondonópolis — SEMAGI</h1>
+                        <h1>Mapa Comparativo de Cotações (Formação de Preço Médio)</h1>
+                        <div class="meta"><strong>Processo:</strong> ${escapeHTML(title)} | <strong>Protocolo:</strong> ${escapeHTML(proto)} | <strong>Secretaria:</strong> ${escapeHTML(sec)} | Emitido em: ${new Date().toLocaleString('pt-BR')}</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:4%;">Item</th>
+                                <th style="width:7%;">Cód. Ágilli</th>
+                                <th style="width:7%;">Cód. TCE</th>
+                                <th style="width:26%;">Descrição</th>
+                                <th style="width:7%;">Und. Medida</th>
+                                <th style="width:7%;">Quantidade</th>
+                                ${quoteColsHeader}
+                                <th style="width:9%;">Média</th>
+                                <th style="width:10%;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHTML}</tbody>
+                    </table>
+                    <div class="total-bar">Valor Total Geral Estimado (Médias × Quantidades): ${formatBRL(grandTotal)}</div>
+                    <script>window.onload = function() { setTimeout(() => window.print(), 250); };<\/script>
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+        }
+
+        function printQuotesReportPDF() {
+            if (!currentQuotes.length) {
+                alert('Adicione ao menos uma cotação antes de gerar o relatório.');
+                return;
+            }
+
+            const title = document.getElementById('doc-title').value || 'Relatório de Validade das Cotações';
+            const proto = document.getElementById('doc-protocolo').value || 'Não informado';
+            const sec = document.getElementById('doc-secretaria').value || 'Não informada';
+
+            let validCount = 0, warnCount = 0, expiredCount = 0;
+
+            const rowsHTML = currentQuotes.map((q, idx) => {
+                const evalRes = evaluateQuoteStatus(q);
+                if (evalRes.status === 'valid') validCount++;
+                else if (evalRes.status === 'warning') warnCount++;
+                else expiredCount++;
+
+                const statusColor = evalRes.status === 'valid' ? '#15803d' : (evalRes.status === 'warning' ? '#b45309' : '#b91c1c');
+                const srcInfo = q.sourceType ? `[${escapeHTML(q.sourceType)}] ` : '';
+                return `
+                    <tr>
+                        <td>${idx + 1}</td>
+                        <td><strong>${srcInfo}${escapeHTML(q.supplier)}</strong>${q.cnpj ? `<br><small>CNPJ: ${escapeHTML(q.cnpj)}</small>` : ''}</td>
+                        <td>${escapeHTML(q.startDate || '-')}</td>
+                        <td>${escapeHTML(q.endDate || '-')} ${q.validityDays ? `(${q.validityDays}d)` : ''}</td>
+                        <td style="color:${statusColor};font-weight:bold;">${escapeHTML(evalRes.label)}</td>
+                        <td>${escapeHTML(evalRes.detail)}${evalRes.warningNote ? '<br><strong>' + escapeHTML(evalRes.warningNote) + '</strong>' : ''}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const printWin = window.open('', '_blank');
+            if (!printWin) {
+                alert('O navegador bloqueou o pop-up de impressão.');
+                return;
+            }
+
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Relatório de Cotações - ${escapeHTML(proto)}</title>
+                    <style>
+                        @page { size: A4; margin: 14mm; }
+                        body { font-family: Arial, sans-serif; color: #1e293b; font-size: 11px; margin: 0; }
+                        .header { border-bottom: 3px solid #0571ee; padding-bottom: 10px; margin-bottom: 16px; }
+                        h1 { margin: 0 0 4px; font-size: 17px; color: #075da9; }
+                        .meta { font-size: 10px; color: #475569; }
+                        .summary { display: flex; gap: 12px; margin-bottom: 16px; }
+                        .box { flex: 1; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; text-align: center; background: #f8fafc; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { border: 1px solid #cbd5e1; padding: 7px 8px; text-align: left; vertical-align: middle; }
+                        th { background: #f1f5f9; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Prefeitura de Rondonópolis — SEMAGI</h1>
+                        <h1>Relatório de Validade das Cotações</h1>
+                        <div class="meta"><strong>Processo:</strong> ${escapeHTML(title)} | <strong>Protocolo:</strong> ${escapeHTML(proto)} | <strong>Secretaria:</strong> ${escapeHTML(sec)}</div>
+                        <div class="meta">Emitido em: ${new Date().toLocaleString('pt-BR')}</div>
+                    </div>
+                    <div class="summary">
+                        <div class="box"><strong>${validCount}</strong><br>Válidas</div>
+                        <div class="box"><strong>${warnCount}</strong><br>Atenção (≤ 3 dias úteis)</div>
+                        <div class="box"><strong>${expiredCount}</strong><br>Vencidas</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:5%;">#</th>
+                                <th style="width:26%;">Fonte / Fornecedor</th>
+                                <th style="width:12%;">Data Inicial</th>
+                                <th style="width:16%;">Validade Até</th>
+                                <th style="width:16%;">Status</th>
+                                <th style="width:25%;">Período Restante / Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHTML}</tbody>
+                    </table>
+                    <script>window.onload = function() { setTimeout(() => window.print(), 250); };<\/script>
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+        }
+
+        // ==========================================
+        // MÓDULO DE PROPOSTAS RECEBIDAS E LISTA BASE
+        // ==========================================
+
+        function openProposalItemsModal() {
+            if (!currentProposalItems.length) {
+                addBaseItemRow(false);
+            }
+            renderBaseItemsTable();
+            document.getElementById('proposal-items-modal').classList.add('show');
+        }
+
+        function closeProposalItemsModal() {
+            document.getElementById('proposal-items-modal').classList.remove('show');
+        }
+
+        function addBaseItemRow(shouldRender = true) {
+            const nextSeq = currentProposalItems.length + 1;
+            currentProposalItems.push({
+                id: 'item_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                seq: String(nextSeq),
+                codigo: '',
+                codigoTce: '',
+                descricao: '',
+                unidade: 'Unidade',
+                quantidade: 1,
+                precoEstimado: 0
+            });
+            if (shouldRender) renderBaseItemsTable();
+        }
+
+        function removeBaseItemRow(idx) {
+            currentProposalItems.splice(idx, 1);
+            renderBaseItemsTable();
+        }
+
+        function renderBaseItemsTable() {
+            const tbody = document.getElementById('base-items-tbody');
+            tbody.innerHTML = '';
+
+            currentProposalItems.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                const rowTotal = (Number(item.quantidade) || 0) * (Number(item.precoEstimado) || 0);
+
+                tr.innerHTML = `
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.seq)}" oninput="updateBaseItemField(${idx}, 'seq', this.value)"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.codigo)}" placeholder="Cód." oninput="updateBaseItemField(${idx}, 'codigo', this.value)"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.codigoTce)}" placeholder="TCE" oninput="updateBaseItemField(${idx}, 'codigoTce', this.value)"></td>
+                    <td><textarea class="tbl-textarea" placeholder="Descrição do item..." oninput="updateBaseItemField(${idx}, 'descricao', this.value)">${escapeHTML(item.descricao)}</textarea></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.unidade)}" placeholder="Unid." oninput="updateBaseItemField(${idx}, 'unidade', this.value)"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(formatQtyBR(item.quantidade))}" oninput="updateBaseItemNumeric(${idx}, 'quantidade', this.value, ${idx})"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(formatUnitInputBR(item.precoEstimado))}" placeholder="0,00" oninput="updateBaseItemNumeric(${idx}, 'precoEstimado', this.value, ${idx})"></td>
+                    <td class="tbl-total-cell" id="base_row_total_${idx}">${formatBRL(rowTotal)}</td>
+                    <td style="text-align:center;"><button type="button" class="history-btn btn-delete" style="padding:5px 8px;" onclick="removeBaseItemRow(${idx})" title="Remover item">✕</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            recalcBaseItemsGrandTotal();
+        }
+
+        function updateBaseItemField(idx, field, val) {
+            if (currentProposalItems[idx]) {
+                currentProposalItems[idx][field] = val;
+            }
+        }
+
+        function updateBaseItemNumeric(idx, field, rawVal, rowIndex) {
+            if (!currentProposalItems[idx]) return;
+            currentProposalItems[idx][field] = parseBRNumber(rawVal);
+            const item = currentProposalItems[idx];
+            const rowTotal = (Number(item.quantidade) || 0) * (Number(item.precoEstimado) || 0);
+            const cell = document.getElementById(`base_row_total_${rowIndex}`);
+            if (cell) cell.textContent = formatBRL(rowTotal);
+            recalcBaseItemsGrandTotal();
+        }
+
+        function recalcBaseItemsGrandTotal() {
+            const total = currentProposalItems.reduce((acc, it) => acc + ((Number(it.quantidade) || 0) * (Number(it.precoEstimado) || 0)), 0);
+            const el = document.getElementById('base-items-grand-total');
+            if (el) el.textContent = formatBRL(total);
+        }
+
+        function cleanEmptyBaseItems() {
+            currentProposalItems = currentProposalItems.filter(it =>
+                (it.descricao && it.descricao.trim() !== '') ||
+                (it.codigo && it.codigo.trim() !== '') ||
+                (Number(it.precoEstimado) > 0)
+            );
+        }
+
+        function saveBaseItemsOnly() {
+            cleanEmptyBaseItems();
+            closeProposalItemsModal();
+            alert(`Lista salva com ${currentProposalItems.length} item(ns)!`);
+        }
+
+        function saveBaseItemsAndOpenAddProposal() {
+            cleanEmptyBaseItems();
+            if (!currentProposalItems.length) {
+                alert('Adicione ao menos um item na lista antes de lançar propostas.');
+                return;
+            }
+            closeProposalItemsModal();
+            openAddProposalModal();
+        }
+
+        function openAddProposalModal(proposalId = null) {
+            if (!currentProposalItems.length) {
+                alert('Primeiro importe o PDF da Lista de Compras ou cadastre os itens base do processo.');
+                openProposalItemsModal();
+                return;
+            }
+
+            editingProposalId = proposalId;
+            const existing = proposalId ? currentProposals.find(p => p.id === proposalId) : null;
+
+            document.getElementById('add-prop-modal-title').textContent = existing
+                ? `✏️ Editar Proposta — ${existing.empresaNome}`
+                : '🏢 Lançar Proposta de Empresa';
+
+            document.getElementById('prop-company-name').value = existing ? existing.empresaNome : '';
+            document.getElementById('prop-company-cnpj').value = existing ? existing.empresaCnpj : '';
+
+            const tbody = document.getElementById('proposal-entry-tbody');
+            tbody.innerHTML = '';
+
+            currentProposalItems.forEach((item, idx) => {
+                const savedUnit = existing && existing.precos ? (Number(existing.precos[item.id]) || 0) : 0;
+                const rowTotal = savedUnit * (Number(item.quantidade) || 0);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.seq)}" oninput="syncBaseItemFromProposal(${idx}, 'seq', this.value)"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.codigo)}" oninput="syncBaseItemFromProposal(${idx}, 'codigo', this.value)"></td>
+                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.codigoTce)}" oninput="syncBaseItemFromProposal(${idx}, 'codigoTce', this.value)"></td>
+                    <td><textarea class="tbl-textarea" oninput="syncBaseItemFromProposal(${idx}, 'descricao', this.value)">${escapeHTML(item.descricao)}</textarea></td>
+                    <td style="padding-top:11px;">${escapeHTML(item.unidade)}</td>
+                    <td style="padding-top:11px;font-weight:700;">${escapeHTML(formatQtyBR(item.quantidade))}</td>
+                    <td style="padding-top:11px;color:var(--muted);">${formatBRL(item.precoEstimado)}</td>
+                    <td>
+                        <input type="text" class="tbl-input prop-unit-input" data-item-id="${item.id}" data-qty="${item.quantidade}"
+                            value="${escapeHTML(formatUnitInputBR(savedUnit))}" placeholder="0,00"
+                            oninput="onProposalUnitChange(this, '${item.id}')">
+                    </td>
+                    <td class="tbl-total-cell" id="prop_entry_total_${item.id}">${formatBRL(rowTotal)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            recalcProposalEntryGrandTotal();
+            document.getElementById('add-proposal-modal').classList.add('show');
+            document.getElementById('prop-company-name').focus();
+        }
+
+        function closeAddProposalModal() {
+            document.getElementById('add-proposal-modal').classList.remove('show');
+            editingProposalId = null;
+        }
+
+        function syncBaseItemFromProposal(idx, field, val) {
+            if (currentProposalItems[idx]) {
+                currentProposalItems[idx][field] = val;
+            }
+        }
+
+        function onProposalUnitChange(inputEl, itemId) {
+            const unitVal = parseBRNumber(inputEl.value);
+            const qty = Number(inputEl.dataset.qty) || 0;
+            const totalCell = document.getElementById(`prop_entry_total_${itemId}`);
+            if (totalCell) totalCell.textContent = formatBRL(unitVal * qty);
+            recalcProposalEntryGrandTotal();
+        }
+
+        function recalcProposalEntryGrandTotal() {
+            let sum = 0;
+            document.querySelectorAll('.prop-unit-input').forEach(inp => {
+                const u = parseBRNumber(inp.value);
+                const q = Number(inp.dataset.qty) || 0;
+                sum += u * q;
+            });
+            const el = document.getElementById('proposal-entry-grand-total');
+            if (el) el.textContent = formatBRL(sum);
+        }
+
+        function saveCompanyProposal(keepOpen) {
+            const empresaNome = document.getElementById('prop-company-name').value.trim();
+            const empresaCnpj = document.getElementById('prop-company-cnpj').value.trim();
+
+            if (!empresaNome) {
+                alert('Informe o Nome / Razão Social da empresa proponente.');
+                document.getElementById('prop-company-name').focus();
+                return;
+            }
+
+            const precos = {};
+            let hasAnyPrice = false;
+            document.querySelectorAll('.prop-unit-input').forEach(inp => {
+                const itemId = inp.dataset.itemId;
+                const val = parseBRNumber(inp.value);
+                precos[itemId] = val;
+                if (val > 0) hasAnyPrice = true;
+            });
+
+            if (!hasAnyPrice) {
+                alert('Informe o valor unitário proposto para pelo menos um item.');
+                return;
+            }
+
+            if (editingProposalId) {
+                const idx = currentProposals.findIndex(p => p.id === editingProposalId);
+                if (idx !== -1) {
+                    currentProposals[idx] = {
+                        ...currentProposals[idx],
+                        empresaNome,
+                        empresaCnpj,
+                        precos
+                    };
+                }
+            } else {
+                currentProposals.push({
+                    id: 'prop_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                    empresaNome,
+                    empresaCnpj,
+                    precos
+                });
+            }
+
+            updateProposalCountBadge();
+
+            if (keepOpen) {
+                editingProposalId = null;
+                openAddProposalModal();
+                alert(`Proposta salva! Total de propostas cadastradas: ${currentProposals.length}.`);
+            } else {
+                closeAddProposalModal();
+                openProposalsReportModal();
+            }
+        }
+
+        function removeProposal(propId) {
+            if (!confirm('Deseja excluir esta proposta recebida?')) return;
+            currentProposals = currentProposals.filter(p => p.id !== propId);
+            updateProposalCountBadge();
+            renderProposalsReport();
+        }
+
+        function openProposalsReportModal() {
+            renderProposalsReport();
+            document.getElementById('report-proposals-modal').classList.add('show');
+        }
+
+        function closeProposalsReportModal() {
+            document.getElementById('report-proposals-modal').classList.remove('show');
+        }
+
+        function setProposalRankingMode(mode) {
+            proposalRankingMode = mode;
+            document.getElementById('prop-mode-global').classList.toggle('active', mode === 'global');
+            document.getElementById('prop-mode-item').classList.toggle('active', mode === 'item');
+            renderProposalsReport();
+        }
+
+        function computeGlobalRanking() {
+            const totalItemsCount = currentProposalItems.length;
+            const estimatedGlobal = currentProposalItems.reduce((acc, it) => acc + ((Number(it.quantidade) || 0) * (Number(it.precoEstimado) || 0)), 0);
+
+            const evaluated = currentProposals.map(prop => {
+                let totalGlobal = 0;
+                let quotedItems = 0;
+
+                currentProposalItems.forEach(item => {
+                    const unit = Number(prop.precos && prop.precos[item.id]) || 0;
+                    if (unit > 0) {
+                        quotedItems++;
+                        totalGlobal += unit * (Number(item.quantidade) || 0);
+                    }
+                });
+
+                return {
+                    ...prop,
+                    totalGlobal,
+                    quotedItems,
+                    totalItemsCount,
+                    isComplete: quotedItems === totalItemsCount && totalItemsCount > 0,
+                    diffEstimated: estimatedGlobal > 0 ? totalGlobal - estimatedGlobal : 0
+                };
+            });
+
+            evaluated.sort((a, b) => {
+                if (a.totalGlobal <= 0 && b.totalGlobal > 0) return 1;
+                if (b.totalGlobal <= 0 && a.totalGlobal > 0) return -1;
+                if (a.isComplete !== b.isComplete) return a.isComplete ? -1 : 1;
+                return a.totalGlobal - b.totalGlobal;
+            });
+
+            return { ranking: evaluated, estimatedGlobal };
+        }
+
+        function computeItemByItemRanking() {
+            const companyWonSummary = {};
+            currentProposals.forEach(p => {
+                companyWonSummary[p.id] = {
+                    id: p.id,
+                    empresaNome: p.empresaNome,
+                    empresaCnpj: p.empresaCnpj,
+                    wonItemsCount: 0,
+                    wonTotalValue: 0,
+                    wonSeqs: []
+                };
+            });
+
+            const itemsResults = currentProposalItems.map(item => {
+                const qty = Number(item.quantidade) || 0;
+                const estUnit = Number(item.precoEstimado) || 0;
+                const offers = [];
+
+                currentProposals.forEach(prop => {
+                    const unit = Number(prop.precos && prop.precos[item.id]) || 0;
+                    if (unit > 0) {
+                        offers.push({
+                            propId: prop.id,
+                            empresaNome: prop.empresaNome,
+                            empresaCnpj: prop.empresaCnpj,
+                            unitPrice: unit,
+                            totalPrice: unit * qty,
+                            diffEst: estUnit > 0 ? (unit - estUnit) * qty : 0
+                        });
+                    }
+                });
+
+                offers.sort((a, b) => a.unitPrice - b.unitPrice);
+
+                if (offers.length > 0 && companyWonSummary[offers[0].propId]) {
+                    companyWonSummary[offers[0].propId].wonItemsCount++;
+                    companyWonSummary[offers[0].propId].wonTotalValue += offers[0].totalPrice;
+                    companyWonSummary[offers[0].propId].wonSeqs.push(item.seq);
+                }
+
+                return {
+                    item,
+                    offers
+                };
+            });
+
+            const winnersSummary = Object.values(companyWonSummary).sort((a, b) => {
+                if (b.wonItemsCount !== a.wonItemsCount) return b.wonItemsCount - a.wonItemsCount;
+                return a.wonTotalValue - b.wonTotalValue;
+            });
+
+            return { itemsResults, winnersSummary };
+        }
+
+        function renderProposalsReport() {
+            const container = document.getElementById('proposals-report-content');
+
+            if (!currentProposalItems.length) {
+                container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--muted);font-size:0.88rem;">
+                    Nenhuma lista de itens foi cadastrada ainda.<br>Clique em <strong>"📋 Lista de Itens"</strong> para importar o PDF da Lista de Compras ou cadastrar manualmente.
+                </div>`;
+                return;
+            }
+
+            if (!currentProposals.length) {
+                container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--muted);font-size:0.88rem;">
+                    Lista com <strong>${currentProposalItems.length} item(ns)</strong> pronta, mas nenhuma proposta de empresa foi lançada ainda.<br>
+                    Clique em <strong>"➕ Adicionar Proposta"</strong> para registrar os preços das empresas.
+                </div>`;
+                return;
+            }
+
+            if (proposalRankingMode === 'global') {
+                const { ranking, estimatedGlobal } = computeGlobalRanking();
+                const bestPrice = ranking.length > 0 ? ranking[0].totalGlobal : 0;
+
+                const cardsHTML = ranking.map((r, idx) => {
+                    const pos = idx + 1;
+                    const rankClass = pos === 1 ? 'rank-1' : (pos === 2 ? 'rank-2' : (pos === 3 ? 'rank-3' : ''));
+                    const badgeClass = pos === 1 ? 'pos-1' : (pos === 2 ? 'pos-2' : (pos === 3 ? 'pos-3' : 'pos-other'));
+                    const posLabel = pos === 1 ? '🥇 1º Lugar (Vencedora Global)' : (pos === 2 ? '🥈 2º Lugar' : (pos === 3 ? '🥉 3º Lugar' : `${pos}º Lugar`));
+
+                    const diffFromFirst = pos > 1 && bestPrice > 0 ? r.totalGlobal - bestPrice : 0;
+                    const incompleteWarn = !r.isComplete
+                        ? `<div style="color:#b45309;font-size:0.75rem;font-weight:800;margin-top:3px;">⚠️ Cotou ${r.quotedItems} de ${r.totalItemsCount} item(ns)</div>`
+                        : `<div style="color:#15803d;font-size:0.74rem;font-weight:700;margin-top:3px;">✔ Cotou todos os ${r.totalItemsCount} item(ns)</div>`;
+
+                    return `
+                        <div class="rank-card ${rankClass}">
+                            <div style="flex:1 1 320px;">
+                                <span class="rank-pos-badge ${badgeClass}">${posLabel}</span>
+                                <div style="font-size:0.96rem;font-weight:850;color:#19324a;margin-top:6px;">${escapeHTML(r.empresaNome)}</div>
+                                <div style="font-size:0.78rem;color:var(--muted);">CNPJ: ${escapeHTML(r.empresaCnpj || 'Não informado')}</div>
+                                ${incompleteWarn}
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:0.74rem;color:var(--muted);font-weight:700;">Valor Global Proposto</div>
+                                <div style="font-size:1.15rem;font-weight:900;color:${pos === 1 ? '#15803d' : '#19324a'};">${formatBRL(r.totalGlobal)}</div>
+                                ${pos > 1 && diffFromFirst > 0 ? `<div style="font-size:0.73rem;color:#b91c1c;">+${formatBRL(diffFromFirst)} acima do 1º</div>` : ''}
+                                ${estimatedGlobal > 0 ? `<div style="font-size:0.72rem;color:${r.diffEstimated <= 0 ? '#15803d' : '#b45309'};">${r.diffEstimated <= 0 ? 'Abaixo' : 'Acima'} do estimado (${formatBRL(Math.abs(r.diffEstimated))})</div>` : ''}
+                            </div>
+                            <div style="display:flex;gap:6px;">
+                                <button type="button" class="history-btn btn-open" onclick="closeProposalsReportModal(); openAddProposalModal('${r.id}')">Editar</button>
+                                <button type="button" class="history-btn btn-delete" onclick="removeProposal('${r.id}')">Excluir</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = `
+                    <div style="background:#f8fbff;border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:0.82rem;">
+                        <span><strong>Critério:</strong> Julgamento pelo Menor Preço Global (${currentProposals.length} proposta(s))</span>
+                        <span><strong>Valor Global Estimado:</strong> ${formatBRL(estimatedGlobal)}</span>
+                    </div>
+                    ${cardsHTML}
+                `;
+            } else {
+                const { itemsResults, winnersSummary } = computeItemByItemRanking();
+
+                const summaryCards = winnersSummary.map(w => `
+                    <div style="border:1px solid ${w.wonItemsCount > 0 ? '#86efac' : '#e2e8f0'};background:${w.wonItemsCount > 0 ? '#f0fdf4' : '#f8fafc'};border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+                        <div>
+                            <strong style="font-size:0.88rem;color:#19324a;">${escapeHTML(w.empresaNome)}</strong>
+                            <span style="font-size:0.75rem;color:var(--muted);"> (${escapeHTML(w.empresaCnpj || 'CNPJ não inf.')})</span><br>
+                            <span style="font-size:0.76rem;color:#15803d;font-weight:750;">
+                                ${w.wonItemsCount > 0 ? `🏆 Venceu ${w.wonItemsCount} item(ns) [Seq: ${w.wonSeqs.join(', ')}]` : 'Nenhum item em 1º lugar'}
+                            </span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div style="text-align:right;">
+                                <div style="font-size:0.7rem;color:var(--muted);">Total dos Itens Vencidos</div>
+                                <strong style="font-size:0.95rem;color:#047857;">${formatBRL(w.wonTotalValue)}</strong>
+                            </div>
+                            <button type="button" class="history-btn btn-open" onclick="closeProposalsReportModal(); openAddProposalModal('${w.id}')">Editar</button>
+                            <button type="button" class="history-btn btn-delete" onclick="removeProposal('${w.id}')">Excluir</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                const itemsHTML = itemsResults.map(({ item, offers }) => {
+                    const rows = offers.length
+                        ? offers.map((off, i) => {
+                            const pos = i + 1;
+                            const medal = pos === 1 ? '🥇 1º (Vencedora)' : (pos === 2 ? '🥈 2º' : (pos === 3 ? '🥉 3º' : `${pos}º`));
+                            return `
+                                <tr class="${pos === 1 ? 'winner-row' : ''}">
+                                    <td style="width:125px;">${medal}</td>
+                                    <td>${escapeHTML(off.empresaNome)} <small style="color:var(--muted);">(${escapeHTML(off.empresaCnpj || 'S/ CNPJ')})</small></td>
+                                    <td style="width:115px;">${formatBRL(off.unitPrice)}</td>
+                                    <td style="width:125px;">${formatBRL(off.totalPrice)}</td>
+                                </tr>
+                            `;
+                        }).join('')
+                        : `<tr><td colspan="4" style="color:var(--muted);font-style:italic;">Nenhuma empresa apresentou preço para este item.</td></tr>`;
+
+                    return `
+                        <div class="item-winner-box">
+                            <div class="item-winner-header">
+                                <span>Item ${escapeHTML(item.seq)} (Cód: ${escapeHTML(item.codigo || '-')} | TCE: ${escapeHTML(item.codigoTce || '-')}) — ${escapeHTML(item.descricao)}</span>
+                                <span style="white-space:nowrap;color:#475569;font-size:0.76rem;">Qtd: ${escapeHTML(formatQtyBR(item.quantidade))} ${escapeHTML(item.unidade)} | Est. Unit: ${formatBRL(item.precoEstimado)}</span>
+                            </div>
+                            <table class="mini-rank-table">
+                                <thead>
+                                    <tr>
+                                        <th>Colocação</th>
+                                        <th>Empresa</th>
+                                        <th>Unit. Proposto</th>
+                                        <th>Total do Item</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${rows}</tbody>
+                            </table>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = `
+                    <div style="margin-bottom:14px;">
+                        <div style="font-size:0.82rem;font-weight:800;color:#075da9;margin-bottom:8px;">📌 Resumo Consolidado por Empresa (Critério: Menor Preço por Item):</div>
+                        ${summaryCards}
+                    </div>
+                    <div style="font-size:0.82rem;font-weight:800;color:#075da9;margin-bottom:8px;">📦 Classificação Detalhada Item a Item:</div>
+                    ${itemsHTML}
+                `;
+            }
+        }
+
+        function printProposalsReportPDF() {
+            if (!currentProposalItems.length || !currentProposals.length) {
+                alert('Cadastre a lista de itens e pelo menos uma proposta antes de gerar o PDF.');
+                return;
+            }
+
+            const title = document.getElementById('doc-title').value || 'Apuração de Propostas Recebidas';
+            const proto = document.getElementById('doc-protocolo').value || 'Não informado';
+            const sec = document.getElementById('doc-secretaria').value || 'Não informada';
+
+            let bodyHTML = '';
+
+            if (proposalRankingMode === 'global') {
+                const { ranking, estimatedGlobal } = computeGlobalRanking();
+                const rows = ranking.map((r, idx) => {
+                    const pos = idx + 1;
+                    return `
+                        <tr style="${pos === 1 ? 'background:#f0fdf4;font-weight:bold;' : ''}">
+                            <td>${pos}º Lugar ${pos === 1 ? '(VENCEDORA)' : ''}</td>
+                            <td>${escapeHTML(r.empresaNome)}</td>
+                            <td>${escapeHTML(r.empresaCnpj || '-')}</td>
+                            <td>${r.quotedItems}/${r.totalItemsCount}</td>
+                            <td>${formatBRL(r.totalGlobal)}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                bodyHTML = `
+                    <h2>Classificação Final — Critério: Menor Preço Global</h2>
+                    <p style="font-size:10px;color:#475569;">Valor Global Estimado da Lista de Compras: <strong>${formatBRL(estimatedGlobal)}</strong></p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:18%;">Colocação</th>
+                                <th style="width:34%;">Empresa Proponente</th>
+                                <th style="width:18%;">CNPJ</th>
+                                <th style="width:12%;">Itens Cotados</th>
+                                <th style="width:18%;">Valor Global</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                `;
+            } else {
+                const { itemsResults, winnersSummary } = computeItemByItemRanking();
+
+                const sumRows = winnersSummary.map(w => `
+                    <tr>
+                        <td><strong>${escapeHTML(w.empresaNome)}</strong></td>
+                        <td>${escapeHTML(w.empresaCnpj || '-')}</td>
+                        <td>${w.wonItemsCount} item(ns) ${w.wonSeqs.length ? `(Seq: ${w.wonSeqs.join(', ')})` : ''}</td>
+                        <td><strong>${formatBRL(w.wonTotalValue)}</strong></td>
+                    </tr>
+                `).join('');
+
+                const detailBlocks = itemsResults.map(({ item, offers }) => {
+                    const offerRows = offers.length
+                        ? offers.map((o, idx) => `
+                            <tr style="${idx === 0 ? 'background:#f0fdf4;font-weight:bold;' : ''}">
+                                <td>${idx + 1}º Lugar ${idx === 0 ? '(VENCEDORA)' : ''}</td>
+                                <td>${escapeHTML(o.empresaNome)}</td>
+                                <td>${escapeHTML(o.empresaCnpj || '-')}</td>
+                                <td>${formatBRL(o.unitPrice)}</td>
+                                <td>${formatBRL(o.totalPrice)}</td>
+                            </tr>
+                        `).join('')
+                        : `<tr><td colspan="5">Nenhuma proposta para este item.</td></tr>`;
+
+                    return `
+                        <div style="margin-top:12px;page-break-inside:avoid;">
+                            <div style="background:#e2e8f0;padding:5px 8px;font-weight:bold;font-size:10px;border:1px solid #cbd5e1;border-bottom:none;">
+                                Item ${escapeHTML(item.seq)} | Cód: ${escapeHTML(item.codigo || '-')} | TCE: ${escapeHTML(item.codigoTce || '-')} — ${escapeHTML(item.descricao)} (Qtd: ${escapeHTML(formatQtyBR(item.quantidade))} ${escapeHTML(item.unidade)})
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width:18%;">Colocação</th>
+                                        <th style="width:32%;">Empresa</th>
+                                        <th style="width:18%;">CNPJ</th>
+                                        <th style="width:16%;">Unit. Proposto</th>
+                                        <th style="width:16%;">Total do Item</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${offerRows}</tbody>
+                            </table>
+                        </div>
+                    `;
+                }).join('');
+
+                bodyHTML = `
+                    <h2>Resumo Consolidado — Critério: Menor Preço por Item</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:34%;">Empresa Proponente</th>
+                                <th style="width:18%;">CNPJ</th>
+                                <th style="width:28%;">Itens Vencidos</th>
+                                <th style="width:20%;">Valor Total Vencido</th>
+                            </tr>
+                        </thead>
+                        <tbody>${sumRows}</tbody>
+                    </table>
+                    <h2>Classificação Detalhada por Item</h2>
+                    ${detailBlocks}
+                `;
+            }
+
+            const printWin = window.open('', '_blank');
+            if (!printWin) {
+                alert('O navegador bloqueou o pop-up de impressão.');
+                return;
+            }
+
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Apuração de Propostas - ${escapeHTML(proto)}</title>
+                    <style>
+                        @page { size: A4; margin: 12mm; }
+                        body { font-family: Arial, sans-serif; color: #1e293b; font-size: 11px; margin: 0; }
+                        .header { border-bottom: 3px solid #0571ee; padding-bottom: 10px; margin-bottom: 14px; }
+                        h1 { margin: 0 0 4px; font-size: 17px; color: #075da9; }
+                        h2 { font-size: 12px; color: #fff; background: #0571ee; padding: 6px 8px; border-radius: 4px; margin: 14px 0 8px; }
+                        .meta { font-size: 10px; color: #475569; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+                        th, td { border: 1px solid #cbd5e1; padding: 6px 7px; text-align: left; vertical-align: middle; font-size: 10px; }
+                        th { background: #f1f5f9; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Prefeitura de Rondonópolis — SEMAGI</h1>
+                        <h1>Mapa Comparativo e Classificação de Propostas Recebidas</h1>
+                        <div class="meta"><strong>Processo:</strong> ${escapeHTML(title)} | <strong>Protocolo:</strong> ${escapeHTML(proto)} | <strong>Secretaria:</strong> ${escapeHTML(sec)}</div>
+                        <div class="meta">Emitido em: ${new Date().toLocaleString('pt-BR')}</div>
+                    </div>
+                    ${bodyHTML}
+                    <script>window.onload = function() { setTimeout(() => window.print(), 250); };<\/script>
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+        }
+
+        // ==========================================
+        // SALVAMENTO, HISTÓRICO E PDF GERAL
+        // ==========================================
+
+        function saveData() {
+            const title = document.getElementById('doc-title').value;
+            const formData = {};
+
+            formData['protocolo_numero'] = document.getElementById('doc-protocolo').value;
+            formData['secretaria'] = document.getElementById('doc-secretaria').value;
+            formData['protocolo_obs'] = document.getElementById('doc-protocolo-obs').value;
+
+            const authSelected = document.querySelector('input[name="autenticacao_vias"]:checked');
+            formData['autenticacao_vias'] = authSelected ? authSelected.value : '';
+            formData['autenticacao_vias_observation'] = document.getElementById('autenticacao_vias_observation').value || '';
+
+            fixedChecklistData.forEach((block, sectionIndex) => {
+                block.items.forEach((item, itemIndex) => {
+                    const inputId = `s${sectionIndex}_i${itemIndex}`;
+                    const selected = document.querySelector(`input[name="${inputId}"]:checked`);
+                    formData[inputId] = selected ? selected.value : '';
+
+                    if (document.getElementById(`${inputId}_date`)) {
+                        formData[`${inputId}_date`] = document.getElementById(`${inputId}_date`).value || '';
+                    }
+                    if (item.extra === 'currency') {
+                        formData[`${inputId}_value`] = document.getElementById(`${inputId}_value`)?.value || '';
+                    }
+                    formData[`${inputId}_observation`] = document.getElementById(`${inputId}_observation`)?.value || '';
+                });
+            });
+
+            finalSectionData.items.forEach((item, itemIndex) => {
+                const inputId = `sFinal_i${itemIndex}`;
+                const selected = document.querySelector(`input[name="${inputId}"]:checked`);
+                formData[inputId] = selected ? selected.value : '';
+                formData[`${inputId}_observation`] = document.getElementById(`${inputId}_observation`)?.value || '';
+            });
+
+            const habilitacaoBlocos = [];
+            const blocosElements = document.querySelectorAll('.habilitacao-bloco');
+            blocosElements.forEach((blocoEl, blocoIndex) => {
+                const empresaNome = blocoEl.querySelector('.hab-empresa-nome').value;
+                const empresaCnpj = blocoEl.querySelector('.hab-empresa-cnpj').value;
+                const itens = {};
+                const datas = {};
+                const observacoes = {};
+
+                habilitacaoItemsData.forEach((item, itemIndex) => {
+                    const uniqueId = `hab_${blocoIndex}_i${itemIndex}`;
+                    const selected = document.querySelector(`input[name="${uniqueId}"]:checked`);
+                    itens[itemIndex] = selected ? selected.value : '';
+
+                    const dateEl = document.getElementById(`${uniqueId}_date`);
+                    if (dateEl) {
+                        datas[itemIndex] = dateEl.value;
+                    }
+                    const obsEl = document.getElementById(`${uniqueId}_observation`);
+                    if (obsEl) {
+                        observacoes[itemIndex] = obsEl.value;
+                    }
+                });
+
+                habilitacaoBlocos.push({ empresaNome, empresaCnpj, itens, datas, observacoes });
+            });
+
+            let history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            let existingStatus = 'Em andamento';
+            let existingPub = null;
+
+            if (currentEditingId) {
+                const existingRecord = history.find(h => h.id === currentEditingId);
+                if (existingRecord) {
+                    if (existingRecord.status) existingStatus = existingRecord.status;
+                    if (existingRecord.publicacao) existingPub = existingRecord.publicacao;
+                }
+            }
+
+            const recordId = currentEditingId || Date.now().toString();
+            const record = {
+                id: recordId,
+                title: title,
+                date: new Date().toLocaleString('pt-BR'),
+                status: existingStatus,
+                publicacao: existingPub,
+                data: formData,
+                habilitacaoBlocos: habilitacaoBlocos,
+                quotes: JSON.parse(JSON.stringify(currentQuotes)),
+                proposalItems: JSON.parse(JSON.stringify(currentProposalItems)),
+                proposals: JSON.parse(JSON.stringify(currentProposals))
+            };
+
+            if (currentEditingId) {
+                const index = history.findIndex(h => h.id === currentEditingId);
+                if (index !== -1) history[index] = record;
+                else history.unshift(record);
+            } else {
+                history.unshift(record);
+                currentEditingId = recordId;
+            }
+
+            localStorage.setItem('checklist_history', JSON.stringify(history));
+            alert('Questionário salvo com sucesso!');
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('history-list');
+            list.innerHTML = '';
+            const history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            const searchTerm = (document.getElementById('history-search')?.value || '').toLowerCase().trim();
+
+            const filteredHistory = history.filter(record => {
+                const recordStatus = record.status || 'Em andamento';
+                if (currentStatusFilter !== 'Todos' && recordStatus !== currentStatusFilter) {
+                    return false;
+                }
+
+                if (!searchTerm) return true;
+                const titleMatch = (record.title || '').toLowerCase().includes(searchTerm);
+                const dateMatch = (record.date || '').toLowerCase().includes(searchTerm);
+                const statusMatch = recordStatus.toLowerCase().includes(searchTerm);
+                const protoMatch = record.data && record.data['protocolo_numero'] && record.data['protocolo_numero'].toLowerCase().includes(searchTerm);
+                const secMatch = record.data && record.data['secretaria'] && record.data['secretaria'].toLowerCase().includes(searchTerm);
+                const empresaMatch = record.habilitacaoBlocos && record.habilitacaoBlocos.some(b => 
+                    (b.empresaNome && b.empresaNome.toLowerCase().includes(searchTerm)) || 
+                    (b.empresaCnpj && b.empresaCnpj.toLowerCase().includes(searchTerm))
+                );
+                const propEmpresaMatch = record.proposals && record.proposals.some(p =>
+                    (p.empresaNome && p.empresaNome.toLowerCase().includes(searchTerm)) ||
+                    (p.empresaCnpj && p.empresaCnpj.toLowerCase().includes(searchTerm))
+                );
+                return titleMatch || dateMatch || statusMatch || protoMatch || secMatch || empresaMatch || propEmpresaMatch;
+            });
+
+            if (!filteredHistory.length) {
+                list.innerHTML = '<li style="color:var(--muted);font-size:0.85rem;text-align:center;padding:16px">Nenhuma dispensa encontrada para o filtro selecionado.</li>';
+                return;
+            }
+
+            filteredHistory.forEach(record => {
+                const li = document.createElement('li');
+                li.className = 'history-item';
+
+                const info = document.createElement('div');
+                info.className = 'history-info';
+
+                const titleRow = document.createElement('div');
+                titleRow.style.display = 'flex';
+                titleRow.style.justifyContent = 'space-between';
+                titleRow.style.alignItems = 'flex-start';
+                titleRow.style.gap = '8px';
+
+                const title = document.createElement('strong');
+                const secSigla = record.data && record.data['secretaria'] ? `<span class="sec-tag">${escapeHTML(record.data['secretaria'])}</span>` : '';
+                const protoNum = record.data && record.data['protocolo_numero'] ? `[Prot: ${escapeHTML(record.data['protocolo_numero'])}] ` : '';
+                title.innerHTML = `${secSigla}${protoNum}${escapeHTML(record.title)}`;
+                title.style.flex = '1';
+                title.style.fontSize = '0.84rem';
+                title.style.lineHeight = '1.35';
+
+                const currentStatus = record.status || 'Em andamento';
+                const dropdownContainer = document.createElement('div');
+                dropdownContainer.className = 'dropdown-container';
+
+                const dotBtn = document.createElement('button');
+                dotBtn.className = 'dropdown-btn';
+                dotBtn.innerHTML = '⋮';
+                dotBtn.title = 'Alterar status';
+                dotBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.dropdown-content').forEach(d => {
+                        if (d !== dropdownContent) d.classList.remove('show');
+                    });
+                    dropdownContent.classList.toggle('show');
+                };
+
+                const dropdownContent = document.createElement('div');
+                dropdownContent.className = 'dropdown-content';
+
+                ['Em andamento', 'Finalizada', 'Fracassada', 'Suspensa', 'Cancelada'].forEach(st => {
+                    const optBtn = document.createElement('button');
+                    optBtn.textContent = st;
+                    if (st === currentStatus) optBtn.style.fontWeight = 'bold';
+                    optBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        updateRecordStatus(record.id, st);
+                    };
+                    dropdownContent.appendChild(optBtn);
+                });
+
+                dropdownContainer.appendChild(dotBtn);
+                dropdownContainer.appendChild(dropdownContent);
+
+                titleRow.appendChild(title);
+                titleRow.appendChild(dropdownContainer);
+
+                const badgeContainer = document.createElement('div');
+                badgeContainer.style.display = 'flex';
+                badgeContainer.style.gap = '6px';
+                badgeContainer.style.flexWrap = 'wrap';
+
+                const badge = document.createElement('span');
+                badge.className = `status-badge status-${slugify(currentStatus)}`;
+                badge.textContent = currentStatus;
+                badgeContainer.appendChild(badge);
+
+                if (record.publicacao && record.publicacao.start && record.publicacao.end) {
+                    const pubBadge = document.createElement('span');
+                    pubBadge.className = 'pub-badge';
+
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    const start = new Date(record.publicacao.start + 'T00:00:00');
+                    const end = new Date(record.publicacao.end + 'T00:00:00');
+
+                    if (today < start) {
+                        pubBadge.classList.add('pub-green');
+                        pubBadge.innerHTML = `🟢 Inicia em ${formatDateShort(record.publicacao.start)}`;
+                    } else if (today.getTime() === start.getTime() && today.getTime() === end.getTime()) {
+                        pubBadge.classList.add('pub-red');
+                        pubBadge.innerHTML = `🔴 Último Dia (Único)`;
+                    } else if (today.getTime() === start.getTime()) {
+                        pubBadge.classList.add('pub-green');
+                        pubBadge.innerHTML = `🟢 1º Dia de Aviso`;
+                    } else if (today.getTime() === end.getTime()) {
+                        pubBadge.classList.add('pub-red');
+                        pubBadge.innerHTML = `🔴 Último Dia de Aviso`;
+                    } else if (today > end) {
+                        pubBadge.classList.add('pub-red');
+                        pubBadge.innerHTML = `🔴 Publicação Encerrada`;
+                    } else {
+                        pubBadge.classList.add('pub-yellow');
+                        pubBadge.innerHTML = `🟡 Dia Intermediário`;
+                    }
+                    badgeContainer.appendChild(pubBadge);
+                }
+
+                const date = document.createElement('div');
+                date.className = 'history-date';
+                date.style.marginTop = '4px';
+                const quotesCount = Array.isArray(record.quotes) ? record.quotes.length : 0;
+                const propsCount = Array.isArray(record.proposals) ? record.proposals.length : 0;
+                const extras = [
+                    quotesCount ? `${quotesCount} cotação(ões)` : '',
+                    propsCount ? `${propsCount} proposta(s)` : ''
+                ].filter(Boolean).join(' • ');
+                date.textContent = `Salvo em: ${record.date}${extras ? ` • ${extras}` : ''}`;
+
+                info.appendChild(titleRow);
+                info.appendChild(badgeContainer);
+                info.appendChild(date);
+
+                const actions = document.createElement('div');
+                actions.className = 'history-actions';
+
+                const openBtn = document.createElement('button');
+                openBtn.className = 'history-btn btn-open';
+                openBtn.textContent = 'Abrir';
+                openBtn.onclick = () => openRecord(record);
+
+                const pubBtn = document.createElement('button');
+                pubBtn.className = 'history-btn btn-pub';
+                pubBtn.textContent = '📢 Publicar';
+                pubBtn.onclick = () => openPubModal(record);
+
+                const pdfBtn = document.createElement('button');
+                pdfBtn.className = 'history-btn btn-pdf-small';
+                pdfBtn.textContent = '📄 PDF';
+                pdfBtn.onclick = () => exportRecordPDF(record);
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'history-btn btn-delete';
+                deleteBtn.textContent = 'Excluir';
+                deleteBtn.onclick = () => deleteRecord(record.id);
+
+                actions.appendChild(openBtn);
+                actions.appendChild(pubBtn);
+                actions.appendChild(pdfBtn);
+                actions.appendChild(deleteBtn);
+
+                li.appendChild(info);
+                li.appendChild(actions);
+                list.appendChild(li);
+            });
+        }
+
+        function openPubModal(record) {
+            activePubRecordId = record.id;
+            document.getElementById('pub-modal-title').textContent = `Processo: ${record.title}`;
+            document.getElementById('pub-start-date').value = record.publicacao?.start || '';
+            document.getElementById('pub-end-date').value = record.publicacao?.end || '';
+            document.getElementById('pub-modal').classList.add('show');
+        }
+
+        function closePubModal() {
+            document.getElementById('pub-modal').classList.remove('show');
+            activePubRecordId = null;
+        }
+
+        function savePubDates() {
+            if (!activePubRecordId) return;
+            const start = document.getElementById('pub-start-date').value;
+            const end = document.getElementById('pub-end-date').value;
+
+            if (!start || !end) {
+                alert('Por favor, preencha a data de início e de término.');
+                return;
+            }
+
+            let history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            const index = history.findIndex(h => h.id === activePubRecordId);
+            if (index !== -1) {
+                history[index].publicacao = { start, end };
+                localStorage.setItem('checklist_history', JSON.stringify(history));
+                renderHistory();
+                alert('Período de publicação salvo com sucesso!');
+            }
+            closePubModal();
+        }
+
+        function checkClosingPublications() {
+            const history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            const closingToday = history.filter(record => {
+                if (!record.publicacao || !record.publicacao.end) return false;
+                const end = new Date(record.publicacao.end + 'T00:00:00');
+                return end.getTime() === today.getTime();
+            });
+
+            if (closingToday.length > 0) {
+                const titles = closingToday.map(r => `• ${r.title}`).join('\n');
+                setTimeout(() => {
+                    alert(`🚨 ALERTA DE ENCERRAMENTO DE PUBLICAÇÃO!\n\nA(s) seguinte(s) dispensa(s) encerra(m) o prazo de aviso hoje:\n\n${titles}`);
+                }, 500);
+            }
+        }
+
+        function formatDateShort(dateStr) {
+            const parts = dateStr.split('-');
+            if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            return dateStr;
+        }
+
+        function slugify(text) {
+            return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+        }
+
+        function updateRecordStatus(id, newStatus) {
+            let history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            const index = history.findIndex(h => h.id === id);
+            if (index !== -1) {
+                history[index].status = newStatus;
+                localStorage.setItem('checklist_history', JSON.stringify(history));
+                renderHistory();
+            }
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-btn')) {
+                document.querySelectorAll('.dropdown-content').forEach(d => {
+                    d.classList.remove('show');
+                });
+            }
+            if (event.target === document.getElementById('pub-modal')) closePubModal();
+            if (event.target === document.getElementById('add-quote-modal')) closeAddQuoteModal();
+            if (event.target === document.getElementById('report-quotes-modal')) closeQuotesReportModal();
+            if (event.target === document.getElementById('quotes-matrix-modal')) closeQuotesMatrixModal();
+            if (event.target === document.getElementById('proposal-items-modal')) closeProposalItemsModal();
+            if (event.target === document.getElementById('add-proposal-modal')) closeAddProposalModal();
+            if (event.target === document.getElementById('report-proposals-modal')) closeProposalsReportModal();
+        }
+
+        function openRecord(record) {
+            currentEditingId = record.id;
+            document.getElementById('doc-title').value = record.title;
+            renderForm(record);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function deleteRecord(id) {
+            const history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            const record = history.find(item => item.id === id);
+
+            if (!record) return;
+
+            const confirmed = confirm(`Deseja realmente excluir a dispensa "${record.title}"?\n\nEssa ação não poderá ser desfeita.`);
+            if (!confirmed) return;
+
+            const updatedHistory = history.filter(item => item.id !== id);
+            localStorage.setItem('checklist_history', JSON.stringify(updatedHistory));
+
+            if (currentEditingId === id) {
+                clearForm();
+            }
+
+            renderHistory();
+        }
+
+        function exportRecordPDF(record) {
+            if (!record) {
+                alert('Não foi possível localizar a dispensa selecionada.');
+                return;
+            }
+
+            const statusClass = value => {
+                if (value === 'Tem') return 'tem';
+                if (value === 'Não tem' || value === 'Vencido') return 'nao-tem';
+                if (value === 'Tem, mas não está assinado') return 'assinado';
+                if (value === 'Tem, mas não possui conexão') return 'conexao';
+                if (value === 'Dispensado com justificativa/Não precisa') return 'dispensado';
+                return 'vazio';
+            };
+
+            const formatDate = value => {
+                if (!value) return 'Não preenchido';
+                const parts = value.split('-');
+                return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : value;
+            };
+
+            let sectionsHTML = '';
+            const formData = record.data || record;
+            const protocoloNum = formData['protocolo_numero'] ? `Nº de Protocolo: ${escapeHTML(formData['protocolo_numero'])}` : '';
+            const secretariaSigla = formData['secretaria'] ? `Secretaria Demandante: ${escapeHTML(formData['secretaria'])}` : '';
+            const metaDetails = [protocoloNum, secretariaSigla].filter(Boolean).join(' | ');
+            const protoObs = (formData['protocolo_obs'] || '').trim();
+            const authStatus = formData['autenticacao_vias'] || 'Não informado';
+            const authObs = (formData['autenticacao_vias_observation'] || '').trim();
+
+            fixedChecklistData.forEach((block, sectionIndex) => {
+                let rows = '';
+                block.items.forEach((item, itemIndex) => {
+                    const inputId = `s${sectionIndex}_i${itemIndex}`;
+                    const value = formData[inputId] || 'Não preenchido';
+                    let details = `<span class="status ${statusClass(value)}">${escapeHTML(value)}</span>`;
+
+                    if (item.extra === 'currency') {
+                        const amount = formData[`${inputId}_value`] || '';
+                        details += `<br><strong>Valor: R$ ${escapeHTML(amount || 'Não informado')}</strong>`;
+                    }
+                    const observation = (formData[`${inputId}_observation`] || '').trim();
+                    if (observation) {
+                        details += `<br><strong>Obs:</strong> ${escapeHTML(observation)}`;
+                    }
+
+                    rows += `<tr><td class="col-doc">${escapeHTML(item.text)}</td><td class="col-sit">${details}</td></tr>`;
+                });
+
+                sectionsHTML += `
+                    <h2>${escapeHTML(block.section)}</h2>
+                    <table>
+                        <colgroup>
+                            <col style="width: 72%;">
+                            <col style="width: 28%;">
+                        </colgroup>
+                        <thead><tr><th class="col-doc">Documento / Item</th><th class="col-sit">Situação / Informação</th></tr></thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                `;
+            });
+
+            let habBlocosHtml = '';
+            if (record.habilitacaoBlocos && record.habilitacaoBlocos.length > 0) {
+                record.habilitacaoBlocos.forEach((bloco, bIdx) => {
+                    let habRows = '';
+                    habilitacaoItemsData.forEach((item, itemIndex) => {
+                        const value = (bloco.itens && bloco.itens[itemIndex]) || 'Não preenchido';
+                        let details = `<span class="status ${statusClass(value)}">${escapeHTML(value)}</span>`;
+                        if (!item.noDate && bloco.datas && bloco.datas[itemIndex]) {
+                            details += `<br><small>Data: ${escapeHTML(formatDate(bloco.datas[itemIndex]))}</small>`;
+                        }
+                        const obs = (bloco.observacoes && bloco.observacoes[itemIndex] || '').trim();
+                        if (obs) {
+                            details += `<br><strong>Obs:</strong> ${escapeHTML(obs)}`;
+                        }
+                        habRows += `<tr><td class="col-doc">${escapeHTML(item.text)}</td><td class="col-sit">${details}</td></tr>`;
+                    });
+
+                    habBlocosHtml += `
+                        <div style="margin-top: 12px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; background: #fafafa;">
+                            <h3 style="margin: 0 0 6px; font-size: 11px; color: #1e293b; background: #e2e8f0; padding: 5px 7px; border-radius: 4px;">
+                                Empresa Vencedora #${bIdx + 1}: ${escapeHTML(bloco.empresaNome || 'Não informada')} | CNPJ: ${escapeHTML(bloco.empresaCnpj || 'Não informado')}
+                            </h3>
+                            <table>
+                                <colgroup>
+                                    <col style="width: 72%;">
+                                    <col style="width: 28%;">
+                                </colgroup>
+                                <thead><tr><th class="col-doc">Documento / Item</th><th class="col-sit">Situação / Informação</th></tr></thead>
+                                <tbody>${habRows}</tbody>
+                            </table>
+                        </div>
+                    `;
+                });
+            }
+
+            sectionsHTML += `
+                <h2>Documentos para habilitação (anexados à proposta vencedora)</h2>
+                ${habBlocosHtml}
+            `;
+
+            if (finalSectionData) {
+                let finalRows = '';
+                finalSectionData.items.forEach((item, itemIndex) => {
+                    const inputId = `sFinal_i${itemIndex}`;
+                    const value = formData[inputId] || 'Não preenchido';
+                    let details = `<span class="status ${statusClass(value)}">${escapeHTML(value)}</span>`;
+                    const observation = (formData[`${inputId}_observation`] || '').trim();
+                    if (observation) {
+                        details += `<br><strong>Obs:</strong> ${escapeHTML(observation)}`;
+                    }
+                    finalRows += `<tr><td class="col-doc">${escapeHTML(item.text)}</td><td class="col-sit">${details}</td></tr>`;
+                });
+
+                sectionsHTML += `
+                    <h2>${escapeHTML(finalSectionData.section)}</h2>
+                    <table>
+                        <colgroup>
+                            <col style="width: 72%;">
+                            <col style="width: 28%;">
+                        </colgroup>
+                        <thead><tr><th class="col-doc">Documento / Item</th><th class="col-sit">Situação / Informação</th></tr></thead>
+                        <tbody>${finalRows}</tbody>
+                    </table>
+                `;
+            }
+
+            if (Array.isArray(record.quotes) && record.quotes.length > 0) {
+                const quoteRows = record.quotes.map((q, idx) => {
+                    const ev = evaluateQuoteStatus(q);
+                    const srcTag = q.sourceType ? `[${escapeHTML(q.sourceType)}] ` : '';
+                    return `<tr>
+                        <td class="col-doc">${idx + 1}. ${srcTag}${escapeHTML(q.supplier)}${q.cnpj ? ` (CNPJ: ${escapeHTML(q.cnpj)})` : ''} — Início: ${escapeHTML(q.startDate || '-')} | Até: ${escapeHTML(q.endDate || '-')} ${q.validityDays ? `(${q.validityDays}d)` : ''}</td>
+                        <td class="col-sit"><strong>${escapeHTML(ev.label)}</strong><br><small>${escapeHTML(ev.detail)}</small></td>
+                    </tr>`;
+                }).join('');
+
+                sectionsHTML += `
+                    <h2>Relatório de Cotações Adicionadas</h2>
+                    <table>
+                        <colgroup>
+                            <col style="width: 72%;">
+                            <col style="width: 28%;">
+                        </colgroup>
+                        <thead><tr><th class="col-doc">Cotação / Fonte / Período</th><th class="col-sit">Validade</th></tr></thead>
+                        <tbody>${quoteRows}</tbody>
+                    </table>
+                `;
+            }
+
+            if (Array.isArray(record.proposalItems) && record.proposalItems.length > 0 && Array.isArray(record.quotes) && record.quotes.some(q => q.precos && Object.values(q.precos).some(v => Number(v) > 0))) {
+                let grandTotalQuotes = 0;
+                const quoteMatrixRows = record.proposalItems.map(it => {
+                    const qty = Number(it.quantidade) || 0;
+                    let sum = 0, cnt = 0;
+                    record.quotes.forEach(q => {
+                        const v = Number(q.precos && q.precos[it.id]) || 0;
+                        if (v > 0) { sum += v; cnt++; }
+                    });
+                    const avg = cnt > 0 ? sum / cnt : 0;
+                    const tot = avg * qty;
+                    grandTotalQuotes += tot;
+                    return `<tr>
+                        <td class="col-doc">Item ${escapeHTML(it.seq)} (Ágilli: ${escapeHTML(it.codigo || '-')} | TCE: ${escapeHTML(it.codigoTce || '-')}) — ${escapeHTML(it.descricao)} (Qtd: ${escapeHTML(formatQtyBR(qty))} ${escapeHTML(it.unidade)})</td>
+                        <td class="col-sit">Média: <strong>${formatBRL(avg)}</strong><br>Total: <strong>${formatBRL(tot)}</strong></td>
+                    </tr>`;
+                }).join('');
+
+                sectionsHTML += `
+                    <h2>Mapa de Cotações — Média e Total Estimado (Geral: ${formatBRL(grandTotalQuotes)})</h2>
+                    <table>
+                        <colgroup>
+                            <col style="width: 72%;">
+                            <col style="width: 28%;">
+                        </colgroup>
+                        <thead><tr><th class="col-doc">Item / Códigos / Quantidade</th><th class="col-sit">Média Unitária e Total</th></tr></thead>
+                        <tbody>${quoteMatrixRows}</tbody>
+                    </table>
+                `;
+            }
+
+            if (Array.isArray(record.proposals) && record.proposals.length > 0 && Array.isArray(record.proposalItems) && record.proposalItems.length > 0) {
+                const propRows = record.proposals.map(p => {
+                    let sum = 0;
+                    record.proposalItems.forEach(it => {
+                        const u = Number(p.precos && p.precos[it.id]) || 0;
+                        sum += u * (Number(it.quantidade) || 0);
+                    });
+                    return { nome: p.empresaNome, cnpj: p.empresaCnpj, total: sum };
+                }).sort((a, b) => a.total - b.total).map((p, idx) => `
+                    <tr>
+                        <td class="col-doc">${idx + 1}º Lugar: <strong>${escapeHTML(p.nome)}</strong> (CNPJ: ${escapeHTML(p.cnpj || '-')})</td>
+                        <td class="col-sit"><strong>${formatBRL(p.total)}</strong></td>
+                    </tr>
+                `).join('');
+
+                sectionsHTML += `
+                    <h2>Propostas Recebidas (Classificação Global)</h2>
+                    <table>
+                        <colgroup>
+                            <col style="width: 72%;">
+                            <col style="width: 28%;">
+                        </colgroup>
+                        <thead><tr><th class="col-doc">Empresa / Colocação</th><th class="col-sit">Valor Global</th></tr></thead>
+                        <tbody>${propRows}</tbody>
+                    </table>
+                `;
+            }
+
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                alert('O navegador bloqueou a janela do PDF. Permita pop-ups para este site e tente novamente.');
+                return;
+            }
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>${escapeHTML(record.title)}</title>
+                    <style>
+                        @page { size: A4; margin: 12mm; }
+                        * { box-sizing: border-box; }
+                        body { font-family: Arial, Helvetica, sans-serif; color: #1e293b; margin: 0; background: white; font-size: 11px; }
+                        .header { border-bottom: 3px solid #0571ee; padding-bottom: 10px; margin-bottom: 15px; }
+                        h1 { margin: 0 0 5px; font-size: 17px; color: #075da9; }
+                        .meta { color: #64748b; font-size: 10px; }
+                        h2 { font-size: 12px; color: white; background: #0571ee; padding: 6px 8px; border-radius: 4px; margin: 15px 0 6px; page-break-after: avoid; }
+                        table { width: 100%; table-layout: fixed; border-collapse: collapse; margin-bottom: 8px; }
+                        th, td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: left; vertical-align: middle; word-wrap: break-word; overflow-wrap: break-word; }
+                        th { background: #f1f5f9; font-weight: 700; }
+                        tr { page-break-inside: avoid; }
+                        .col-doc { width: 72%; }
+                        .col-sit { width: 28%; }
+                        .status { display: inline-block; padding: 3px 7px; border-radius: 12px; font-weight: 700; font-size: 10px; }
+                        .tem { background: #d1fae5; color: #047857; }
+                        .nao-tem { background: #fee2e2; color: #b91c1c; }
+                        .assinado { background: #fef3c7; color: #b45309; }
+                        .conexao { background: #dbeafe; color: #1d4ed8; }
+                        .dispensado { background: #e0e7ff; color: #4338ca; }
+                        .vazio { background: #e2e8f0; color: #475569; }
+                        small { color: #475569; font-size: 9px; }
+                        .auth-box { margin-top: 15px; border: 1px solid #cbd5e1; background: #f8fafc; padding: 8px 10px; border-radius: 4px; font-size: 10px; page-break-inside: avoid; }
+                        .footer { margin-top: 16px; padding-top: 6px; border-top: 1px solid #cbd5e1; color: #64748b; font-size: 9px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Prefeitura de Rondonópolis — SEMAGI</h1>
+                        <h1>${escapeHTML(record.title)}</h1>
+                        <div class="meta">Registro salvo em: ${escapeHTML(record.date)} | Status: ${escapeHTML(record.status || 'Em andamento')}${pubInfo}</div>
+                        ${metaDetails ? `<div class="meta" style="margin-top:4px;font-weight:bold;color:#075da9;">${metaDetails}</div>` : ''}
+                        ${protoObs ? `<div class="meta" style="margin-top:4px;color:#1e293b;"><strong>Observação do Protocolo:</strong> ${escapeHTML(protoObs)}</div>` : ''}
+                    </div>
+                    ${sectionsHTML}
+                    <div class="auth-box">
+                        <strong>Obs: Autenticar todas as vias (nome completo e matrícula ou assinatura e carimbo de identificação).</strong><br>
+                        Situação da Autenticação: <strong>${escapeHTML(authStatus)}</strong>
+                        ${authObs ? `<br><strong>Observação:</strong> ${escapeHTML(authObs)}` : ''}
+                    </div>
+                    <div class="footer">Documento gerado pelo Checklist - Ordem de Dispensa.</div>
+                    <script>
+                        window.onload = function() {
+                            setTimeout(function() { window.print(); }, 250);
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+
+            printWindow.document.close();
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function clearForm() {
+            currentEditingId = null;
+            currentQuotes = [];
+            currentProposalItems = [];
+            currentProposals = [];
+            document.getElementById('doc-title').value = "Check List - Dispensa de Licitação Art nº 75, Incisos I e II";
+            document.getElementById('doc-protocolo').value = '';
+            document.getElementById('doc-secretaria').value = '';
+            document.getElementById('doc-protocolo-obs').value = '';
+            document.getElementById('proto-obs-wrapper').classList.add('hidden');
+            document.getElementById('proto-obs-btn').classList.remove('active');
+            document.getElementById('proto-obs-btn').textContent = '📝 Observação';
+            restoreAuthSection({});
+            renderForm();
+        }
+
+        // Inicialização
+        setupAuthRadios();
+        renderForm();
+        renderHistory();
+        checkClosingPublications();
+    </script>
+</body>
+</html>
