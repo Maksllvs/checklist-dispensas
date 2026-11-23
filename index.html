@@ -29,11 +29,9 @@
         h2{margin-top:0;font-size:1.3rem;color:#075da9}
         h3.section-header{color:#fff;background:linear-gradient(90deg,#0571ee,#05abff);border:0;padding:11px 15px;border-radius:10px;margin:26px 0 7px;box-shadow:0 7px 16px rgba(5,113,238,.16);font-size:.96rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 
-        .header-btns-wrap{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
-        .btn-header-report{background:#fff;color:#0565c9;border:none;padding:6px 11px;border-radius:8px;font-size:0.75rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(0,0,0,0.12);transition:.18s}
+        .btn-header-report{background:#fff;color:#0565c9;border:none;padding:6px 12px;border-radius:8px;font-size:0.76rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(0,0,0,0.12);transition:.18s}
         .btn-header-report:hover{background:#eef7ff;transform:translateY(-1px)}
         .quote-count-pill{background:#0571ee;color:#fff;padding:2px 7px;border-radius:999px;font-size:0.7rem;font-weight:800}
-        .pill-mini-count{background:#0571ee;color:#fff;padding:1px 6px;border-radius:999px;font-size:.68rem;font-weight:800;transition:.18s}
 
         .item-row{display:flex;justify-content:space-between;align-items:center;padding:12px 6px;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap;transition:background .2s}
         .item-row:hover{background:#f7fbff}
@@ -50,9 +48,8 @@
         .options-group input[value="Vencido"]:checked+label{background:linear-gradient(135deg,#b91c1c,#7f1d1d)}
         .options-group input[type=radio]:checked:not([value="Tem"]):not([value="Não tem"]):not([value="Vencido"]):not([value="Autenticado"]):not([value="Não autenticado"])+label{background:linear-gradient(135deg,#f6b800,#d98b00)}
 
-        .btn-add-quote{background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;padding:7px 11px;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:5px}
+        .btn-add-quote{background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;padding:7px 11px;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:4px}
         .btn-add-quote:hover{background:#0571ee;color:#fff;border-color:#0571ee}
-        .btn-add-quote:hover .pill-mini-count{background:#fff;color:#0571ee}
 
         .btn-prop-action{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;padding:7px 11px;border-radius:999px;font-size:.75rem;font-weight:800;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:4px}
         .btn-prop-action:hover{background:#059669;color:#fff;border-color:#059669}
@@ -79,6 +76,11 @@
         .observation-input{width:100%;min-height:48px;resize:vertical;padding:8px 10px;border:1px solid var(--border);border-radius:9px;outline:none;font-family:inherit;font-size:.84rem;color:var(--text);background:#fff}
         .observation-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
 
+        .extra-field{display:flex;align-items:center;gap:5px}
+        .extra-field span{font-weight:800;color:#607387;font-size:.82rem}
+        .currency-input{width:105px;padding:7px 8px;border:1px solid var(--border);border-radius:8px;font-size:.84rem;outline:none}
+        .currency-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(5,113,238,.10)}
+
         .obs-aviso{background:#fffbeb;border:1px solid #fde68a;color:#92400e;padding:14px 16px;border-radius:12px;font-size:0.86rem;margin-top:24px;margin-bottom:8px;display:flex;flex-direction:column;gap:10px}
         .obs-aviso-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
         .obs-aviso-title{font-weight:800;line-height:1.4;flex:1 1 280px}
@@ -90,18 +92,19 @@
         button{padding:11px 17px;border:none;border-radius:9px;font-weight:800;cursor:pointer;transition:.18s}
         .btn-save{background:linear-gradient(135deg,#0571ee,#05abff);color:#fff}
         .btn-save:hover{filter:brightness(1.05)}
-        .btn-save:disabled{opacity:.6;cursor:not-allowed}
         .btn-new{background:#64748b;color:#fff}
         .btn-new:hover{background:#475569}
-
-        .cloud-status{display:inline-flex;align-items:center;gap:6px;font-size:0.74rem;font-weight:700;color:#047857;background:#d1fae5;padding:4px 10px;border-radius:999px;margin-bottom:10px}
-        .cloud-status.connecting{color:#b45309;background:#fef3c7}
-        .cloud-status.error{color:#b91c1c;background:#fee2e2}
 
         .history-list{list-style:none;padding:0;margin:14px 0 0;max-height:70vh;overflow-y:auto}
         .history-item{padding:13px;border:1px solid var(--border);border-radius:11px;margin-bottom:9px;background:#fff}
         .history-date{font-size:.76rem;color:var(--muted)}
         .history-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+        .history-io-bar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+        .btn-io{flex:1 1 120px;padding:7px 10px;font-size:0.74rem;border-radius:8px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:.18s}
+        .btn-export{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0}
+        .btn-export:hover{background:#059669;color:#fff;border-color:#059669}
+        .btn-import{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+        .btn-import:hover{background:#2563eb;color:#fff;border-color:#2563eb}
         .history-btn{padding:6px 8px;font-size:.72rem;border-radius:7px}
         .btn-open{background:#e7f2ff;color:#0565c9}
         .btn-delete{background:#feecec;color:#b91c1c}
@@ -146,12 +149,12 @@
         .btn-add-bloco{background:#e0f2fe;color:#0369a1;padding:8px 14px;font-size:0.82rem;border-radius:8px;margin-top:8px;font-weight:800;border:1px solid #bae6fd;display:inline-flex;align-items:center;gap:6px}
         .btn-add-bloco:hover{background:#bae6fd}
 
-        /* Modais */
+        /* Modais (Publicação, Cotações e Propostas Recebidas) */
         .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,23,42,0.55);z-index:1000;justify-content:center;align-items:center;padding:16px}
         .modal-overlay.show{display:flex}
-        .modal-card{background:#fff;padding:24px;border-radius:16px;width:100%;max-width:480px;box-shadow:0 20px 45px rgba(0,0,0,0.22);max-height:92vh;overflow-y:auto}
+        .modal-card{background:#fff;padding:24px;border-radius:16px;width:100%;max-width:460px;box-shadow:0 20px 45px rgba(0,0,0,0.22);max-height:92vh;overflow-y:auto}
         .modal-card.wide{max-width:780px}
-        .modal-card.extra-wide{max-width:1240px}
+        .modal-card.extra-wide{max-width:1100px}
         .modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:16px;gap:10px}
         .modal-header h3{margin:0;font-size:1.05rem;color:#075da9;background:none;padding:0;box-shadow:none}
         .modal-close{background:#f1f5f9;color:#475569;border:none;width:30px;height:30px;border-radius:8px;font-weight:800;cursor:pointer;padding:0;display:grid;place-items:center;flex-shrink:0}
@@ -163,15 +166,6 @@
         .mode-switch button{flex:1;padding:7px 10px;font-size:0.76rem;border-radius:7px;background:transparent;color:var(--muted);font-weight:750}
         .mode-switch button.active{background:#fff;color:var(--primary);box-shadow:0 2px 6px rgba(0,0,0,0.08)}
         .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
-
-        .source-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
-        .source-chip{padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:var(--surface-soft);color:var(--muted);font-size:0.73rem;font-weight:750;cursor:pointer;transition:.15s}
-        .source-chip:hover{border-color:var(--primary);color:var(--primary)}
-        .source-chip.active{background:#0571ee;color:#fff;border-color:#0571ee}
-
-        .source-type-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.69rem;font-weight:800;margin-left:6px;vertical-align:middle}
-        .stag-public{background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd}
-        .stag-private{background:#f3e8ff;color:#6b21a8;border:1px solid #e9d5ff}
 
         .pub-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;font-size:0.7rem;font-weight:700;margin-top:5px}
         .pub-green{background:#d1fae5;color:#047857}
@@ -198,34 +192,21 @@
         .quote-meta{font-size:0.8rem;color:var(--text);line-height:1.45}
         .quote-warning-msg{margin-top:5px;font-size:0.76rem;font-weight:800;color:#b45309;background:#fef3c7;padding:4px 8px;border-radius:6px;display:inline-block}
 
-        /* Estilos do Modal de Dotações */
-        .dotacao-input-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;background:#f8fbff;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px}
-        .dotacao-input-grid .modal-field{margin-bottom:0}
-        .dotacao-list{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow-y:auto;margin-bottom:14px}
-        .dotacao-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:10px;background:#fff}
-        .dotacao-info{font-size:0.88rem;color:var(--text);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-        .dotacao-num-badge{background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;padding:3px 9px;border-radius:7px;font-weight:800;font-size:0.82rem}
-        .dotacao-val-text{font-weight:800;color:#15803d;font-size:0.92rem}
-        .dotacao-total-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,#eef7ff,#e0f2fe);border:1px solid #b9d9f8;color:#075da9}
-        .dotacao-total-bar span{font-size:0.85rem;font-weight:800}
-        .dotacao-total-bar strong{font-size:1.25rem;font-weight:900;color:#0565c9}
-
-        /* Estilos para Lista de Compras, Mapa de Cotações e Propostas Recebidas */
+        /* Estilos para Lista de Compras e Propostas Recebidas */
         .pdf-upload-zone{border:2px dashed #93c5fd;background:#f0f7ff;border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
         .pdf-upload-info{font-size:0.82rem;color:#1e3a8a;line-height:1.4;flex:1 1 260px}
         .btn-upload-pdf{background:#0571ee;color:#fff;padding:9px 14px;border-radius:8px;font-size:0.8rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
         .btn-upload-pdf:hover{background:#045fc7}
 
-        .items-table-wrapper{overflow-x:auto;border:1px solid var(--border);border-radius:10px;max-height:54vh}
-        .editable-items-table{width:100%;border-collapse:collapse;font-size:0.8rem;min-width:920px}
-        .editable-items-table th{background:#f1f5f9;color:#1e293b;font-weight:800;padding:8px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5;vertical-align:top}
+        .items-table-wrapper{overflow-x:auto;border:1px solid var(--border);border-radius:10px;max-height:52vh}
+        .editable-items-table{width:100%;border-collapse:collapse;font-size:0.8rem;min-width:860px}
+        .editable-items-table th{background:#f1f5f9;color:#1e293b;font-weight:800;padding:8px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5}
         .editable-items-table td{padding:6px;border-bottom:1px solid var(--border);vertical-align:top;background:#fff}
         .tbl-input{width:100%;padding:6px 7px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.79rem;font-family:inherit;color:var(--text);outline:none}
         .tbl-input:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(5,113,238,.12)}
         .tbl-textarea{width:100%;min-height:48px;resize:vertical;padding:6px 7px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.78rem;font-family:inherit;color:var(--text);outline:none;line-height:1.35}
         .tbl-textarea:focus{border-color:var(--primary)}
         .tbl-total-cell{font-weight:800;color:#075da9;white-space:nowrap;padding-top:11px !important;font-size:0.81rem}
-        .tbl-avg-cell{font-weight:800;color:#047857;white-space:nowrap;padding-top:11px !important;font-size:0.81rem;background:#f0fdf4 !important}
         .table-footer-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;padding:10px 14px;background:#f8fbff;border:1px solid var(--border);border-radius:10px}
 
         .rank-card{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:#fff;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
@@ -257,7 +238,6 @@
             .date-input{width:112px}
             .observation-wrapper{min-width:0;width:100%}
             .quote-summary-grid{grid-template-columns:1fr}
-            .dotacao-input-grid{grid-template-columns:1fr}
         }
     </style>
 </head>
@@ -346,10 +326,7 @@
         </div>
 
         <div class="history-container">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
-                <h2 style="margin:0">Dispensas de Licitação</h2>
-                <span class="cloud-status connecting" id="cloud-status-badge">⏳ Conectando...</span>
-            </div>
+            <h2>Dispensas de Licitação</h2>
             <input type="text" id="history-search" class="search-box" placeholder="🔍 Pesquisar protocolo, secretaria, empresa..." oninput="renderHistory()">
             <div class="status-filters" id="status-filters">
                 <button type="button" class="filter-chip active" data-filter="Todos" onclick="setStatusFilter('Todos', this)">Todos</button>
@@ -359,43 +336,14 @@
                 <button type="button" class="filter-chip" data-filter="Suspensa" onclick="setStatusFilter('Suspensa', this)">Suspensa</button>
                 <button type="button" class="filter-chip" data-filter="Cancelada" onclick="setStatusFilter('Cancelada', this)">Cancelada</button>
             </div>
+            <div class="history-io-bar">
+                <button type="button" class="btn-io btn-export" onclick="exportHistoryJSON()">📤 Exportar</button>
+                <label class="btn-io btn-import" for="import-history-file">
+                    📥 Importar
+                    <input type="file" id="import-history-file" accept=".json,application/json" style="display:none" onchange="importHistoryJSON(event)">
+                </label>
+            </div>
             <ul class="history-list" id="history-list"></ul>
-        </div>
-    </div>
-
-    <!-- Modal: Dotações Orçamentárias -->
-    <div id="dotacao-modal" class="modal-overlay">
-        <div class="modal-card wide">
-            <div class="modal-header">
-                <h3>💰 Dotações Orçamentárias</h3>
-                <button type="button" class="modal-close" onclick="closeDotacaoModal()">✕</button>
-            </div>
-            <p style="font-size:0.8rem;color:var(--muted);margin-top:-8px;margin-bottom:14px;line-height:1.4;">
-                Informe o número próprio de cada dotação (ex: 234, 578, 958) e o respectivo valor atribuído para somar o total do processo.
-            </p>
-
-            <div class="dotacao-input-grid">
-                <div class="modal-field">
-                    <label for="dotacao-numero">Número da Dotação *</label>
-                    <input type="text" id="dotacao-numero" placeholder="Ex: 234" onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('dotacao-valor').focus();}">
-                </div>
-                <div class="modal-field">
-                    <label for="dotacao-valor">Valor Atribuído (R$) *</label>
-                    <input type="text" id="dotacao-valor" placeholder="R$ 0,00" inputmode="numeric" oninput="maskCurrencyInput(this)" onkeydown="if(event.key==='Enter'){event.preventDefault(); addDotacao();}">
-                </div>
-                <button type="button" style="background:var(--primary);color:#fff;padding:10px 15px;height:39px;" onclick="addDotacao()">➕ Adicionar</button>
-            </div>
-
-            <div id="dotacao-list-container" class="dotacao-list"></div>
-
-            <div class="dotacao-total-bar">
-                <span>Valor Total das Dotações (<span id="dotacao-total-itens">0</span>):</span>
-                <strong id="dotacao-total-valor">R$ 0,00</strong>
-            </div>
-
-            <div class="modal-actions">
-                <button type="button" style="background:var(--primary);color:#fff;" onclick="closeDotacaoModal()">Concluir</button>
-            </div>
         </div>
     </div>
 
@@ -422,40 +370,21 @@
         </div>
     </div>
 
-    <!-- Modal: Adicionar Cotação (Fonte Pública ou Privada) -->
+    <!-- Modal: Adicionar Cotação -->
     <div id="add-quote-modal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header">
-                <h3>➕ Adicionar Cotação (Pública ou Privada)</h3>
+                <h3>➕ Adicionar Cotação</h3>
                 <button type="button" class="modal-close" onclick="closeAddQuoteModal()">✕</button>
             </div>
-
             <div class="modal-field">
-                <label>Tipo de Fonte da Cotação *</label>
-                <div class="source-chips" id="quote-source-type-chips">
-                    <button type="button" class="source-chip active" data-type="Banco de Preços" onclick="selectQuoteSourceType('Banco de Preços', this)">🏛️ Banco de Preços</button>
-                    <button type="button" class="source-chip" data-type="PNCP" onclick="selectQuoteSourceType('PNCP', this)">🌐 PNCP</button>
-                    <button type="button" class="source-chip" data-type="TCE-MT" onclick="selectQuoteSourceType('TCE-MT', this)">⚖️ TCE-MT</button>
-                    <button type="button" class="source-chip" data-type="Empresa Privada" onclick="selectQuoteSourceType('Empresa Privada', this)">🏢 Empresa Privada</button>
-                    <button type="button" class="source-chip" data-type="Outro Órgão / Ata" onclick="selectQuoteSourceType('Outro Órgão / Ata', this)">📄 Outro Órgão / Ata</button>
-                </div>
+                <label for="quote-supplier">Fornecedor / Fonte (Opcional)</label>
+                <input type="text" id="quote-supplier" placeholder="Ex: Empresa ABC Ltda / Banco de Preços">
             </div>
-
-            <div class="modal-field">
-                <label for="quote-supplier" id="quote-supplier-label">Descrição / Identificação da Fonte (Opcional)</label>
-                <input type="text" id="quote-supplier" placeholder="Ex: Banco de Preços - Cotação nº 1234/2026">
-            </div>
-
-            <div class="modal-field" id="quote-cnpj-field" style="display:none;">
-                <label for="quote-cnpj">CNPJ da Empresa (Opcional)</label>
-                <input type="text" id="quote-cnpj" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJInput(this)">
-            </div>
-
             <div class="modal-field">
                 <label for="quote-start-date">Data Inicial da Cotação *</label>
                 <input type="text" id="quote-start-date" placeholder="dd/mm/aaaa" maxlength="10" inputmode="numeric" oninput="maskDateInput(this)" onblur="completeDateYear(this)">
             </div>
-
             <div class="mode-switch">
                 <button type="button" id="qmode-days" class="active" onclick="setQuoteMode('days')">Informar Dias de Validade</button>
                 <button type="button" id="qmode-date" onclick="setQuoteMode('date')">Informar Data Final ("Até")</button>
@@ -476,64 +405,18 @@
         </div>
     </div>
 
-    <!-- Modal: Relatório de Validade das Cotações Adicionadas -->
+    <!-- Modal: Relatório de Cotações Adicionadas -->
     <div id="report-quotes-modal" class="modal-overlay">
         <div class="modal-card wide">
             <div class="modal-header">
-                <h3>📊 Validade das Cotações Adicionadas</h3>
+                <h3>📊 Cotações Adicionadas — Relatório de Validade</h3>
                 <button type="button" class="modal-close" onclick="closeQuotesReportModal()">✕</button>
             </div>
             <div id="quotes-report-content"></div>
             <div class="modal-actions">
                 <button type="button" style="background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;" onclick="closeQuotesReportModal(); openAddQuoteModal();">+ Nova Cotação</button>
-                <button type="button" style="background:#059669;color:#fff;" onclick="closeQuotesReportModal(); openQuotesMatrixModal();">🧮 Mapa de Cotações (Média/Total)</button>
-                <button type="button" style="background:#fff3d6;color:#9a6500;" onclick="printQuotesReportPDF()">🖨️ Imprimir Validades</button>
+                <button type="button" style="background:#fff3d6;color:#9a6500;" onclick="printQuotesReportPDF()">🖨️ Imprimir / PDF</button>
                 <button type="button" style="background:#e2e8f0;color:#334155;" onclick="closeQuotesReportModal()">Fechar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal: Mapa de Cotações (Lista de Itens + Cotação 01, 02, 03... + Média + Total) -->
-    <div id="quotes-matrix-modal" class="modal-overlay">
-        <div class="modal-card extra-wide">
-            <div class="modal-header">
-                <h3>🧮 Mapa de Cotações — Cálculo de Média e Valor Total</h3>
-                <button type="button" class="modal-close" onclick="closeQuotesMatrixModal()">✕</button>
-            </div>
-
-            <div class="pdf-upload-zone">
-                <div class="pdf-upload-info">
-                    <strong>📄 Importar Lista de Compras (PDF ÁgiliBlue):</strong><br>
-                    Importe o PDF da Lista de Compras para preencher automaticamente <em>Item, Código Ágilli, Código TCE, Descrição, Und de Medida, Quantidade</em> e o <em>Valor Estimado</em> (que também pode ser usado na aba de Propostas).
-                </div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                    <label class="btn-upload-pdf" for="quotes-pdf-input">
-                        📤 Importar Lista (PDF)
-                        <input type="file" id="quotes-pdf-input" accept="application/pdf" style="display:none" onchange="handleListaComprasPDF(event, 'quotes')">
-                    </label>
-                    <button type="button" style="background:#eef7ff;color:#0565c9;border:1px solid #b9d9f8;padding:9px 13px;font-size:0.79rem;" onclick="addQuoteColumnFromMatrix()">
-                        ＋ Adicionar Coluna de Cotação
-                    </button>
-                </div>
-            </div>
-
-            <div class="items-table-wrapper">
-                <table class="editable-items-table" id="quotes-matrix-table">
-                    <thead id="quotes-matrix-thead"></thead>
-                    <tbody id="quotes-matrix-tbody"></tbody>
-                </table>
-            </div>
-
-            <div class="table-footer-bar">
-                <button type="button" style="background:#e0f2fe;color:#0369a1;padding:8px 13px;font-size:0.78rem;" onclick="addItemRowFromQuotesMatrix()">＋ Adicionar Item Manualmente</button>
-                <div style="font-size:0.95rem;font-weight:900;color:#075da9;">
-                    Valor Total Geral (Soma das Médias × Quantidades): <span id="quotes-matrix-grand-total">R$ 0,00</span>
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <button type="button" style="background:#fff3d6;color:#9a6500;" onclick="printQuotesMatrixPDF()">🖨️ Imprimir / PDF do Mapa de Cotações</button>
-                <button type="button" style="background:var(--primary);color:#fff;" onclick="saveQuotesMatrixAndClose()">Salvar e Fechar</button>
             </div>
         </div>
     </div>
@@ -542,18 +425,18 @@
     <div id="proposal-items-modal" class="modal-overlay">
         <div class="modal-card extra-wide">
             <div class="modal-header">
-                <h3>📋 Lista de Itens do Processo (Base para Propostas e Cotações)</h3>
+                <h3>📋 Lista de Itens do Processo (Base para Propostas)</h3>
                 <button type="button" class="modal-close" onclick="closeProposalItemsModal()">✕</button>
             </div>
 
             <div class="pdf-upload-zone">
                 <div class="pdf-upload-info">
                     <strong>📄 Importar PDF da Lista de Compras (ÁgiliBlue):</strong><br>
-                    Selecione o PDF oficial da Lista de Compras para extrair automaticamente <em>Sequência, Código Ágilli, Código TCE, Descrição, Unidade, Quantidade e Valor Unitário Estimado</em>. Todos os campos permanecem editáveis abaixo.
+                    Selecione o PDF oficial da Lista de Compras para extrair automaticamente <em>Sequência, Código, Código TCE, Descrição, Unidade, Quantidade e Preço Estimado</em>. Todos os campos permanecem editáveis abaixo.
                 </div>
                 <label class="btn-upload-pdf" for="agiliblue-pdf-input">
                     📤 Importar Lista (PDF)
-                    <input type="file" id="agiliblue-pdf-input" accept="application/pdf" style="display:none" onchange="handleListaComprasPDF(event, 'proposals')">
+                    <input type="file" id="agiliblue-pdf-input" accept="application/pdf" style="display:none" onchange="handleListaComprasPDF(event)">
                 </label>
             </div>
 
@@ -561,11 +444,11 @@
                 <table class="editable-items-table">
                     <thead>
                         <tr>
-                            <th style="width:55px;">Item</th>
-                            <th style="width:85px;">Cód. Ágilli</th>
+                            <th style="width:55px;">Seq.</th>
+                            <th style="width:85px;">Código</th>
                             <th style="width:95px;">Cód. TCE</th>
                             <th>Descrição do Item</th>
-                            <th style="width:90px;">Und. Medida</th>
+                            <th style="width:85px;">Unidade</th>
                             <th style="width:105px;">Quantidade</th>
                             <th style="width:115px;">Unit. Estimado</th>
                             <th style="width:120px;">Total Estimado</th>
@@ -611,7 +494,7 @@
             </div>
 
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
-                <span style="font-size:0.8rem;color:var(--muted);font-weight:700;">Informe manualmente os valores unitários propostos pela empresa:</span>
+                <span style="font-size:0.8rem;color:var(--muted);font-weight:700;">Informe os valores unitários propostos pela empresa (campos alteráveis):</span>
                 <button type="button" style="background:#eff6ff;color:#1d4ed8;padding:6px 10px;font-size:0.74rem;" onclick="closeAddProposalModal(); openProposalItemsModal();">⚙️ Editar Lista Base / Importar PDF</button>
             </div>
 
@@ -619,8 +502,8 @@
                 <table class="editable-items-table">
                     <thead>
                         <tr>
-                            <th style="width:50px;">Item</th>
-                            <th style="width:80px;">Cód. Ágilli</th>
+                            <th style="width:50px;">Seq.</th>
+                            <th style="width:80px;">Código</th>
                             <th style="width:90px;">Cód. TCE</th>
                             <th>Descrição do Item</th>
                             <th style="width:80px;">Unid.</th>
@@ -677,139 +560,6 @@
         </div>
     </div>
 
-    <!-- Script de Sincronização em Tempo Real com Firebase Firestore -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import {
-            getFirestore, collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy
-        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCAPYyVcSPwI30-VWHDKQkJJikvb2k5SJQ",
-            authDomain: "checklist-semagi.firebaseapp.com",
-            projectId: "checklist-semagi",
-            storageBucket: "checklist-semagi.firebasestorage.app",
-            messagingSenderId: "745465206175",
-            appId: "1:745465206175:web:c459fc87e9b3f79bbb19aa"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const dispensasRef = collection(db, "dispensas_checklist");
-
-        window.cloudHistory = [];
-        let isInitialLoad = true;
-        let isHandlingRemoteUpdate = false;
-        let isSavingSilently = false;
-        let hasAlertedClosingToday = false;
-
-        const q = query(dispensasRef, orderBy("createdAt", "desc"));
-        onSnapshot(q, (snapshot) => {
-            const newHistory = snapshot.docs.map(d => ({
-                id: d.id,
-                ...d.data()
-            }));
-
-            window.cloudHistory = newHistory;
-
-            const badge = document.getElementById('cloud-status-badge');
-            if (badge) {
-                badge.className = 'cloud-status';
-                badge.textContent = '☁️ Sincronizado';
-            }
-
-            if (typeof window.renderHistory === 'function') {
-                window.renderHistory();
-            }
-
-            if (!hasAlertedClosingToday && typeof window.checkClosingPublications === 'function') {
-                hasAlertedClosingToday = true;
-                window.checkClosingPublications();
-            }
-
-            if (isInitialLoad) {
-                isInitialLoad = false;
-                return;
-            }
-
-            if (isHandlingRemoteUpdate || isSavingSilently) {
-                return;
-            }
-
-            const remoteAddedDocs = snapshot.docChanges().filter(
-                change => change.type === "added" && !change.doc.metadata.hasPendingWrites
-            );
-
-            if (remoteAddedDocs.length > 0) {
-                isHandlingRemoteUpdate = true;
-                setTimeout(async () => {
-                    try {
-                        const shouldSaveAndReload = confirm(
-                            "🔄 Uma nova dispensa foi adicionada no sistema por outro usuário!\n\nDeseja salvar o seu progresso atual e reiniciar a página para carregar as modificações?"
-                        );
-
-                        if (shouldSaveAndReload) {
-                            if (typeof window.saveDataSilently === 'function') {
-                                isSavingSilently = true;
-                                try {
-                                    await window.saveDataSilently();
-                                } finally {
-                                    isSavingSilently = false;
-                                }
-                            }
-                            window.location.reload();
-                        }
-                    } finally {
-                        isHandlingRemoteUpdate = false;
-                    }
-                }, 50);
-            }
-        }, (error) => {
-            console.error("Erro ao sincronizar com o banco:", error);
-            const badge = document.getElementById('cloud-status-badge');
-            if (badge) {
-                badge.className = 'cloud-status error';
-                badge.textContent = '⚠️ Erro no Banco';
-            }
-        });
-
-        window.cloudSaveRecord = async (record) => {
-            isSavingSilently = true;
-            try {
-                await setDoc(doc(db, "dispensas_checklist", record.id), record);
-            } finally {
-                setTimeout(() => { isSavingSilently = false; }, 300);
-            }
-        };
-
-        window.cloudUpdateStatus = async (id, newStatus) => {
-            isSavingSilently = true;
-            try {
-                await updateDoc(doc(db, "dispensas_checklist", id), { status: newStatus });
-            } finally {
-                setTimeout(() => { isSavingSilently = false; }, 300);
-            }
-        };
-
-        window.cloudUpdatePublication = async (id, publicacao) => {
-            isSavingSilently = true;
-            try {
-                await updateDoc(doc(db, "dispensas_checklist", id), { publicacao });
-            } finally {
-                setTimeout(() => { isSavingSilently = false; }, 300);
-            }
-        };
-
-        window.cloudDeleteRecord = async (id) => {
-            isSavingSilently = true;
-            try {
-                await deleteDoc(doc(db, "dispensas_checklist", id));
-            } finally {
-                setTimeout(() => { isSavingSilently = false; }, 300);
-            }
-        };
-    </script>
-
     <script>
         if (window.pdfjsLib) {
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -826,7 +576,7 @@
                     { text: "Comprovação de Inclusão no PCA (Publicação);", options: ["Tem", "Não tem"] },
                     { text: "Mapa de Risco" },
                     { text: "Termo de referência;" },
-                    { text: "Classificação orçamentaria autorizada pela equipe econômica;", hasDotacaoAction: true },
+                    { text: "Classificação orçamentaria autorizada pela equipe econômica;", extra: "currency" },
                     { text: "Justificativa da necessidade da aquisição/serviço;" },
                     { text: "Justificativa da escolha do fornecedor (se tiver preço privado);" },
                     { text: "Orçamentos válido (contendo todos itens solicitados); (Orçamentos para média);", hasQuoteAction: true },
@@ -884,20 +634,14 @@
         let habilitacaoInstancesCount = 0;
         let activePubRecordId = null;
         let currentStatusFilter = 'Todos';
-
-        // Estado das Dotações Orçamentárias
-        let currentDotacoes = []; // [{ id, numero, valor }]
-
-        // Estado das Cotações (Fontes Públicas/Privadas + Valores por Item)
         let currentQuotes = [];
         let quoteInputMode = 'days';
-        let selectedQuoteSourceType = 'Banco de Preços';
 
-        // Estado da Lista de Itens e Propostas Recebidas
-        let currentProposalItems = [];
-        let currentProposals = [];
+        // Estado das Propostas Recebidas e Lista de Compras
+        let currentProposalItems = []; // [{ id, seq, codigo, codigoTce, descricao, unidade, quantidade, precoEstimado }]
+        let currentProposals = [];    // [{ id, empresaNome, empresaCnpj, precos: { [itemId]: number } }]
         let editingProposalId = null;
-        let proposalRankingMode = 'global';
+        let proposalRankingMode = 'global'; // 'global' | 'item'
 
         function setStatusFilter(status, btnEl) {
             currentStatusFilter = status;
@@ -972,31 +716,7 @@
             input.value = v;
         }
 
-        function formatCurrencyBRL(value) {
-            const num = Number(value) || 0;
-            return num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
-
-        function maskCurrencyInput(input) {
-            let digits = (input.value || '').replace(/\D/g, '');
-            if (!digits) {
-                input.value = '';
-                return;
-            }
-            const numericValue = parseInt(digits, 10) / 100;
-            input.value = formatCurrencyBRL(numericValue);
-        }
-
-        function parseCurrencyBRL(str) {
-            if (typeof str === 'number') return str;
-            const clean = String(str || '')
-                .replace(/[^\d,.-]/g, '')
-                .replace(/\./g, '')
-                .replace(',', '.');
-            const parsed = parseFloat(clean);
-            return isNaN(parsed) ? 0 : parsed;
-        }
-
+        // Insere barras automaticamente (dd/mm/aaaa) enquanto o usuário digita
         function maskDateInput(input) {
             let digits = (input.value || '').replace(/\D/g, '').slice(0, 8);
             if (digits.length > 4) {
@@ -1008,6 +728,7 @@
             }
         }
 
+        // Completa o ano automaticamente ao pressionar TAB ou sair do campo se só informou dia e mês
         function completeDateYear(input) {
             const raw = (input.value || '').trim();
             if (!raw) return;
@@ -1119,9 +840,6 @@
         }
 
         function evaluateQuoteStatus(quote) {
-            if (!quote.startDate || !quote.endDate) {
-                return { status: 'valid', label: 'Sem data definida', detail: 'Validade não informada na cotação', businessDaysLeft: 99, calendarDaysLeft: 99 };
-            }
             const res = evaluatePeriodStatus(quote.startDate, quote.endDate);
             if (res.status === 'expired') res.label = 'Vencida';
             if (res.status === 'valid') res.label = 'Válida';
@@ -1139,13 +857,6 @@
             const badge = document.getElementById('proposal-count-pill');
             if (badge) {
                 badge.textContent = currentProposals.length;
-            }
-        }
-
-        function updateDotacaoCountBadge() {
-            const badge = document.getElementById('dotacao-count-pill');
-            if (badge) {
-                badge.textContent = currentDotacoes.length;
             }
         }
 
@@ -1182,11 +893,11 @@
             const formData = savedRecord ? (savedRecord.data || savedRecord) : {};
             if (savedRecord) {
                 currentQuotes = Array.isArray(savedRecord.quotes) ? JSON.parse(JSON.stringify(savedRecord.quotes)) : [];
-                currentDotacoes = Array.isArray(savedRecord.dotacoes) ? JSON.parse(JSON.stringify(savedRecord.dotacoes)) : [];
                 currentProposalItems = Array.isArray(savedRecord.proposalItems) ? JSON.parse(JSON.stringify(savedRecord.proposalItems)) : [];
                 currentProposals = Array.isArray(savedRecord.proposals) ? JSON.parse(JSON.stringify(savedRecord.proposals)) : [];
             }
 
+            // Preencher Protocolo, Secretaria e Observação do Protocolo
             document.getElementById('doc-protocolo').value = formData['protocolo_numero'] || '';
             document.getElementById('doc-secretaria').value = formData['secretaria'] || '';
             const protoObs = formData['protocolo_obs'] || '';
@@ -1215,24 +926,12 @@
                 sectionTitle.appendChild(titleSpan);
 
                 if (block.isBudgetSection) {
-                    const headerBtns = document.createElement('div');
-                    headerBtns.className = 'header-btns-wrap';
-
-                    const matrixBtn = document.createElement('button');
-                    matrixBtn.type = 'button';
-                    matrixBtn.className = 'btn-header-report';
-                    matrixBtn.innerHTML = `🧮 Mapa de Cotações (Média/Total)`;
-                    matrixBtn.onclick = openQuotesMatrixModal;
-                    headerBtns.appendChild(matrixBtn);
-
                     const reportBtn = document.createElement('button');
                     reportBtn.type = 'button';
                     reportBtn.className = 'btn-header-report';
                     reportBtn.innerHTML = `📊 Cotações Adicionadas <span class="quote-count-pill" id="quote-count-pill">${currentQuotes.length}</span>`;
                     reportBtn.onclick = openQuotesReportModal;
-                    headerBtns.appendChild(reportBtn);
-
-                    sectionTitle.appendChild(headerBtns);
+                    sectionTitle.appendChild(reportBtn);
                 }
 
                 if (block.isProposalSection) {
@@ -1323,9 +1022,7 @@
 
             const cnpjField = document.createElement('div');
             cnpjField.className = 'company-field';
-            cnpjField.innerHTML = `<label>CNPJ:</label><input type="text" class="hab-empresa-cnpj" placeholder="00.000.000/0000-00" maxlength="18" inputmode="numeric" value="${escapeHTML(blocoData ? blocoData.empresaCnpj : '')}">`;
-            const cnpjInput = cnpjField.querySelector('input');
-            cnpjInput.addEventListener('input', () => maskCNPJInput(cnpjInput));
+            cnpjField.innerHTML = `<label>CNPJ:</label><input type="text" class="hab-empresa-cnpj" placeholder="00.000.000/0000-00" value="${escapeHTML(blocoData ? blocoData.empresaCnpj : '')}">`;
             inputsDiv.appendChild(cnpjField);
 
             blocoDiv.appendChild(inputsDiv);
@@ -1349,6 +1046,7 @@
 
             let savedValue = '';
             let savedDate = '';
+            let savedCurrency = '';
             let savedObs = '';
 
             const formData = (savedSource && savedSource.data) ? savedSource.data : (savedSource || {});
@@ -1368,6 +1066,7 @@
                 } else {
                     savedValue = formData[inputId] || '';
                     savedDate = formData[`${inputId}_date`] || '';
+                    savedCurrency = formData[`${inputId}_value`] || '';
                     savedObs = formData[`${inputId}_observation`] || '';
                 }
             }
@@ -1376,23 +1075,7 @@
                 const optionsGroup = document.createElement('div');
                 optionsGroup.className = 'options-group';
 
-                if (item.hasDotacaoAction) {
-                    const addDotacaoBtn = document.createElement('button');
-                    addDotacaoBtn.type = 'button';
-                    addDotacaoBtn.className = 'btn-add-quote';
-                    addDotacaoBtn.innerHTML = `➕ Adicionar dotação <span class="pill-mini-count" id="dotacao-count-pill">${currentDotacoes.length}</span>`;
-                    addDotacaoBtn.onclick = openDotacaoModal;
-                    optionsGroup.appendChild(addDotacaoBtn);
-                }
-
                 if (item.hasQuoteAction) {
-                    const quoteMatrixBtn = document.createElement('button');
-                    quoteMatrixBtn.type = 'button';
-                    quoteMatrixBtn.className = 'btn-prop-list';
-                    quoteMatrixBtn.innerHTML = '📋 Lista / Mapa de Cotações';
-                    quoteMatrixBtn.onclick = openQuotesMatrixModal;
-                    optionsGroup.appendChild(quoteMatrixBtn);
-
                     const addQuoteBtn = document.createElement('button');
                     addQuoteBtn.type = 'button';
                     addQuoteBtn.className = 'btn-add-quote';
@@ -1472,6 +1155,27 @@
                 }
             }
 
+            if (item.extra === 'currency') {
+                const currencyWrapper = document.createElement('div');
+                currencyWrapper.className = 'extra-field';
+
+                const prefix = document.createElement('span');
+                prefix.textContent = 'R$';
+
+                const currencyInput = document.createElement('input');
+                currencyInput.type = 'text';
+                currencyInput.inputMode = 'decimal';
+                currencyInput.placeholder = '0,00';
+                currencyInput.name = `${inputId}_value`;
+                currencyInput.id = `${inputId}_value`;
+                currencyInput.className = 'currency-input';
+                currencyInput.value = savedCurrency;
+
+                currencyWrapper.appendChild(prefix);
+                currencyWrapper.appendChild(currencyInput);
+                row.appendChild(currencyWrapper);
+            }
+
             if (hasObservation) {
                 const observationButton = document.createElement('button');
                 observationButton.type = 'button';
@@ -1505,90 +1209,7 @@
         }
 
         // ==========================================
-        // MÓDULO DE DOTAÇÕES ORÇAMENTÁRIAS
-        // ==========================================
-
-        function openDotacaoModal() {
-            document.getElementById('dotacao-numero').value = '';
-            document.getElementById('dotacao-valor').value = '';
-            renderDotacoesList();
-            document.getElementById('dotacao-modal').classList.add('show');
-            document.getElementById('dotacao-numero').focus();
-        }
-
-        function closeDotacaoModal() {
-            document.getElementById('dotacao-modal').classList.remove('show');
-        }
-
-        function addDotacao() {
-            const numInput = document.getElementById('dotacao-numero');
-            const valInput = document.getElementById('dotacao-valor');
-
-            const numero = (numInput.value || '').trim();
-            const valor = parseCurrencyBRL(valInput.value);
-
-            if (!numero) {
-                alert('Informe o número da dotação (ex: 234, 578, 958).');
-                numInput.focus();
-                return;
-            }
-
-            if (valor <= 0) {
-                alert('Informe um valor válido maior que zero para a dotação.');
-                valInput.focus();
-                return;
-            }
-
-            currentDotacoes.push({
-                id: Date.now().toString() + Math.random().toString(36).slice(2, 6),
-                numero: numero,
-                valor: valor
-            });
-
-            numInput.value = '';
-            valInput.value = '';
-            numInput.focus();
-
-            updateDotacaoCountBadge();
-            renderDotacoesList();
-        }
-
-        function removeDotacao(dotacaoId) {
-            currentDotacoes = currentDotacoes.filter(d => d.id !== dotacaoId);
-            updateDotacaoCountBadge();
-            renderDotacoesList();
-        }
-
-        function renderDotacoesList() {
-            const container = document.getElementById('dotacao-list-container');
-            const totalItensEl = document.getElementById('dotacao-total-itens');
-            const totalValorEl = document.getElementById('dotacao-total-valor');
-
-            const totalSum = currentDotacoes.reduce((acc, item) => acc + (Number(item.valor) || 0), 0);
-            totalItensEl.textContent = `${currentDotacoes.length} ${currentDotacoes.length === 1 ? 'dotação' : 'dotações'}`;
-            totalValorEl.textContent = formatCurrencyBRL(totalSum);
-
-            if (!currentDotacoes.length) {
-                container.innerHTML = `<div style="text-align:center;padding:20px;color:var(--muted);font-size:0.85rem;border:1px dashed var(--border);border-radius:10px;">
-                    Nenhuma dotação adicionada ainda.<br>Preencha o número da dotação e o valor acima para incluir.
-                </div>`;
-                return;
-            }
-
-            container.innerHTML = currentDotacoes.map(d => `
-                <div class="dotacao-row">
-                    <div class="dotacao-info">
-                        <span class="dotacao-num-badge">Dotação: ${escapeHTML(d.numero)}</span>
-                        <span>—</span>
-                        <span class="dotacao-val-text">${formatCurrencyBRL(d.valor)}</span>
-                    </div>
-                    <button type="button" class="history-btn btn-delete" onclick="removeDotacao('${d.id}')">Excluir</button>
-                </div>
-            `).join('');
-        }
-
-        // ==========================================
-        // UTILITÁRIOS NUMÉRICOS E EXTRATOR PDF
+        // MÓDULO DE PROPOSTAS RECEBIDAS E LISTA PDF
         // ==========================================
 
         function parseBRNumber(str) {
@@ -1620,766 +1241,6 @@
             if (val === 0) return '';
             return val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
         }
-
-        async function handleListaComprasPDF(event, origin = 'proposals') {
-            const file = event.target.files && event.target.files[0];
-            if (!file) return;
-
-            if (!window.pdfjsLib) {
-                alert('A biblioteca de leitura de PDF não pôde ser carregada. Verifique sua conexão ou preencha manualmente.');
-                return;
-            }
-
-            try {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                const allPagesTokens = [];
-
-                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-                    const page = await pdf.getPage(pageNum);
-                    const textContent = await page.getTextContent();
-
-                    const tokens = textContent.items
-                        .map(item => ({
-                            str: (item.str || '').trim(),
-                            x: item.transform[4],
-                            y: item.transform[5],
-                            width: item.width || 0
-                        }))
-                        .filter(t => t.str.length > 0);
-
-                    allPagesTokens.push({ pageNum, tokens });
-                }
-
-                const extractedItems = parseAgiliBlueByColumns(allPagesTokens);
-                if (!extractedItems.length) {
-                    alert('Não foi possível identificar automaticamente a tabela de itens neste PDF. Verifique se é uma Lista de Compras em texto selecionável ou adicione os itens manualmente.');
-                    return;
-                }
-
-                currentProposalItems = extractedItems;
-                if (origin === 'quotes') {
-                    ensureDefaultQuoteColumns();
-                    renderQuotesMatrix();
-                } else {
-                    renderBaseItemsTable();
-                }
-                alert(`✅ ${extractedItems.length} item(ns) extraído(s) com sucesso da Lista de Compras (incluindo valores unitários estimados)!`);
-            } catch (err) {
-                console.error(err);
-                alert('Erro ao ler o arquivo PDF: ' + err.message);
-            } finally {
-                event.target.value = '';
-            }
-        }
-
-        function parseAgiliBlueByColumns(pagesTokens) {
-            const items = [];
-            let colBounds = {
-                seqMax: 75,
-                codMax: 125,
-                tceMax: 185,
-                descMax: 425,
-                unidMax: 485,
-                qtdMax: 555,
-                unitMax: 635
-            };
-
-            const isNoise = (txt) => {
-                return /^Página:\s*\d+/i.test(txt) ||
-                       /^PREFEITURA DE/i.test(txt) ||
-                       /^RONDONÓPOLIS/i.test(txt) ||
-                       /^ESTADO DE MATO GROSSO/i.test(txt) ||
-                       /^Prefeitura Municipal de Rondonópolis/i.test(txt) ||
-                       /^Avenida Duque de Caxias/i.test(txt) ||
-                       /^CNPJ\s*03\.347\.101/i.test(txt) ||
-                       /^Telefone:\s*\(66\)/i.test(txt) ||
-                       /^Lista de compras$/i.test(txt) ||
-                       /^Número:/i.test(txt) ||
-                       /^Data:/i.test(txt) ||
-                       /^Situação:/i.test(txt) ||
-                       /^Estrutura administrativa:/i.test(txt) ||
-                       /^Descrição:/i.test(txt) ||
-                       /^Total:$/i.test(txt);
-            };
-
-            for (const pageData of pagesTokens) {
-                const tokens = pageData.tokens;
-
-                const hSeq = tokens.find(t => /^Sequ[êe]ncia$/i.test(t.str));
-                const hCod = tokens.find(t => /^C[óo]digo$/i.test(t.str) && (!hSeq || t.x > hSeq.x));
-                const hTce = tokens.find(t => /TCE/i.test(t.str));
-                const hItens = tokens.find(t => /^Itens$/i.test(t.str));
-                const hUnid = tokens.find(t => /^Unidade$/i.test(t.str));
-                const hQtd = tokens.find(t => /^Quantidade$/i.test(t.str));
-                const hEst = tokens.find(t => /estimado/i.test(t.str) || /^Pre[çc]o/i.test(t.str));
-                const hTot = tokens.find(t => /^Valor$/i.test(t.str) || /^total$/i.test(t.str));
-
-                let tableTopY = Infinity;
-                if (hSeq) {
-                    tableTopY = hSeq.y - 4;
-                    if (hCod) colBounds.seqMax = (hSeq.x + hCod.x) / 2 + 8;
-                    if (hCod && hTce) colBounds.codMax = (hCod.x + hTce.x) / 2 + 8;
-                    if (hTce && hItens) colBounds.tceMax = (hTce.x + hItens.x) / 2 + 12;
-                    if (hItens && hUnid) colBounds.descMax = hUnid.x - 10;
-                    if (hUnid && hQtd) colBounds.unidMax = (hUnid.x + hQtd.x) / 2 + 5;
-                    if (hQtd && hEst) colBounds.qtdMax = (hQtd.x + hEst.x) / 2 + 5;
-                    if (hEst && hTot) colBounds.unitMax = (hEst.x + hTot.x) / 2 + 5;
-                }
-
-                const footerToken = tokens.find(t => /^Total:$/i.test(t.str) || /^Página:/i.test(t.str));
-                const tableBottomY = footerToken ? footerToken.y + 4 : -Infinity;
-
-                const bodyTokens = tokens.filter(t => {
-                    if (t.y >= tableTopY || t.y <= tableBottomY) return false;
-                    if (isNoise(t.str)) return false;
-                    if (/^(Sequ[êe]ncia|C[óo]digo|TCE|Itens|Unidade|Quantidade|Pre[çc]o|estimado|Valor|total)$/i.test(t.str)) return false;
-                    return true;
-                });
-
-                const seqAnchors = bodyTokens
-                    .filter(t => t.x <= colBounds.seqMax && /^\d{1,4}$/.test(t.str))
-                    .sort((a, b) => b.y - a.y);
-
-                if (!seqAnchors.length) {
-                    if (items.length > 0 && bodyTokens.length > 0) {
-                        const extraDesc = bodyTokens
-                            .filter(t => t.x > colBounds.tceMax && t.x <= colBounds.descMax)
-                            .sort((a, b) => (Math.abs(b.y - a.y) > 3 ? b.y - a.y : a.x - b.x))
-                            .map(t => t.str)
-                            .join(' ');
-                        if (extraDesc) {
-                            items[items.length - 1].descricao = (items[items.length - 1].descricao + ' ' + extraDesc).replace(/\s+/g, ' ').trim();
-                        }
-                    }
-                    continue;
-                }
-
-                for (let i = 0; i < seqAnchors.length; i++) {
-                    const anchor = seqAnchors[i];
-                    const prevAnchor = i > 0 ? seqAnchors[i - 1] : null;
-                    const nextAnchor = i < seqAnchors.length - 1 ? seqAnchors[i + 1] : null;
-
-                    const upperY = prevAnchor ? (prevAnchor.y + anchor.y) / 2 : tableTopY;
-                    const lowerY = nextAnchor ? (anchor.y + nextAnchor.y) / 2 : tableBottomY;
-
-                    const rowTokens = bodyTokens.filter(t => t.y <= upperY && t.y > lowerY);
-
-                    const codTokens = rowTokens.filter(t => t.x > colBounds.seqMax && t.x <= colBounds.codMax);
-                    const tceTokens = rowTokens.filter(t => t.x > colBounds.codMax && t.x <= colBounds.tceMax);
-                    const descTokens = rowTokens.filter(t => t.x > colBounds.tceMax && t.x <= colBounds.descMax);
-                    const unidTokens = rowTokens.filter(t => t.x > colBounds.descMax && t.x <= colBounds.unidMax);
-                    const qtdTokens = rowTokens.filter(t => t.x > colBounds.unidMax && t.x <= colBounds.qtdMax);
-                    const unitTokens = rowTokens.filter(t => t.x > colBounds.qtdMax && t.x <= colBounds.unitMax);
-
-                    const sortReadingOrder = (arr) => arr.sort((a, b) => (Math.abs(b.y - a.y) > 3 ? b.y - a.y : a.x - b.x));
-
-                    const codigo = sortReadingOrder(codTokens).map(t => t.str).join('');
-                    const codigoTce = sortReadingOrder(tceTokens).map(t => t.str).join('');
-                    const descricao = sortReadingOrder(descTokens).map(t => t.str).join(' ').replace(/\s+/g, ' ').trim();
-                    const unidade = sortReadingOrder(unidTokens).map(t => t.str).join(' ').trim() || 'Unidade';
-
-                    const qtdRaw = sortReadingOrder(qtdTokens).map(t => t.str).join('');
-                    const unitRaw = sortReadingOrder(unitTokens).map(t => t.str).join('');
-
-                    items.push({
-                        id: 'item_' + Date.now().toString(36) + '_' + items.length + '_' + Math.random().toString(36).slice(2, 5),
-                        seq: anchor.str.trim(),
-                        codigo: codigo,
-                        codigoTce: codigoTce,
-                        descricao: descricao,
-                        unidade: unidade,
-                        quantidade: parseBRNumber(qtdRaw) || 1,
-                        precoEstimado: parseBRNumber(unitRaw)
-                    });
-                }
-            }
-
-            return items;
-        }
-
-        // ==========================================
-        // MÓDULO DE COTAÇÕES (PÚBLICAS/PRIVADAS + MAPA DE MÉDIA E TOTAL)
-        // ==========================================
-
-        function selectQuoteSourceType(type, btnEl) {
-            selectedQuoteSourceType = type;
-            document.querySelectorAll('#quote-source-type-chips .source-chip').forEach(c => c.classList.remove('active'));
-            if (btnEl) btnEl.classList.add('active');
-
-            const cnpjField = document.getElementById('quote-cnpj-field');
-            const supplierInput = document.getElementById('quote-supplier');
-            const supplierLabel = document.getElementById('quote-supplier-label');
-
-            if (type === 'Empresa Privada') {
-                cnpjField.style.display = 'flex';
-                supplierLabel.textContent = 'Razão Social / Nome da Empresa *';
-                supplierInput.placeholder = 'Ex: Papelaria Central Ltda';
-            } else {
-                cnpjField.style.display = 'none';
-                document.getElementById('quote-cnpj').value = '';
-                supplierLabel.textContent = `Identificação / Detalhe (${type}) (Opcional)`;
-                if (type === 'Banco de Preços') supplierInput.placeholder = 'Ex: Banco de Preços - Cotação nº 1234/2026';
-                else if (type === 'PNCP') supplierInput.placeholder = 'Ex: PNCP - Pregão nº 15/2026 - Pref. Cuiabá';
-                else if (type === 'TCE-MT') supplierInput.placeholder = 'Ex: TCE-MT / Radar - Ata nº 42/2026';
-                else supplierInput.placeholder = 'Ex: Ata RP nº 10/2026 - Secretaria X';
-            }
-        }
-
-        function openAddQuoteModal() {
-            document.getElementById('quote-supplier').value = '';
-            document.getElementById('quote-cnpj').value = '';
-            document.getElementById('quote-start-date').value = '';
-            document.getElementById('quote-days').value = '';
-            document.getElementById('quote-end-date').value = '';
-            const defaultChip = document.querySelector('#quote-source-type-chips .source-chip[data-type="Banco de Preços"]');
-            selectQuoteSourceType('Banco de Preços', defaultChip);
-            setQuoteMode('days');
-            document.getElementById('add-quote-modal').classList.add('show');
-            document.getElementById('quote-supplier').focus();
-        }
-
-        function closeAddQuoteModal() {
-            document.getElementById('add-quote-modal').classList.remove('show');
-        }
-
-        function setQuoteMode(mode) {
-            quoteInputMode = mode;
-            document.getElementById('qmode-days').classList.toggle('active', mode === 'days');
-            document.getElementById('qmode-date').classList.toggle('active', mode === 'date');
-            document.getElementById('qfield-days').style.display = mode === 'days' ? 'flex' : 'none';
-            document.getElementById('qfield-end-date').style.display = mode === 'date' ? 'flex' : 'none';
-        }
-
-        function addQuote(keepOpen) {
-            const rawSupplier = document.getElementById('quote-supplier').value.trim();
-            const cnpj = document.getElementById('quote-cnpj').value.trim();
-
-            if (selectedQuoteSourceType === 'Empresa Privada' && !rawSupplier) {
-                alert('Informe o nome da empresa privada.');
-                document.getElementById('quote-supplier').focus();
-                return;
-            }
-
-            const supplier = rawSupplier || `${selectedQuoteSourceType} (Cotação #${currentQuotes.length + 1})`;
-            const startInput = document.getElementById('quote-start-date');
-            completeDateYear(startInput);
-            const startDateObj = parseDateBR(startInput.value);
-
-            if (!startDateObj) {
-                alert('Por favor, informe uma Data Inicial válida no formato dd/mm/aaaa.');
-                startInput.focus();
-                return;
-            }
-
-            let endDateObj = null;
-            let validityDays = 0;
-
-            if (quoteInputMode === 'days') {
-                const daysVal = parseInt(document.getElementById('quote-days').value, 10);
-                if (!daysVal || daysVal <= 0) {
-                    alert('Informe a quantidade de dias de validade (maior que zero).');
-                    document.getElementById('quote-days').focus();
-                    return;
-                }
-                validityDays = daysVal;
-                endDateObj = new Date(startDateObj);
-                endDateObj.setDate(endDateObj.getDate() + daysVal);
-            } else {
-                const endInput = document.getElementById('quote-end-date');
-                completeDateYear(endInput);
-                endDateObj = parseDateBR(endInput.value);
-                if (!endDateObj) {
-                    alert('Por favor, informe uma Data Final ("Até") válida no formato dd/mm/aaaa.');
-                    endInput.focus();
-                    return;
-                }
-                if (endDateObj < startDateObj) {
-                    alert('A data final não pode ser anterior à data inicial da cotação.');
-                    endInput.focus();
-                    return;
-                }
-                validityDays = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
-            }
-
-            currentQuotes.push({
-                id: Date.now().toString() + Math.random().toString(36).slice(2, 6),
-                sourceType: selectedQuoteSourceType,
-                supplier,
-                cnpj: selectedQuoteSourceType === 'Empresa Privada' ? cnpj : '',
-                startDate: formatDateBR(startDateObj),
-                endDate: formatDateBR(endDateObj),
-                validityDays,
-                precos: {}
-            });
-
-            updateQuoteCountBadge();
-
-            if (keepOpen) {
-                document.getElementById('quote-supplier').value = '';
-                document.getElementById('quote-cnpj').value = '';
-                document.getElementById('quote-start-date').value = '';
-                document.getElementById('quote-days').value = '';
-                document.getElementById('quote-end-date').value = '';
-                document.getElementById('quote-supplier').focus();
-                alert(`Cotação adicionada! Total atual: ${currentQuotes.length} cotação(ões).`);
-            } else {
-                closeAddQuoteModal();
-                openQuotesReportModal();
-            }
-        }
-
-        function removeQuote(quoteId) {
-            currentQuotes = currentQuotes.filter(q => q.id !== quoteId);
-            updateQuoteCountBadge();
-            renderQuotesReport();
-        }
-
-        function openQuotesReportModal() {
-            renderQuotesReport();
-            document.getElementById('report-quotes-modal').classList.add('show');
-        }
-
-        function closeQuotesReportModal() {
-            document.getElementById('report-quotes-modal').classList.remove('show');
-        }
-
-        function renderQuotesReport() {
-            const container = document.getElementById('quotes-report-content');
-            if (!currentQuotes.length) {
-                container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--muted);font-size:0.88rem;">
-                    Nenhuma cotação foi adicionada a este processo ainda.<br>Clique em <strong>"+ Nova Cotação"</strong> para cadastrar fontes públicas (Banco de Preços, PNCP, TCE-MT) ou privadas.
-                </div>`;
-                return;
-            }
-
-            let validCount = 0, warnCount = 0, expiredCount = 0;
-
-            const cardsHTML = currentQuotes.map((q, idx) => {
-                const evalRes = evaluateQuoteStatus(q);
-                if (evalRes.status === 'valid') validCount++;
-                else if (evalRes.status === 'warning') warnCount++;
-                else expiredCount++;
-
-                const badgeClass = evalRes.status === 'valid' ? 'qbadge-valid' : (evalRes.status === 'warning' ? 'qbadge-warn' : 'qbadge-expired');
-                const srcType = q.sourceType || 'Cotação';
-                const isPrivate = srcType === 'Empresa Privada';
-                const srcTagClass = isPrivate ? 'stag-private' : 'stag-public';
-                const cnpjInfo = isPrivate && q.cnpj ? ` — CNPJ: ${escapeHTML(q.cnpj)}` : '';
-
-                return `
-                    <div class="quote-card ${evalRes.status}">
-                        <div>
-                            <span class="quote-badge ${badgeClass}">${evalRes.label}</span>
-                            <span class="source-type-tag ${srcTagClass}">${escapeHTML(srcType)}</span>
-                            <div style="font-weight:800;font-size:0.9rem;color:#19324a;margin-bottom:3px;">${idx + 1}. ${escapeHTML(q.supplier)}${cnpjInfo}</div>
-                            <div class="quote-meta">
-                                <strong>Data Inicial:</strong> ${escapeHTML(q.startDate || '-')} &nbsp;|&nbsp;
-                                <strong>Válida Até:</strong> ${escapeHTML(q.endDate || '-')} ${q.validityDays ? `(${q.validityDays} dias)` : ''}<br>
-                                <strong>Situação Atual:</strong> ${escapeHTML(evalRes.detail)}
-                            </div>
-                            ${evalRes.warningNote ? `<div class="quote-warning-msg">${evalRes.warningNote}</div>` : ''}
-                        </div>
-                        <button type="button" class="history-btn btn-delete" onclick="removeQuote('${q.id}')">Excluir</button>
-                    </div>
-                `;
-            }).join('');
-
-            container.innerHTML = `
-                <div class="quote-summary-grid">
-                    <div class="quote-stat-box stat-valid"><strong>${validCount}</strong><span>Válidas (> 3 dias úteis)</span></div>
-                    <div class="quote-stat-box stat-warn"><strong>${warnCount}</strong><span>Atenção (≤ 3 dias úteis)</span></div>
-                    <div class="quote-stat-box stat-expired"><strong>${expiredCount}</strong><span>Vencidas</span></div>
-                </div>
-                <div class="quote-list">${cardsHTML}</div>
-            `;
-        }
-
-        function ensureDefaultQuoteColumns() {
-            if (currentQuotes.length === 0) {
-                currentQuotes.push({
-                    id: 'qcol_' + Date.now().toString(36) + '_1',
-                    sourceType: 'Banco de Preços',
-                    supplier: 'Cotação 01 (Banco de Preços)',
-                    cnpj: '',
-                    startDate: '',
-                    endDate: '',
-                    validityDays: 0,
-                    precos: {}
-                });
-                updateQuoteCountBadge();
-            }
-            currentQuotes.forEach(q => {
-                if (!q.precos) q.precos = {};
-            });
-        }
-
-        function openQuotesMatrixModal() {
-            if (!currentProposalItems.length) {
-                addBaseItemRow(false);
-            }
-            ensureDefaultQuoteColumns();
-            renderQuotesMatrix();
-            document.getElementById('quotes-matrix-modal').classList.add('show');
-        }
-
-        function closeQuotesMatrixModal() {
-            document.getElementById('quotes-matrix-modal').classList.remove('show');
-        }
-
-        function addQuoteColumnFromMatrix() {
-            const nextNum = String(currentQuotes.length + 1).padStart(2, '0');
-            currentQuotes.push({
-                id: 'qcol_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 5),
-                sourceType: 'Banco de Preços',
-                supplier: `Cotação ${nextNum}`,
-                cnpj: '',
-                startDate: '',
-                endDate: '',
-                validityDays: 0,
-                precos: {}
-            });
-            updateQuoteCountBadge();
-            renderQuotesMatrix();
-        }
-
-        function removeQuoteColumnFromMatrix(qIdx) {
-            if (currentQuotes.length <= 1) {
-                alert('É necessário manter ao menos uma coluna de cotação na tabela.');
-                return;
-            }
-            if (!confirm(`Remover a coluna "${currentQuotes[qIdx].supplier}"?`)) return;
-            currentQuotes.splice(qIdx, 1);
-            updateQuoteCountBadge();
-            renderQuotesMatrix();
-        }
-
-        function updateQuoteColumnHeader(qIdx, newName) {
-            if (currentQuotes[qIdx]) {
-                currentQuotes[qIdx].supplier = newName;
-            }
-        }
-
-        function addItemRowFromQuotesMatrix() {
-            addBaseItemRow(false);
-            renderQuotesMatrix();
-        }
-
-        function removeItemRowFromQuotesMatrix(itemIdx) {
-            currentProposalItems.splice(itemIdx, 1);
-            renderQuotesMatrix();
-        }
-
-        function calcQuoteItemStats(item) {
-            const qty = Number(item.quantidade) || 0;
-            let sum = 0;
-            let count = 0;
-            currentQuotes.forEach(q => {
-                const val = Number(q.precos && q.precos[item.id]) || 0;
-                if (val > 0) {
-                    sum += val;
-                    count++;
-                }
-            });
-            const avg = count > 0 ? (sum / count) : 0;
-            const total = avg * qty;
-            return { avg, total, count };
-        }
-
-        function renderQuotesMatrix() {
-            const thead = document.getElementById('quotes-matrix-thead');
-            const tbody = document.getElementById('quotes-matrix-tbody');
-
-            let quoteHeadersHTML = currentQuotes.map((q, qIdx) => {
-                const numLabel = `Cotação ${String(qIdx + 1).padStart(2, '0')}`;
-                const srcTag = q.sourceType ? `<div style="font-size:0.68rem;color:#0369a1;font-weight:700;margin-bottom:3px;">${escapeHTML(q.sourceType)}</div>` : '';
-                return `
-                    <th style="min-width:135px;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;gap:4px;margin-bottom:2px;">
-                            <span style="font-size:0.72rem;color:#0571ee;">${numLabel}</span>
-                            ${currentQuotes.length > 1 ? `<button type="button" style="background:#fee2e2;color:#b91c1c;padding:1px 5px;font-size:0.65rem;border-radius:4px;" onclick="removeQuoteColumnFromMatrix(${qIdx})" title="Remover coluna">✕</button>` : ''}
-                        </div>
-                        ${srcTag}
-                        <input type="text" class="tbl-input" style="font-size:0.72rem;padding:4px 6px;" value="${escapeHTML(q.supplier)}" placeholder="Fonte / Empresa" oninput="updateQuoteColumnHeader(${qIdx}, this.value)">
-                    </th>
-                `;
-            }).join('');
-
-            thead.innerHTML = `
-                <tr>
-                    <th style="width:52px;">Item</th>
-                    <th style="width:82px;">Código Ágilli</th>
-                    <th style="width:88px;">Código TCE</th>
-                    <th style="min-width:220px;">Descrição</th>
-                    <th style="width:88px;">Und de Medida</th>
-                    <th style="width:92px;">Quantidade</th>
-                    ${quoteHeadersHTML}
-                    <th style="width:110px;background:#dcfce7;color:#14532d;">Média</th>
-                    <th style="width:120px;background:#e0f2fe;color:#075da9;">Total</th>
-                    <th style="width:42px;text-align:center;">Ação</th>
-                </tr>
-            `;
-
-            tbody.innerHTML = '';
-
-            currentProposalItems.forEach((item, itemIdx) => {
-                const tr = document.createElement('tr');
-                const stats = calcQuoteItemStats(item);
-
-                const quoteCellsHTML = currentQuotes.map((q, qIdx) => {
-                    const unitVal = Number(q.precos && q.precos[item.id]) || 0;
-                    return `
-                        <td>
-                            <input type="text" class="tbl-input" value="${escapeHTML(formatUnitInputBR(unitVal))}" placeholder="0,00"
-                                oninput="onMatrixQuotePriceChange(${qIdx}, '${item.id}', this.value, ${itemIdx})">
-                        </td>
-                    `;
-                }).join('');
-
-                tr.innerHTML = `
-                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.seq)}" oninput="updateBaseItemField(${itemIdx}, 'seq', this.value)"></td>
-                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.codigo)}" placeholder="Ágilli" oninput="updateBaseItemField(${itemIdx}, 'codigo', this.value)"></td>
-                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.codigoTce)}" placeholder="TCE" oninput="updateBaseItemField(${itemIdx}, 'codigoTce', this.value)"></td>
-                    <td><textarea class="tbl-textarea" placeholder="Descrição..." oninput="updateBaseItemField(${itemIdx}, 'descricao', this.value)">${escapeHTML(item.descricao)}</textarea></td>
-                    <td><input type="text" class="tbl-input" value="${escapeHTML(item.unidade)}" placeholder="Unid." oninput="updateBaseItemField(${itemIdx}, 'unidade', this.value)"></td>
-                    <td><input type="text" class="tbl-input" value="${escapeHTML(formatQtyBR(item.quantidade))}" oninput="onMatrixQtyChange(${itemIdx}, this.value)"></td>
-                    ${quoteCellsHTML}
-                    <td class="tbl-avg-cell" id="qmatrix_avg_${itemIdx}">${formatBRL(stats.avg)}</td>
-                    <td class="tbl-total-cell" id="qmatrix_tot_${itemIdx}">${formatBRL(stats.total)}</td>
-                    <td style="text-align:center;"><button type="button" class="history-btn btn-delete" style="padding:5px 8px;" onclick="removeItemRowFromQuotesMatrix(${itemIdx})" title="Remover item">✕</button></td>
-                `;
-                tbody.appendChild(tr);
-            });
-
-            recalcQuotesMatrixGrandTotal();
-        }
-
-        function onMatrixQuotePriceChange(qIdx, itemId, rawVal, itemIdx) {
-            if (!currentQuotes[qIdx]) return;
-            if (!currentQuotes[qIdx].precos) currentQuotes[qIdx].precos = {};
-            currentQuotes[qIdx].precos[itemId] = parseBRNumber(rawVal);
-
-            const item = currentProposalItems[itemIdx];
-            if (item) {
-                const stats = calcQuoteItemStats(item);
-                const avgEl = document.getElementById(`qmatrix_avg_${itemIdx}`);
-                const totEl = document.getElementById(`qmatrix_tot_${itemIdx}`);
-                if (avgEl) avgEl.textContent = formatBRL(stats.avg);
-                if (totEl) totEl.textContent = formatBRL(stats.total);
-            }
-            recalcQuotesMatrixGrandTotal();
-        }
-
-        function onMatrixQtyChange(itemIdx, rawVal) {
-            const item = currentProposalItems[itemIdx];
-            if (!item) return;
-            item.quantidade = parseBRNumber(rawVal);
-
-            const stats = calcQuoteItemStats(item);
-            const avgEl = document.getElementById(`qmatrix_avg_${itemIdx}`);
-            const totEl = document.getElementById(`qmatrix_tot_${itemIdx}`);
-            if (avgEl) avgEl.textContent = formatBRL(stats.avg);
-            if (totEl) totEl.textContent = formatBRL(stats.total);
-            recalcQuotesMatrixGrandTotal();
-        }
-
-        function recalcQuotesMatrixGrandTotal() {
-            const grandTotal = currentProposalItems.reduce((acc, item) => acc + calcQuoteItemStats(item).total, 0);
-            const el = document.getElementById('quotes-matrix-grand-total');
-            if (el) el.textContent = formatBRL(grandTotal);
-        }
-
-        function saveQuotesMatrixAndClose() {
-            cleanEmptyBaseItems();
-            closeQuotesMatrixModal();
-        }
-
-        function printQuotesMatrixPDF() {
-            cleanEmptyBaseItems();
-            if (!currentProposalItems.length) {
-                alert('Cadastre ou importe ao menos um item antes de gerar o PDF do Mapa de Cotações.');
-                return;
-            }
-
-            const title = document.getElementById('doc-title').value || 'Mapa de Cotações';
-            const proto = document.getElementById('doc-protocolo').value || 'Não informado';
-            const sec = document.getElementById('doc-secretaria').value || 'Não informada';
-
-            const quoteColsHeader = currentQuotes.map((q, idx) =>
-                `<th>Cotação ${String(idx + 1).padStart(2, '0')}<br><small style="font-weight:normal;">${escapeHTML(q.supplier)}</small></th>`
-            ).join('');
-
-            let grandTotal = 0;
-            const rowsHTML = currentProposalItems.map(item => {
-                const stats = calcQuoteItemStats(item);
-                grandTotal += stats.total;
-
-                const qCells = currentQuotes.map(q => {
-                    const v = Number(q.precos && q.precos[item.id]) || 0;
-                    return `<td>${v > 0 ? formatBRL(v) : '-'}</td>`;
-                }).join('');
-
-                return `
-                    <tr>
-                        <td>${escapeHTML(item.seq)}</td>
-                        <td>${escapeHTML(item.codigo || '-')}</td>
-                        <td>${escapeHTML(item.codigoTce || '-')}</td>
-                        <td>${escapeHTML(item.descricao)}</td>
-                        <td>${escapeHTML(item.unidade)}</td>
-                        <td>${escapeHTML(formatQtyBR(item.quantidade))}</td>
-                        ${qCells}
-                        <td style="font-weight:bold;background:#f0fdf4;">${formatBRL(stats.avg)}</td>
-                        <td style="font-weight:bold;background:#eff6ff;">${formatBRL(stats.total)}</td>
-                    </tr>
-                `;
-            }).join('');
-
-            const printWin = window.open('', '_blank');
-            if (!printWin) {
-                alert('O navegador bloqueou o pop-up de impressão.');
-                return;
-            }
-
-            printWin.document.write(`
-                <!DOCTYPE html>
-                <html lang="pt-BR">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Mapa de Cotações - ${escapeHTML(proto)}</title>
-                    <style>
-                        @page { size: A4 landscape; margin: 10mm; }
-                        body { font-family: Arial, sans-serif; color: #1e293b; font-size: 10px; margin: 0; }
-                        .header { border-bottom: 3px solid #0571ee; padding-bottom: 8px; margin-bottom: 12px; }
-                        h1 { margin: 0 0 3px; font-size: 15px; color: #075da9; }
-                        .meta { font-size: 9.5px; color: #475569; }
-                        table { width: 100%; border-collapse: collapse; }
-                        th, td { border: 1px solid #cbd5e1; padding: 5px 6px; text-align: left; vertical-align: middle; }
-                        th { background: #f1f5f9; font-weight: bold; }
-                        .total-bar { margin-top: 10px; text-align: right; font-size: 12px; font-weight: bold; color: #075da9; }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <h1>Prefeitura de Rondonópolis — SEMAGI</h1>
-                        <h1>Mapa Comparativo de Cotações (Formação de Preço Médio)</h1>
-                        <div class="meta"><strong>Processo:</strong> ${escapeHTML(title)} | <strong>Protocolo:</strong> ${escapeHTML(proto)} | <strong>Secretaria:</strong> ${escapeHTML(sec)} | Emitido em: ${new Date().toLocaleString('pt-BR')}</div>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width:4%;">Item</th>
-                                <th style="width:7%;">Cód. Ágilli</th>
-                                <th style="width:7%;">Cód. TCE</th>
-                                <th style="width:26%;">Descrição</th>
-                                <th style="width:7%;">Und. Medida</th>
-                                <th style="width:7%;">Quantidade</th>
-                                ${quoteColsHeader}
-                                <th style="width:9%;">Média</th>
-                                <th style="width:10%;">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>${rowsHTML}</tbody>
-                    </table>
-                    <div class="total-bar">Valor Total Geral Estimado (Médias × Quantidades): ${formatBRL(grandTotal)}</div>
-                    <script>window.onload = function() { setTimeout(() => window.print(), 250); };<\/script>
-                </body>
-                </html>
-            `);
-            printWin.document.close();
-        }
-
-        function printQuotesReportPDF() {
-            if (!currentQuotes.length) {
-                alert('Adicione ao menos uma cotação antes de gerar o relatório.');
-                return;
-            }
-
-            const title = document.getElementById('doc-title').value || 'Relatório de Validade das Cotações';
-            const proto = document.getElementById('doc-protocolo').value || 'Não informado';
-            const sec = document.getElementById('doc-secretaria').value || 'Não informada';
-
-            let validCount = 0, warnCount = 0, expiredCount = 0;
-
-            const rowsHTML = currentQuotes.map((q, idx) => {
-                const evalRes = evaluateQuoteStatus(q);
-                if (evalRes.status === 'valid') validCount++;
-                else if (evalRes.status === 'warning') warnCount++;
-                else expiredCount++;
-
-                const statusColor = evalRes.status === 'valid' ? '#15803d' : (evalRes.status === 'warning' ? '#b45309' : '#b91c1c');
-                const srcInfo = q.sourceType ? `[${escapeHTML(q.sourceType)}] ` : '';
-                return `
-                    <tr>
-                        <td>${idx + 1}</td>
-                        <td><strong>${srcInfo}${escapeHTML(q.supplier)}</strong>${q.cnpj ? `<br><small>CNPJ: ${escapeHTML(q.cnpj)}</small>` : ''}</td>
-                        <td>${escapeHTML(q.startDate || '-')}</td>
-                        <td>${escapeHTML(q.endDate || '-')} ${q.validityDays ? `(${q.validityDays}d)` : ''}</td>
-                        <td style="color:${statusColor};font-weight:bold;">${escapeHTML(evalRes.label)}</td>
-                        <td>${escapeHTML(evalRes.detail)}${evalRes.warningNote ? '<br><strong>' + escapeHTML(evalRes.warningNote) + '</strong>' : ''}</td>
-                    </tr>
-                `;
-            }).join('');
-
-            const printWin = window.open('', '_blank');
-            if (!printWin) {
-                alert('O navegador bloqueou o pop-up de impressão.');
-                return;
-            }
-
-            printWin.document.write(`
-                <!DOCTYPE html>
-                <html lang="pt-BR">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Relatório de Cotações - ${escapeHTML(proto)}</title>
-                    <style>
-                        @page { size: A4; margin: 14mm; }
-                        body { font-family: Arial, sans-serif; color: #1e293b; font-size: 11px; margin: 0; }
-                        .header { border-bottom: 3px solid #0571ee; padding-bottom: 10px; margin-bottom: 16px; }
-                        h1 { margin: 0 0 4px; font-size: 17px; color: #075da9; }
-                        .meta { font-size: 10px; color: #475569; }
-                        .summary { display: flex; gap: 12px; margin-bottom: 16px; }
-                        .box { flex: 1; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; text-align: center; background: #f8fafc; }
-                        table { width: 100%; border-collapse: collapse; }
-                        th, td { border: 1px solid #cbd5e1; padding: 7px 8px; text-align: left; vertical-align: middle; }
-                        th { background: #f1f5f9; font-weight: bold; }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <h1>Prefeitura de Rondonópolis — SEMAGI</h1>
-                        <h1>Relatório de Validade das Cotações</h1>
-                        <div class="meta"><strong>Processo:</strong> ${escapeHTML(title)} | <strong>Protocolo:</strong> ${escapeHTML(proto)} | <strong>Secretaria:</strong> ${escapeHTML(sec)}</div>
-                        <div class="meta">Emitido em: ${new Date().toLocaleString('pt-BR')}</div>
-                    </div>
-                    <div class="summary">
-                        <div class="box"><strong>${validCount}</strong><br>Válidas</div>
-                        <div class="box"><strong>${warnCount}</strong><br>Atenção (≤ 3 dias úteis)</div>
-                        <div class="box"><strong>${expiredCount}</strong><br>Vencidas</div>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width:5%;">#</th>
-                                <th style="width:26%;">Fonte / Fornecedor</th>
-                                <th style="width:12%;">Data Inicial</th>
-                                <th style="width:16%;">Validade Até</th>
-                                <th style="width:16%;">Status</th>
-                                <th style="width:25%;">Período Restante / Observação</th>
-                            </tr>
-                        </thead>
-                        <tbody>${rowsHTML}</tbody>
-                    </table>
-                    <script>window.onload = function() { setTimeout(() => window.print(), 250); };<\/script>
-                </body>
-                </html>
-            `);
-            printWin.document.close();
-        }
-
-        // ==========================================
-        // MÓDULO DE PROPOSTAS RECEBIDAS E LISTA BASE
-        // ==========================================
 
         function openProposalItemsModal() {
             if (!currentProposalItems.length) {
@@ -2482,6 +1343,188 @@
             }
             closeProposalItemsModal();
             openAddProposalModal();
+        }
+
+        // Extrator inteligente baseado nas coordenadas X das colunas do ÁgiliBlue
+        async function handleListaComprasPDF(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            if (!window.pdfjsLib) {
+                alert('A biblioteca de leitura de PDF não pôde ser carregada. Verifique sua conexão ou preencha manualmente.');
+                return;
+            }
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const allPagesTokens = [];
+
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const textContent = await page.getTextContent();
+
+                    const tokens = textContent.items
+                        .map(item => ({
+                            str: (item.str || '').trim(),
+                            x: item.transform[4],
+                            y: item.transform[5],
+                            width: item.width || 0
+                        }))
+                        .filter(t => t.str.length > 0);
+
+                    allPagesTokens.push({ pageNum, tokens });
+                }
+
+                const extractedItems = parseAgiliBlueByColumns(allPagesTokens);
+                if (!extractedItems.length) {
+                    alert('Não foi possível identificar automaticamente a tabela de itens neste PDF. Verifique se é uma Lista de Compras em texto selecionável ou adicione os itens manualmente.');
+                    return;
+                }
+
+                currentProposalItems = extractedItems;
+                renderBaseItemsTable();
+                alert(`✅ ${extractedItems.length} item(ns) extraído(s) com sucesso da Lista de Compras! Confira ou ajuste os dados se desejar.`);
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao ler o arquivo PDF: ' + err.message);
+            } finally {
+                event.target.value = '';
+            }
+        }
+
+        function parseAgiliBlueByColumns(pagesTokens) {
+            const items = [];
+            // Posições X padrão das colunas do ÁgiliBlue (serão calibradas automaticamente pelo cabeçalho do PDF)
+            let colBounds = {
+                seqMax: 75,
+                codMax: 125,
+                tceMax: 185,
+                descMax: 425,
+                unidMax: 485,
+                qtdMax: 555,
+                unitMax: 635
+            };
+
+            const isNoise = (txt) => {
+                return /^Página:\s*\d+/i.test(txt) ||
+                       /^PREFEITURA DE/i.test(txt) ||
+                       /^RONDONÓPOLIS/i.test(txt) ||
+                       /^ESTADO DE MATO GROSSO/i.test(txt) ||
+                       /^Prefeitura Municipal de Rondonópolis/i.test(txt) ||
+                       /^Avenida Duque de Caxias/i.test(txt) ||
+                       /^CNPJ\s*03\.347\.101/i.test(txt) ||
+                       /^Telefone:\s*\(66\)/i.test(txt) ||
+                       /^Lista de compras$/i.test(txt) ||
+                       /^Número:/i.test(txt) ||
+                       /^Data:/i.test(txt) ||
+                       /^Situação:/i.test(txt) ||
+                       /^Estrutura administrativa:/i.test(txt) ||
+                       /^Descrição:/i.test(txt) ||
+                       /^Total:$/i.test(txt);
+            };
+
+            for (const pageData of pagesTokens) {
+                const tokens = pageData.tokens;
+
+                // 1. Calibra as fronteiras X usando as palavras do cabeçalho da tabela, se presentes na página
+                const hSeq = tokens.find(t => /^Sequ[êe]ncia$/i.test(t.str));
+                const hCod = tokens.find(t => /^C[óo]digo$/i.test(t.str) && (!hSeq || t.x > hSeq.x));
+                const hTce = tokens.find(t => /TCE/i.test(t.str));
+                const hItens = tokens.find(t => /^Itens$/i.test(t.str));
+                const hUnid = tokens.find(t => /^Unidade$/i.test(t.str));
+                const hQtd = tokens.find(t => /^Quantidade$/i.test(t.str));
+                const hEst = tokens.find(t => /estimado/i.test(t.str) || /^Pre[çc]o/i.test(t.str));
+                const hTot = tokens.find(t => /^Valor$/i.test(t.str) || /^total$/i.test(t.str));
+
+                let tableTopY = Infinity;
+                if (hSeq) {
+                    tableTopY = hSeq.y - 4;
+                    if (hCod) colBounds.seqMax = (hSeq.x + hCod.x) / 2 + 8;
+                    if (hCod && hTce) colBounds.codMax = (hCod.x + hTce.x) / 2 + 8;
+                    if (hTce && hItens) colBounds.tceMax = (hTce.x + hItens.x) / 2 + 12;
+                    if (hItens && hUnid) colBounds.descMax = hUnid.x - 10;
+                    if (hUnid && hQtd) colBounds.unidMax = (hUnid.x + hQtd.x) / 2 + 5;
+                    if (hQtd && hEst) colBounds.qtdMax = (hQtd.x + hEst.x) / 2 + 5;
+                    if (hEst && hTot) colBounds.unitMax = (hEst.x + hTot.x) / 2 + 5;
+                }
+
+                // Localiza o limite inferior da tabela ("Total:" ou "Página:")
+                const footerToken = tokens.find(t => /^Total:$/i.test(t.str) || /^Página:/i.test(t.str));
+                const tableBottomY = footerToken ? footerToken.y + 4 : -Infinity;
+
+                // 2. Filtra apenas os tokens que pertencem à área da tabela
+                const bodyTokens = tokens.filter(t => {
+                    if (t.y >= tableTopY || t.y <= tableBottomY) return false;
+                    if (isNoise(t.str)) return false;
+                    if (/^(Sequ[êe]ncia|C[óo]digo|TCE|Itens|Unidade|Quantidade|Pre[çc]o|estimado|Valor|total)$/i.test(t.str)) return false;
+                    return true;
+                });
+
+                // 3. Identifica as âncoras de cada item (números inteiros na coluna Sequência)
+                const seqAnchors = bodyTokens
+                    .filter(t => t.x <= colBounds.seqMax && /^\d{1,4}$/.test(t.str))
+                    .sort((a, b) => b.y - a.y);
+
+                if (!seqAnchors.length) {
+                    // Caso a descrição de um item da página anterior continue no topo desta página sem nova sequência
+                    if (items.length > 0 && bodyTokens.length > 0) {
+                        const extraDesc = bodyTokens
+                            .filter(t => t.x > colBounds.tceMax && t.x <= colBounds.descMax)
+                            .sort((a, b) => (Math.abs(b.y - a.y) > 3 ? b.y - a.y : a.x - b.x))
+                            .map(t => t.str)
+                            .join(' ');
+                        if (extraDesc) {
+                            items[items.length - 1].descricao = (items[items.length - 1].descricao + ' ' + extraDesc).replace(/\s+/g, ' ').trim();
+                        }
+                    }
+                    continue;
+                }
+
+                // 4. Para cada âncora de Sequência, delimita a faixa vertical (Y) pertencente àquele item
+                for (let i = 0; i < seqAnchors.length; i++) {
+                    const anchor = seqAnchors[i];
+                    const prevAnchor = i > 0 ? seqAnchors[i - 1] : null;
+                    const nextAnchor = i < seqAnchors.length - 1 ? seqAnchors[i + 1] : null;
+
+                    // No ÁgiliBlue, o número da sequência costuma ficar centralizado verticalmente na célula do item;
+                    // por isso, a faixa superior vai até o ponto médio com o item anterior (ou topo da tabela)
+                    const upperY = prevAnchor ? (prevAnchor.y + anchor.y) / 2 : tableTopY;
+                    const lowerY = nextAnchor ? (anchor.y + nextAnchor.y) / 2 : tableBottomY;
+
+                    const rowTokens = bodyTokens.filter(t => t.y <= upperY && t.y > lowerY);
+
+                    const codTokens = rowTokens.filter(t => t.x > colBounds.seqMax && t.x <= colBounds.codMax);
+                    const tceTokens = rowTokens.filter(t => t.x > colBounds.codMax && t.x <= colBounds.tceMax);
+                    const descTokens = rowTokens.filter(t => t.x > colBounds.tceMax && t.x <= colBounds.descMax);
+                    const unidTokens = rowTokens.filter(t => t.x > colBounds.descMax && t.x <= colBounds.unidMax);
+                    const qtdTokens = rowTokens.filter(t => t.x > colBounds.unidMax && t.x <= colBounds.qtdMax);
+                    const unitTokens = rowTokens.filter(t => t.x > colBounds.qtdMax && t.x <= colBounds.unitMax);
+
+                    const sortReadingOrder = (arr) => arr.sort((a, b) => (Math.abs(b.y - a.y) > 3 ? b.y - a.y : a.x - b.x));
+
+                    const codigo = sortReadingOrder(codTokens).map(t => t.str).join('');
+                    const codigoTce = sortReadingOrder(tceTokens).map(t => t.str).join('');
+                    const descricao = sortReadingOrder(descTokens).map(t => t.str).join(' ').replace(/\s+/g, ' ').trim();
+                    const unidade = sortReadingOrder(unidTokens).map(t => t.str).join(' ').trim() || 'Unidade';
+
+                    const qtdRaw = sortReadingOrder(qtdTokens).map(t => t.str).join('');
+                    const unitRaw = sortReadingOrder(unitTokens).map(t => t.str).join('');
+
+                    items.push({
+                        id: 'item_' + Date.now().toString(36) + '_' + items.length + '_' + Math.random().toString(36).slice(2, 5),
+                        seq: anchor.str.trim(),
+                        codigo: codigo,
+                        codigoTce: codigoTce,
+                        descricao: descricao,
+                        unidade: unidade,
+                        quantidade: parseBRNumber(qtdRaw) || 1,
+                        precoEstimado: parseBRNumber(unitRaw)
+                    });
+                }
+            }
+
+            return items;
         }
 
         function openAddProposalModal(proposalId = null) {
@@ -3010,10 +2053,250 @@
         }
 
         // ==========================================
-        // SALVAMENTO (FIREBASE), HISTÓRICO E PDF GERAL
+        // MÓDULO DE COTAÇÕES
         // ==========================================
 
-        function buildRecordPayload(existingRecord = null) {
+        function openAddQuoteModal() {
+            document.getElementById('quote-supplier').value = '';
+            document.getElementById('quote-start-date').value = '';
+            document.getElementById('quote-days').value = '';
+            document.getElementById('quote-end-date').value = '';
+            setQuoteMode('days');
+            document.getElementById('add-quote-modal').classList.add('show');
+            document.getElementById('quote-supplier').focus();
+        }
+
+        function closeAddQuoteModal() {
+            document.getElementById('add-quote-modal').classList.remove('show');
+        }
+
+        function setQuoteMode(mode) {
+            quoteInputMode = mode;
+            document.getElementById('qmode-days').classList.toggle('active', mode === 'days');
+            document.getElementById('qmode-date').classList.toggle('active', mode === 'date');
+            document.getElementById('qfield-days').style.display = mode === 'days' ? 'flex' : 'none';
+            document.getElementById('qfield-end-date').style.display = mode === 'date' ? 'flex' : 'none';
+        }
+
+        function addQuote(keepOpen) {
+            const supplier = document.getElementById('quote-supplier').value.trim() || `Cotação #${currentQuotes.length + 1}`;
+            const startInput = document.getElementById('quote-start-date');
+            completeDateYear(startInput);
+            const startDateObj = parseDateBR(startInput.value);
+
+            if (!startDateObj) {
+                alert('Por favor, informe uma Data Inicial válida no formato dd/mm/aaaa.');
+                startInput.focus();
+                return;
+            }
+
+            let endDateObj = null;
+            let validityDays = 0;
+
+            if (quoteInputMode === 'days') {
+                const daysVal = parseInt(document.getElementById('quote-days').value, 10);
+                if (!daysVal || daysVal <= 0) {
+                    alert('Informe a quantidade de dias de validade (maior que zero).');
+                    document.getElementById('quote-days').focus();
+                    return;
+                }
+                validityDays = daysVal;
+                endDateObj = new Date(startDateObj);
+                endDateObj.setDate(endDateObj.getDate() + daysVal);
+            } else {
+                const endInput = document.getElementById('quote-end-date');
+                completeDateYear(endInput);
+                endDateObj = parseDateBR(endInput.value);
+                if (!endDateObj) {
+                    alert('Por favor, informe uma Data Final ("Até") válida no formato dd/mm/aaaa.');
+                    endInput.focus();
+                    return;
+                }
+                if (endDateObj < startDateObj) {
+                    alert('A data final não pode ser anterior à data inicial da cotação.');
+                    endInput.focus();
+                    return;
+                }
+                validityDays = Math.round((endDateObj - startDateObj) / (1000 * 60 * 60 * 24));
+            }
+
+            currentQuotes.push({
+                id: Date.now().toString() + Math.random().toString(36).slice(2, 6),
+                supplier,
+                startDate: formatDateBR(startDateObj),
+                endDate: formatDateBR(endDateObj),
+                validityDays
+            });
+
+            updateQuoteCountBadge();
+
+            if (keepOpen) {
+                document.getElementById('quote-supplier').value = '';
+                document.getElementById('quote-start-date').value = '';
+                document.getElementById('quote-days').value = '';
+                document.getElementById('quote-end-date').value = '';
+                document.getElementById('quote-supplier').focus();
+                alert(`Cotação adicionada! Total atual: ${currentQuotes.length} cotação(ões).`);
+            } else {
+                closeAddQuoteModal();
+                openQuotesReportModal();
+            }
+        }
+
+        function removeQuote(quoteId) {
+            currentQuotes = currentQuotes.filter(q => q.id !== quoteId);
+            updateQuoteCountBadge();
+            renderQuotesReport();
+        }
+
+        function openQuotesReportModal() {
+            renderQuotesReport();
+            document.getElementById('report-quotes-modal').classList.add('show');
+        }
+
+        function closeQuotesReportModal() {
+            document.getElementById('report-quotes-modal').classList.remove('show');
+        }
+
+        function renderQuotesReport() {
+            const container = document.getElementById('quotes-report-content');
+            if (!currentQuotes.length) {
+                container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--muted);font-size:0.88rem;">
+                    Nenhuma cotação foi adicionada a este processo ainda.<br>Clique em <strong>"+ Nova Cotação"</strong> para cadastrar.
+                </div>`;
+                return;
+            }
+
+            let validCount = 0, warnCount = 0, expiredCount = 0;
+
+            const cardsHTML = currentQuotes.map((q, idx) => {
+                const evalRes = evaluateQuoteStatus(q);
+                if (evalRes.status === 'valid') validCount++;
+                else if (evalRes.status === 'warning') warnCount++;
+                else expiredCount++;
+
+                const badgeClass = evalRes.status === 'valid' ? 'qbadge-valid' : (evalRes.status === 'warning' ? 'qbadge-warn' : 'qbadge-expired');
+
+                return `
+                    <div class="quote-card ${evalRes.status}">
+                        <div>
+                            <span class="quote-badge ${badgeClass}">${evalRes.label}</span>
+                            <div style="font-weight:800;font-size:0.9rem;color:#19324a;margin-bottom:3px;">${idx + 1}. ${escapeHTML(q.supplier)}</div>
+                            <div class="quote-meta">
+                                <strong>Data Inicial:</strong> ${escapeHTML(q.startDate)} &nbsp;|&nbsp; 
+                                <strong>Válida Até:</strong> ${escapeHTML(q.endDate)} (${q.validityDays} dias)<br>
+                                <strong>Situação Atual:</strong> ${escapeHTML(evalRes.detail)}
+                            </div>
+                            ${evalRes.warningNote ? `<div class="quote-warning-msg">${evalRes.warningNote}</div>` : ''}
+                        </div>
+                        <button type="button" class="history-btn btn-delete" onclick="removeQuote('${q.id}')">Excluir</button>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="quote-summary-grid">
+                    <div class="quote-stat-box stat-valid"><strong>${validCount}</strong><span>Válidas (> 3 dias úteis)</span></div>
+                    <div class="quote-stat-box stat-warn"><strong>${warnCount}</strong><span>Atenção (≤ 3 dias úteis)</span></div>
+                    <div class="quote-stat-box stat-expired"><strong>${expiredCount}</strong><span>Vencidas</span></div>
+                </div>
+                <div class="quote-list">${cardsHTML}</div>
+            `;
+        }
+
+        function printQuotesReportPDF() {
+            if (!currentQuotes.length) {
+                alert('Adicione ao menos uma cotação antes de gerar o relatório.');
+                return;
+            }
+
+            const title = document.getElementById('doc-title').value || 'Relatório de Validade das Cotações';
+            const proto = document.getElementById('doc-protocolo').value || 'Não informado';
+            const sec = document.getElementById('doc-secretaria').value || 'Não informada';
+
+            let validCount = 0, warnCount = 0, expiredCount = 0;
+
+            const rowsHTML = currentQuotes.map((q, idx) => {
+                const evalRes = evaluateQuoteStatus(q);
+                if (evalRes.status === 'valid') validCount++;
+                else if (evalRes.status === 'warning') warnCount++;
+                else expiredCount++;
+
+                const statusColor = evalRes.status === 'valid' ? '#15803d' : (evalRes.status === 'warning' ? '#b45309' : '#b91c1c');
+                return `
+                    <tr>
+                        <td>${idx + 1}</td>
+                        <td><strong>${escapeHTML(q.supplier)}</strong></td>
+                        <td>${escapeHTML(q.startDate)}</td>
+                        <td>${escapeHTML(q.endDate)} (${q.validityDays}d)</td>
+                        <td style="color:${statusColor};font-weight:bold;">${escapeHTML(evalRes.label)}</td>
+                        <td>${escapeHTML(evalRes.detail)}${evalRes.warningNote ? '<br><strong>' + escapeHTML(evalRes.warningNote) + '</strong>' : ''}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const printWin = window.open('', '_blank');
+            if (!printWin) {
+                alert('O navegador bloqueou o pop-up de impressão.');
+                return;
+            }
+
+            printWin.document.write(`
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Relatório de Cotações - ${escapeHTML(proto)}</title>
+                    <style>
+                        @page { size: A4; margin: 14mm; }
+                        body { font-family: Arial, sans-serif; color: #1e293b; font-size: 11px; margin: 0; }
+                        .header { border-bottom: 3px solid #0571ee; padding-bottom: 10px; margin-bottom: 16px; }
+                        h1 { margin: 0 0 4px; font-size: 17px; color: #075da9; }
+                        .meta { font-size: 10px; color: #475569; }
+                        .summary { display: flex; gap: 12px; margin-bottom: 16px; }
+                        .box { flex: 1; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; text-align: center; background: #f8fafc; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { border: 1px solid #cbd5e1; padding: 7px 8px; text-align: left; vertical-align: middle; }
+                        th { background: #f1f5f9; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Prefeitura de Rondonópolis — SEMAGI</h1>
+                        <h1>Relatório de Validade das Cotações</h1>
+                        <div class="meta"><strong>Processo:</strong> ${escapeHTML(title)} | <strong>Protocolo:</strong> ${escapeHTML(proto)} | <strong>Secretaria:</strong> ${escapeHTML(sec)}</div>
+                        <div class="meta">Emitido em: ${new Date().toLocaleString('pt-BR')}</div>
+                    </div>
+                    <div class="summary">
+                        <div class="box"><strong>${validCount}</strong><br>Válidas</div>
+                        <div class="box"><strong>${warnCount}</strong><br>Atenção (≤ 3 dias úteis)</div>
+                        <div class="box"><strong>${expiredCount}</strong><br>Vencidas</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:5%;">#</th>
+                                <th style="width:24%;">Fornecedor / Fonte</th>
+                                <th style="width:13%;">Data Inicial</th>
+                                <th style="width:16%;">Validade Até</th>
+                                <th style="width:16%;">Status</th>
+                                <th style="width:26%;">Período Restante / Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHTML}</tbody>
+                    </table>
+                    <script>window.onload = function() { setTimeout(() => window.print(), 250); };<\/script>
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+        }
+
+        // ==========================================
+        // SALVAMENTO, HISTÓRICO E PDF GERAL
+        // ==========================================
+
+        function saveData() {
             const title = document.getElementById('doc-title').value;
             const formData = {};
 
@@ -3033,6 +2316,9 @@
 
                     if (document.getElementById(`${inputId}_date`)) {
                         formData[`${inputId}_date`] = document.getElementById(`${inputId}_date`).value || '';
+                    }
+                    if (item.extra === 'currency') {
+                        formData[`${inputId}_value`] = document.getElementById(`${inputId}_value`)?.value || '';
                     }
                     formData[`${inputId}_observation`] = document.getElementById(`${inputId}_observation`)?.value || '';
                 });
@@ -3072,65 +2358,50 @@
                 habilitacaoBlocos.push({ empresaNome, empresaCnpj, itens, datas, observacoes });
             });
 
-            const existingStatus = existingRecord?.status || 'Em andamento';
-            const existingPub = existingRecord?.publicacao || null;
-            const createdAt = existingRecord?.createdAt || Date.now();
-            const recordId = currentEditingId || Date.now().toString();
+            let history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            let existingStatus = 'Em andamento';
+            let existingPub = null;
 
-            return {
+            if (currentEditingId) {
+                const existingRecord = history.find(h => h.id === currentEditingId);
+                if (existingRecord) {
+                    if (existingRecord.status) existingStatus = existingRecord.status;
+                    if (existingRecord.publicacao) existingPub = existingRecord.publicacao;
+                }
+            }
+
+            const recordId = currentEditingId || Date.now().toString();
+            const record = {
                 id: recordId,
-                createdAt: createdAt,
                 title: title,
                 date: new Date().toLocaleString('pt-BR'),
                 status: existingStatus,
                 publicacao: existingPub,
                 data: formData,
                 habilitacaoBlocos: habilitacaoBlocos,
-                dotacoes: JSON.parse(JSON.stringify(currentDotacoes)),
                 quotes: JSON.parse(JSON.stringify(currentQuotes)),
                 proposalItems: JSON.parse(JSON.stringify(currentProposalItems)),
                 proposals: JSON.parse(JSON.stringify(currentProposals))
             };
-        }
 
-        async function saveDataSilently() {
-            const title = document.getElementById('doc-title').value;
-            if (!title) return;
-
-            const history = window.cloudHistory || [];
-            const existingRecord = currentEditingId ? history.find(h => h.id === currentEditingId) : null;
-            const record = buildRecordPayload(existingRecord);
-
-            if (typeof window.cloudSaveRecord === 'function') {
-                await window.cloudSaveRecord(record);
+            if (currentEditingId) {
+                const index = history.findIndex(h => h.id === currentEditingId);
+                if (index !== -1) history[index] = record;
+                else history.unshift(record);
+            } else {
+                history.unshift(record);
+                currentEditingId = recordId;
             }
-            currentEditingId = record.id;
-        }
 
-        async function saveData() {
-            const saveBtn = document.querySelector('.btn-save');
-            try {
-                if (saveBtn) {
-                    saveBtn.disabled = true;
-                    saveBtn.textContent = 'Salvando...';
-                }
-                await saveDataSilently();
-                alert('Questionário salvo com sucesso!');
-            } catch (e) {
-                console.error(e);
-                alert('Erro ao salvar na nuvem: ' + e.message);
-            } finally {
-                if (saveBtn) {
-                    saveBtn.disabled = false;
-                    saveBtn.textContent = 'Salvar Registro';
-                }
-            }
+            localStorage.setItem('checklist_history', JSON.stringify(history));
+            alert('Questionário salvo com sucesso!');
+            renderHistory();
         }
 
         function renderHistory() {
             const list = document.getElementById('history-list');
             list.innerHTML = '';
-            const history = window.cloudHistory || [];
+            const history = JSON.parse(localStorage.getItem('checklist_history')) || [];
             const searchTerm = (document.getElementById('history-search')?.value || '').toLowerCase().trim();
 
             const filteredHistory = history.filter(record => {
@@ -3145,8 +2416,8 @@
                 const statusMatch = recordStatus.toLowerCase().includes(searchTerm);
                 const protoMatch = record.data && record.data['protocolo_numero'] && record.data['protocolo_numero'].toLowerCase().includes(searchTerm);
                 const secMatch = record.data && record.data['secretaria'] && record.data['secretaria'].toLowerCase().includes(searchTerm);
-                const empresaMatch = record.habilitacaoBlocos && record.habilitacaoBlocos.some(b =>
-                    (b.empresaNome && b.empresaNome.toLowerCase().includes(searchTerm)) ||
+                const empresaMatch = record.habilitacaoBlocos && record.habilitacaoBlocos.some(b => 
+                    (b.empresaNome && b.empresaNome.toLowerCase().includes(searchTerm)) || 
                     (b.empresaCnpj && b.empresaCnpj.toLowerCase().includes(searchTerm))
                 );
                 const propEmpresaMatch = record.proposals && record.proposals.some(p =>
@@ -3264,9 +2535,7 @@
                 date.style.marginTop = '4px';
                 const quotesCount = Array.isArray(record.quotes) ? record.quotes.length : 0;
                 const propsCount = Array.isArray(record.proposals) ? record.proposals.length : 0;
-                const dotacoesCount = Array.isArray(record.dotacoes) ? record.dotacoes.length : 0;
                 const extras = [
-                    dotacoesCount ? `${dotacoesCount} dotação(ões)` : '',
                     quotesCount ? `${quotesCount} cotação(ões)` : '',
                     propsCount ? `${propsCount} proposta(s)` : ''
                 ].filter(Boolean).join(' • ');
@@ -3323,7 +2592,7 @@
             activePubRecordId = null;
         }
 
-        async function savePubDates() {
+        function savePubDates() {
             if (!activePubRecordId) return;
             const start = document.getElementById('pub-start-date').value;
             const end = document.getElementById('pub-end-date').value;
@@ -3333,19 +2602,19 @@
                 return;
             }
 
-            try {
-                if (typeof window.cloudUpdatePublication === 'function') {
-                    await window.cloudUpdatePublication(activePubRecordId, { start, end });
-                }
+            let history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            const index = history.findIndex(h => h.id === activePubRecordId);
+            if (index !== -1) {
+                history[index].publicacao = { start, end };
+                localStorage.setItem('checklist_history', JSON.stringify(history));
+                renderHistory();
                 alert('Período de publicação salvo com sucesso!');
-            } catch (e) {
-                alert('Erro ao salvar publicação: ' + e.message);
             }
             closePubModal();
         }
 
         function checkClosingPublications() {
-            const history = window.cloudHistory || [];
+            const history = JSON.parse(localStorage.getItem('checklist_history')) || [];
             const today = new Date();
             today.setHours(0,0,0,0);
 
@@ -3373,13 +2642,13 @@
             return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
         }
 
-        async function updateRecordStatus(id, newStatus) {
-            try {
-                if (typeof window.cloudUpdateStatus === 'function') {
-                    await window.cloudUpdateStatus(id, newStatus);
-                }
-            } catch (e) {
-                alert('Erro ao atualizar status: ' + e.message);
+        function updateRecordStatus(id, newStatus) {
+            let history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            const index = history.findIndex(h => h.id === id);
+            if (index !== -1) {
+                history[index].status = newStatus;
+                localStorage.setItem('checklist_history', JSON.stringify(history));
+                renderHistory();
             }
         }
 
@@ -3389,11 +2658,9 @@
                     d.classList.remove('show');
                 });
             }
-            if (event.target === document.getElementById('dotacao-modal')) closeDotacaoModal();
             if (event.target === document.getElementById('pub-modal')) closePubModal();
             if (event.target === document.getElementById('add-quote-modal')) closeAddQuoteModal();
             if (event.target === document.getElementById('report-quotes-modal')) closeQuotesReportModal();
-            if (event.target === document.getElementById('quotes-matrix-modal')) closeQuotesMatrixModal();
             if (event.target === document.getElementById('proposal-items-modal')) closeProposalItemsModal();
             if (event.target === document.getElementById('add-proposal-modal')) closeAddProposalModal();
             if (event.target === document.getElementById('report-proposals-modal')) closeProposalsReportModal();
@@ -3406,25 +2673,23 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        async function deleteRecord(id) {
-            const history = window.cloudHistory || [];
+        function deleteRecord(id) {
+            const history = JSON.parse(localStorage.getItem('checklist_history')) || [];
             const record = history.find(item => item.id === id);
 
             if (!record) return;
 
-            const confirmed = confirm(`Deseja realmente excluir a dispensa "${record.title}" para todos os usuários?\n\nEssa ação não poderá ser desfeita.`);
+            const confirmed = confirm(`Deseja realmente excluir a dispensa "${record.title}"?\n\nEssa ação não poderá ser desfeita.`);
             if (!confirmed) return;
 
-            try {
-                if (typeof window.cloudDeleteRecord === 'function') {
-                    await window.cloudDeleteRecord(id);
-                }
-                if (currentEditingId === id) {
-                    clearForm();
-                }
-            } catch (e) {
-                alert('Erro ao excluir registro: ' + e.message);
+            const updatedHistory = history.filter(item => item.id !== id);
+            localStorage.setItem('checklist_history', JSON.stringify(updatedHistory));
+
+            if (currentEditingId === id) {
+                clearForm();
             }
+
+            renderHistory();
         }
 
         function exportRecordPDF(record) {
@@ -3457,10 +2722,6 @@
             const authStatus = formData['autenticacao_vias'] || 'Não informado';
             const authObs = (formData['autenticacao_vias_observation'] || '').trim();
 
-            const pubInfo = (record.publicacao && record.publicacao.start && record.publicacao.end)
-                ? ` | Publicação: ${escapeHTML(formatDateShort(record.publicacao.start))} a ${escapeHTML(formatDateShort(record.publicacao.end))}`
-                : '';
-
             fixedChecklistData.forEach((block, sectionIndex) => {
                 let rows = '';
                 block.items.forEach((item, itemIndex) => {
@@ -3468,6 +2729,10 @@
                     const value = formData[inputId] || 'Não preenchido';
                     let details = `<span class="status ${statusClass(value)}">${escapeHTML(value)}</span>`;
 
+                    if (item.extra === 'currency') {
+                        const amount = formData[`${inputId}_value`] || '';
+                        details += `<br><strong>Valor: R$ ${escapeHTML(amount || 'Não informado')}</strong>`;
+                    }
                     const observation = (formData[`${inputId}_observation`] || '').trim();
                     if (observation) {
                         details += `<br><strong>Obs:</strong> ${escapeHTML(observation)}`;
@@ -3488,34 +2753,6 @@
                     </table>
                 `;
             });
-
-            if (Array.isArray(record.dotacoes) && record.dotacoes.length > 0) {
-                const totalDotacoes = record.dotacoes.reduce((acc, d) => acc + (Number(d.valor) || 0), 0);
-                const dotacaoRows = record.dotacoes.map(d => `
-                    <tr>
-                        <td class="col-doc"><strong>Dotação: ${escapeHTML(d.numero)}</strong></td>
-                        <td class="col-sit"><strong>${escapeHTML(formatCurrencyBRL(d.valor))}</strong></td>
-                    </tr>
-                `).join('');
-
-                sectionsHTML += `
-                    <h2>Dotações Orçamentárias</h2>
-                    <table>
-                        <colgroup>
-                            <col style="width: 72%;">
-                            <col style="width: 28%;">
-                        </colgroup>
-                        <thead><tr><th class="col-doc">Número da Dotação</th><th class="col-sit">Valor Atribuído</th></tr></thead>
-                        <tbody>
-                            ${dotacaoRows}
-                            <tr style="background:#f1f5f9;">
-                                <td class="col-doc"><strong>Total Geral das Dotações (${record.dotacoes.length})</strong></td>
-                                <td class="col-sit"><strong>${escapeHTML(formatCurrencyBRL(totalDotacoes))}</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                `;
-            }
 
             let habBlocosHtml = '';
             if (record.habilitacaoBlocos && record.habilitacaoBlocos.length > 0) {
@@ -3586,9 +2823,8 @@
             if (Array.isArray(record.quotes) && record.quotes.length > 0) {
                 const quoteRows = record.quotes.map((q, idx) => {
                     const ev = evaluateQuoteStatus(q);
-                    const srcTag = q.sourceType ? `[${escapeHTML(q.sourceType)}] ` : '';
                     return `<tr>
-                        <td class="col-doc">${idx + 1}. ${srcTag}${escapeHTML(q.supplier)}${q.cnpj ? ` (CNPJ: ${escapeHTML(q.cnpj)})` : ''} — Início: ${escapeHTML(q.startDate || '-')} | Até: ${escapeHTML(q.endDate || '-')} ${q.validityDays ? `(${q.validityDays}d)` : ''}</td>
+                        <td class="col-doc">${idx + 1}. ${escapeHTML(q.supplier)} — Início: ${escapeHTML(q.startDate)} | Até: ${escapeHTML(q.endDate)} (${q.validityDays}d)</td>
                         <td class="col-sit"><strong>${escapeHTML(ev.label)}</strong><br><small>${escapeHTML(ev.detail)}</small></td>
                     </tr>`;
                 }).join('');
@@ -3600,39 +2836,8 @@
                             <col style="width: 72%;">
                             <col style="width: 28%;">
                         </colgroup>
-                        <thead><tr><th class="col-doc">Cotação / Fonte / Período</th><th class="col-sit">Validade</th></tr></thead>
+                        <thead><tr><th class="col-doc">Cotação / Período</th><th class="col-sit">Validade</th></tr></thead>
                         <tbody>${quoteRows}</tbody>
-                    </table>
-                `;
-            }
-
-            if (Array.isArray(record.proposalItems) && record.proposalItems.length > 0 && Array.isArray(record.quotes) && record.quotes.some(q => q.precos && Object.values(q.precos).some(v => Number(v) > 0))) {
-                let grandTotalQuotes = 0;
-                const quoteMatrixRows = record.proposalItems.map(it => {
-                    const qty = Number(it.quantidade) || 0;
-                    let sum = 0, cnt = 0;
-                    record.quotes.forEach(q => {
-                        const v = Number(q.precos && q.precos[it.id]) || 0;
-                        if (v > 0) { sum += v; cnt++; }
-                    });
-                    const avg = cnt > 0 ? sum / cnt : 0;
-                    const tot = avg * qty;
-                    grandTotalQuotes += tot;
-                    return `<tr>
-                        <td class="col-doc">Item ${escapeHTML(it.seq)} (Ágilli: ${escapeHTML(it.codigo || '-')} | TCE: ${escapeHTML(it.codigoTce || '-')}) — ${escapeHTML(it.descricao)} (Qtd: ${escapeHTML(formatQtyBR(qty))} ${escapeHTML(it.unidade)})</td>
-                        <td class="col-sit">Média: <strong>${formatBRL(avg)}</strong><br>Total: <strong>${formatBRL(tot)}</strong></td>
-                    </tr>`;
-                }).join('');
-
-                sectionsHTML += `
-                    <h2>Mapa de Cotações — Média e Total Estimado (Geral: ${formatBRL(grandTotalQuotes)})</h2>
-                    <table>
-                        <colgroup>
-                            <col style="width: 72%;">
-                            <col style="width: 28%;">
-                        </colgroup>
-                        <thead><tr><th class="col-doc">Item / Códigos / Quantidade</th><th class="col-sit">Média Unitária e Total</th></tr></thead>
-                        <tbody>${quoteMatrixRows}</tbody>
                     </table>
                 `;
             }
@@ -3669,6 +2874,11 @@
             if (!printWindow) {
                 alert('O navegador bloqueou a janela do PDF. Permita pop-ups para este site e tente novamente.');
                 return;
+            }
+
+            let pubInfo = '';
+            if (record.publicacao && record.publicacao.start && record.publicacao.end) {
+                pubInfo = ` | Período de Publicação: ${formatDateShort(record.publicacao.start)} até ${formatDateShort(record.publicacao.end)}`;
             }
 
             printWindow.document.write(`
@@ -3741,7 +2951,6 @@
 
         function clearForm() {
             currentEditingId = null;
-            currentDotacoes = [];
             currentQuotes = [];
             currentProposalItems = [];
             currentProposals = [];
@@ -3756,10 +2965,92 @@
             renderForm();
         }
 
+        function exportHistoryJSON() {
+            const history = JSON.parse(localStorage.getItem('checklist_history')) || [];
+            if (!history.length) {
+                alert('Não há dispensas salvas no histórico para exportar.');
+                return;
+            }
+
+            const payload = {
+                app: 'checklist-ordem-dispensa',
+                exportedAt: new Date().toISOString(),
+                records: history
+            };
+
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const stamp = new Date().toISOString().slice(0, 10);
+            a.href = url;
+            a.download = `historico-dispensas-${stamp}.json`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        function importHistoryJSON(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    const incoming = Array.isArray(parsed)
+                        ? parsed
+                        : (Array.isArray(parsed.records) ? parsed.records : null);
+
+                    if (!incoming) {
+                        alert('Arquivo inválido: não foi possível ler o histórico de dispensas.');
+                        return;
+                    }
+
+                    const validIncoming = incoming.filter(item => item && typeof item === 'object');
+                    if (!validIncoming.length) {
+                        alert('O arquivo selecionado não contém nenhuma dispensa.');
+                        return;
+                    }
+
+                    const currentHistory = JSON.parse(localStorage.getItem('checklist_history')) || [];
+                    const mapById = new Map();
+
+                    currentHistory.forEach((rec, idx) => {
+                        const key = rec.id ? String(rec.id) : `legacy_curr_${idx}`;
+                        mapById.set(key, rec);
+                    });
+
+                    let count = 0;
+                    validIncoming.forEach((rec, idx) => {
+                        const normalized = {
+                            ...rec,
+                            id: rec.id ? String(rec.id) : `imported_${Date.now()}_${idx}`
+                        };
+                        mapById.set(normalized.id, normalized);
+                        count++;
+                    });
+
+                    const merged = Array.from(mapById.values());
+                    localStorage.setItem('checklist_history', JSON.stringify(merged));
+                    renderHistory();
+                    alert(`✅ Importação concluída! ${count} dispensa(s) importada(s). Total no histórico: ${merged.length}.`);
+                } catch (err) {
+                    console.error(err);
+                    alert('Erro ao ler o arquivo: ' + err.message);
+                } finally {
+                    event.target.value = '';
+                }
+            };
+
+            reader.readAsText(file, 'utf-8');
+        }
+
         // Inicialização
         setupAuthRadios();
         renderForm();
         renderHistory();
+        checkClosingPublications();
     </script>
 </body>
 </html>
